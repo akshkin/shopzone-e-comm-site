@@ -25,7 +25,7 @@ function ProductDetail(){
                 <p><span><Icon icon="ri:star-s-fill" />{rating.rate} ({rating.count})</span></p>
                 <ButtonContainer>
                     <Button buttonType={BUTTON_TYPES.base} onClick={()=>addToCart(thisProduct)}>Add to Cart</Button>
-                    <Button buttonType={BUTTON_TYPES.inverted} onClick={()=>addToFavorites(thisProduct)}>Wishlist</Button>
+                    <Button buttonType={BUTTON_TYPES.inverted} onClick={()=>addToFavorites(thisProduct)}>Favorite</Button>
                 </ButtonContainer>
                 <p>${price}</p>
                 <h4>Product details: </h4>

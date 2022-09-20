@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 export const HeaderContainer = styled.header`
     height: 50px;
@@ -17,36 +18,26 @@ export const HeaderContainer = styled.header`
     }
 
     .faves{
-        position: relative;
+        margin-right: 1em;
     }
-    .favorites{
-        position: absolute;
+    .favorites{        
         color: white;
         background-color: red;
         border-radius: 50%;
         width: 15px;
         height: 15px;
-        top: 3.5%;
-        right: 4%;
-        padding: 0.1em;
-        padding-bottom: 0.3em;
+        padding: 0.3em;
+        /* padding-bottom: 0.3em; */
     }
 
-    .cart{
-        position: relative;
-    }
     .num-cart{
-        position: absolute;
         height: 15px;
         width: 15px;
         top: 3.5%;
-        /* right: 0; */
-        right: 10%;
         background-color: #252525;
         color: white;
         border-radius: 50%;
-        padding: 0.1em;
-        padding-bottom: 0.25em;
+        padding: 0.4em;
     }
 
    
@@ -61,37 +52,37 @@ export const HeaderContainer = styled.header`
     }
 ` 
 export const NavLinks = styled.nav`
-    display: none;
-    transition: translateX(0%);
-    
+    display: flex;
+    /* transition: translateX(0%); */
+    justify-content: space-evenly;
 
+    
     @media (min-width: 600px) {
-        display: flex;
-        position: unset;
-        justify-content: space-evenly;
+        /* display: flex; */
+        /* position: unset; */
+        /* justify-content: space-evenly; */
         margin-left: 1em;
     }
 `
 
-export const NavLinksOpen = styled.nav`
-    flex-direction: column;
-    justify-content: flex-start;
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    gap: 1em;
-    z-index: 100;
-    background-color: white;
-    width: 70%;
-    border: 2px solid blue;
-    transform: translateX(100%);
+// export const NavLinksOpen = styled.nav`
+//     flex-direction: column;
+//     justify-content: flex-start;
+//     position: fixed;
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+//     gap: 1em;
+//     z-index: 100;
+//     background-color: white;
+//     width: 70%;
+//     transform: translateX(100%);
 
-    button{
-        position: absolute;
-        right: 0;
-        top: 0;
-        font-size: 3rem;
-        padding: 0.3em;
-    }
-`
+//     button{
+//         position: absolute;
+//         right: 0;
+//         top: 0;
+//         font-size: 3rem;
+//         padding: 0.3em;
+//     }
+// `

@@ -10,7 +10,7 @@ export const MainProductContainer = styled.div`
         text-align: left;        
           
 
-        @media(min-width: 700px){
+        @media(min-width: 750px){
           flex-direction: row;
           gap: 1em;
           max-width: 1000px;
@@ -21,7 +21,7 @@ export const MainProductContainer = styled.div`
               height: auto;
           }
         }
-        @media (min-width: 800px) {
+        @media (min-width: 850px) {
           img{
                 width: 400px;
                 height: auto;
@@ -33,6 +33,8 @@ export const ButtonContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.75em;
+
+    
 
     /* button {
       color: white;
@@ -49,6 +51,10 @@ export const ButtonContainer = styled.div`
       @media(min-width: 600px){
           flex-direction: row;
           align-items: flex-start;
+
+          button{
+            width: 200px;
+          }
         }
 `
  

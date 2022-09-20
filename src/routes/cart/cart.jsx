@@ -21,17 +21,19 @@ function Cart() {
     return (
         <CartContainer>
             <CartItemsContainer>{cartItemElements}</CartItemsContainer>
-            <div>
-                <img scr="/images/shopping-cart.png" alt="empty shopping cart"/>
-                <h3>Your cart is empty. Let's add some items!</h3>
-                <Button buttonType={BUTTON_TYPES.inverted}><Link to="/favorites">ADD ITEMS FROM FAVORITES</Link></Button>
-            </div>
-            { cartItems.length > 0 &&
-            <div className="place-order">
-                <h4>Price details ({cartCount} items): </h4>
-                <p>Total amount: ${cartTotal.toFixed(2)}</p>
-                <Button type={BUTTON_TYPES.base}>Place order</Button>
-            </div>}
+            {!cartItems.length ? (
+                <div>
+                    <img scr="/images/shopping-cart.png" alt="empty shopping cart"/>
+                    <h3>Your cart is empty. Let's add some items!</h3>
+                    <Button buttonType={BUTTON_TYPES.inverted}><Link to="/favorites">ADD ITEMS FROM FAVORITES</Link></Button>
+                </div> ) : (
+            
+                <div className="place-order">
+                    <h4>Price details ({cartCount} items): </h4>
+                    <p>Total amount: ${cartTotal.toFixed(2)}</p>
+                    <Button type={BUTTON_TYPES.base}>Place order</Button>
+                </div> )
+            }
         </CartContainer>
     )
 }
