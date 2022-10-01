@@ -36,7 +36,7 @@ export const HeaderContainer = styled.header`
         top: 3.5%;
         background-color: #252525;
         color: white;
-        border-radius: 50%;
+        border-radius: 70%;
         padding: 0.4em;
     }
 
@@ -55,14 +55,21 @@ export const NavLinks = styled.nav`
     display: flex;
     /* transition: translateX(0%); */
     justify-content: space-evenly;
+    /* margin-left: 2em; */
 
-    
-    @media (min-width: 600px) {
+    Link{
+        margin-left: 1em;
+    }
+    /* @media (min-width: 600px) {
         /* display: flex; */
         /* position: unset; */
         /* justify-content: space-evenly; */
-        margin-left: 1em;
-    }
+        /* margin-left: 2em; */
+    
+`
+
+export const NavLink = styled(Link)`
+    margin-left: 1em;
 `
 
 // export const NavLinksOpen = styled.nav`

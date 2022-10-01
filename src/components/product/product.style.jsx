@@ -21,7 +21,7 @@ export const ProductContainer = styled.div`
         width: 100%;
         position: absolute;
         top: 70%;
-        left: 15%;
+        left: 6%;
         display: flex;
       }
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
@@ -35,11 +35,10 @@ export const ProductTitle = styled.h3`
 `
 export const Image = styled.img`
   max-width: 200px;
-  /* max-height: 60%; */
-  object-fit: contain;
-  /* margin: 0 auto; */
+  height: 250px;
+  object-fit: cover;
+  margin: 0 auto; 
   padding: 1em;
-  /* border-bottom: 1px solid lightgray; */
 `
 export const ProductPrice = styled.p`
   font-size: 0.875rem;

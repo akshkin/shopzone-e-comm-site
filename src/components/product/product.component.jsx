@@ -47,7 +47,7 @@ function Product({product}){
                 <Button buttonType={BUTTON_TYPES.inverted}>{heartIcon()}</Button>
             </ButtonContainer>            
             <ProductTitle><Link to={`/products/${id}`}>{title}</Link></ProductTitle>
-            <ProductPrice>${price}</ProductPrice>
+            <ProductPrice>SEK {price}</ProductPrice>
         </ProductContainer>
     )
 }

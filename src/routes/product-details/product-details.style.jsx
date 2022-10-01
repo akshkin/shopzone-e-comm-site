@@ -7,7 +7,11 @@ export const MainProductContainer = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
-        text-align: left;        
+        text-align: left;   
+        
+        img{
+          width: 300px;
+        }
           
 
         @media(min-width: 750px){

@@ -19,7 +19,7 @@ function CartItem({item}) {
                 <img src={image} alt={`${title}`}/>
                 <CartItemInfo>
                     <h3><Link to={`/products/${id}`}>{title}</Link></h3>
-                    <p>${price * quantity}</p>
+                    <p>SEK {price * quantity}</p>
                     <QuantityContainer>
                       <StyledIcon icon="ri:subtract-fill" onClick={()=> removeFromCart(id)}/>
                       <Quantity> {quantity} </Quantity>

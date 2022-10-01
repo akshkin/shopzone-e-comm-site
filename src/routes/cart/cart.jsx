@@ -30,7 +30,7 @@ function Cart() {
             
                 <div className="place-order">
                     <h4>Price details ({cartCount} items): </h4>
-                    <p>Total amount: ${cartTotal.toFixed(2)}</p>
+                    <p>Total amount: SEK {cartTotal.toFixed(2)}</p>
                     <Button type={BUTTON_TYPES.base}>Place order</Button>
                 </div> )
             }

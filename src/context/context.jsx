@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react"
+import {ProductsData} from "../data"
 
 const Context = React.createContext()
 
@@ -7,61 +8,25 @@ function ContextProvider({children}) {
     const [cartItems, setCartItems] = useState([])
     const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem("productFavorites")) || [])
     const [cartTotal, setCartTotal] = useState(0)
-    // const [categories, setCategories] = useState({
-    //     mens: [],
-    //     womens: [],
-    //     jewelery: [],
-    //     electronics: []
-    // })
-    // const [mensCategory, setMensCategory] = useState([])
-    // const [womensCategory, setWomensCategory] = useState([])
-    // const [jeweleryCategory, setJeweleryCategory] = useState([])
-    // const [electronicsCategory, setElectronicsCategory] = useState([])
+    
     
     const url = "https://fakestoreapi.com/products"
     useEffect(() => {
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                // const products = data.map((item, i) => ({...item, id: item.id.toString(), isFavorite: false})
-                // )
                 setAllProducts(data)})
     }, [])
-    
-    // console.log(categories)
+
     // useEffect(() => {
-    //     fetch(`https://fakestoreapi.com/products/category/${category}`)
-    //         .then(res=>res.json())
-    //         .then(data=>console.log(data))
-    // })
+    //     setAllProducts(ProductsData)
+    // }, [])
     
-   
-    
+       
     useEffect(()=> {
         JSON.parse(localStorage.getItem("productFavorites"))
-    })
-    const menCategory = allProducts.filter(product => product.category === "men's clothing")
-    const womenCategory = allProducts.filter(product => product.category === "women's clothing")
-    const jewelCategory = allProducts.filter(product => product.category === "jewelery")
-    const electronicCategory = allProducts.filter(product => product.category === "electronics")
-    
-    
-   
-  //  useEffect(() => {
-  //      const {mens, womens, jewelery, electronic} = categories
-  //       setCategories({...categories, mens: menCategory})
-        
-  //       setCategories({...categories, womens: womenCategory})
-        
-  //       setCategories({...categories, jewelery: jewelCategory})
-        
-  //       setCategories({...categories, electronics: electronicCategory})   
-  //  }, [])
-
-  //  console.log(categories.mens)
-   
-   
-  //  console.log(categories.mens)
+    }) 
+  
    
     function saveToLocalStorage(products){
         localStorage.setItem("productFavorites", JSON.stringify(products))
@@ -79,7 +44,7 @@ function ContextProvider({children}) {
         setFavorites(newFavorites)
         saveToLocalStorage(newFavorites)
     }
-    //console.log(allProducts)
+
     
     function addItemToCart(newItem){
         const existingItemInCart = cartItems.find(cartItem => cartItem.id === newItem.id)

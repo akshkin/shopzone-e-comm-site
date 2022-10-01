@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+*{
+  box-sizing: border-box;
+}
 html, body {
   font-family: 'Fira Sans Condensed', sans-serif;
   margin: 0;

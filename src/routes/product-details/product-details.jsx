@@ -27,7 +27,7 @@ function ProductDetail(){
                     <Button buttonType={BUTTON_TYPES.base} onClick={()=>addToCart(thisProduct)}>Add to Cart</Button>
                     <Button buttonType={BUTTON_TYPES.inverted} onClick={()=>addToFavorites(thisProduct)}>Favorite</Button>
                 </ButtonContainer>
-                <p>${price}</p>
+                <p>SEK {price}</p>
                 <h4>Product details: </h4>
                 <p>{description}</p>
             </div>

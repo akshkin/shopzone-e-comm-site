@@ -8,7 +8,6 @@ import { CategoryContainer } from "./category.style"
 function Category(){       
   const {category} = useParams()
   const {allProducts}= useContext(Context)
-
   const [products, setProducts] = useState([])
 
   
