@@ -1,5 +1,6 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useContext, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { UserContext } from "../../context/user.context"
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase.utils"
 import Button, {BUTTON_TYPES} from "../button/button.component"
 import { FormContainer, Input, ErrorText, SignInButton} from "../sign-in/sign-in.style"
@@ -15,6 +16,8 @@ function SignUp(){
   const [formFields, setFormFields] = useState(defaultFormFields)
   const {firstName, email, password, confirmPassword} = formFields
   const [error, setError] = useState("")
+  const navigate = useNavigate()
+  const {currentUser} = useContext(UserContext)
 
   async function handleSubmit(event){
     event.preventDefault()
@@ -36,9 +39,20 @@ function SignUp(){
 
   }
 
+  console.log(currentUser)
   function handleChange(event){
     const {name, value} = event.target
-    setFormFields({...formFields, [name]:value})
+    setFormFields(prevFormFields =>( {...prevFormFields, [name]:value}))
+    if(error){
+      setTimeout(() => {
+        setError("")
+      }, 1000)
+    }
+    if(currentUser){
+      setTimeout(() => {
+        navigate("/")
+      }, 1000)
+    }
   }
 
   return (
@@ -77,7 +91,7 @@ function SignUp(){
           required
           onChange={handleChange}
         />
-        {error && <ErrorText>{error}</ErrorText>}
+        {error && <ErrorText>{error.message}</ErrorText>}
         <SignInButton buttonType={BUTTON_TYPES.base}>Sign Up</SignInButton>
         <p>Already a user? <Link to="/sign-in">Sign in!</Link></p>
       </form>

@@ -1,5 +1,6 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useContext, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { UserContext } from "../../context/user.context"
 import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase.utils"
 import Button, {BUTTON_TYPES} from "../button/button.component"
 import { FormContainer, Input, ErrorText, SignInButton} from "./sign-in.style"
@@ -13,6 +14,8 @@ function SignIn(){
   const [formFields, setFormFields] = useState(defaultFormFields)
   const {email, password} = formFields
   const [error, setError] = useState("")
+  const navigate = useNavigate()
+  const {currentUser} = useContext(UserContext)
 
   async function handleSubmit(event){
     event.preventDefault()
@@ -26,9 +29,20 @@ function SignIn(){
     }
   }
 
+  
   function handleChange(event){
     const {name, value} = event.target
-    setFormFields({...formFields, [name]:value})
+    setFormFields(prevFormFields => ({...prevFormFields, [name]:value}))
+    if(error){
+      setTimeout(() => {
+        setError("")
+      }, 1000)
+    }
+    if(currentUser) { 
+      setTimeout(() => {
+        navigate("/products") 
+      })     
+    }
   }
 
   return (
@@ -50,7 +64,7 @@ function SignIn(){
           required
           onChange={handleChange}
         />
-        {error && <ErrorText>{error}</ErrorText>}
+        {error && <ErrorText>{error.message}</ErrorText>}
         <SignInButton buttonType={BUTTON_TYPES.base}>Sign In</SignInButton>
         <p>Don't have an account? <Link to="/sign-up">Sign up!</Link></p>
       </form>

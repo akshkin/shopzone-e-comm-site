@@ -17,20 +17,16 @@ function Header() {
     
     const cartIcon= cartItems.length > 0 ? "ri:handbag-fill" : "ri:handbag-line"
     
-    console.log("header")
     return (
         <>
             <HeaderContainer>
                 <Link to="/">                
                     <span>SHOPZONE</span>
                 </Link>
-                {/* <Button buttonType={BUTTON_TYPES.inverted} aria-label="open navigation">&#9776;</Button> */}
+                
                 <NavLinks>
-                    {/* <Link to="/mens">MEN</Link>
-                    <Link to="/womens">WOMEN</Link>
-                    <Link to="/jewelery">JEWELERY</Link>
-                    <Link to="/electronics">ELECTRONICS</Link> */}
-                    {currentUser ? <span onClick={signOutUser}>SIGN OUT</span> : <NavLink to="/sign-in">SIGN IN</NavLink>}
+                    
+                    {currentUser ? <span style={{cursor: "pointer"}} onClick={signOutUser}>SIGN OUT</span> : <NavLink to="/sign-in">SIGN IN</NavLink>}
                     <NavLink to="/favorites">
                         {favorites.length > 0 && <span className="num-of-items favorites">{favorites.length}</span>}
                         <span className="faves">FAVORITES</span>
@@ -41,22 +37,6 @@ function Header() {
                     </NavLink>
                 </NavLinks>
 
-                {/* {isOpen && <NavLinksOpen>
-                    <Button buttonType={BUTTON_TYPES.inverted} onClick={setIsOpen(false)} aria-label="close navigation">&times;</Button>
-                    <Link to="/mens">MEN</Link>
-                    <Link to="/womens">WOMEN</Link>
-                    <Link to="/jewelery">JEWELERY</Link>
-                    <Link to="/electronics">ELECTRONICS</Link>
-                    
-                    <Link to="/favorites">
-                        {favorites.length > 0 && <span className="num-of-items favorites">{favorites.length}</span>}
-                        <span className="faves">FAVORITES</span>
-                    </Link>
-                    <Link to="/cart">
-                        {cartItems.length > 0 && <span className="num-cart">{cartItems.length}</span>}
-                        <Icon className="cart" icon={cartIcon} />
-                    </Link>
-                </NavLinksOpen>} */}
             </HeaderContainer>
             <Outlet />
         </>
