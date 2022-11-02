@@ -26,7 +26,11 @@ This personal project was bootstrapped with [Create React App](https://github.co
 - Code URL: [here](https://github.com/akshkin/shopzone-e-comm-site)
 - Live Site URL: [here](https://shopzone-project.netlify.app/)
 
+<<<<<<< HEAD
 ## Contined development
+=======
+## Continued development
+>>>>>>> 63bbe20fc6a5e5c09774a46a5b0c3ac12b38f790
 
 - to add payment using Stripe
 - search feature
