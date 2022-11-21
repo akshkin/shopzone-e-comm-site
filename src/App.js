@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {Routes, Route} from "react-router-dom"
 
 import Home from "./routes/home/home.jsx"
@@ -11,8 +12,10 @@ import Category from "./routes/categories/categories"
 import SignIn from "./components/sign-in/sign-in.component.jsx"
 import SignUp from "./components/sign-up/sign-up.componenet.jsx"
 import './App.css';
+import SearchPage from "./routes/searchPage/searchPage.jsx"
 
 function App() {
+  
   return (
     <div className="App">
         <Header />
@@ -24,9 +27,10 @@ function App() {
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/cart" element={<Cart />}/>
             <Route exact path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />                    
+            <Route path="/sign-up" element={<SignUp />} /> 
+            <Route path="/search/:query" element={<SearchPage />} />                   
         </Routes>
-        <Footer />      
+        {/* <Footer />       */}
     </div>
   );
 }

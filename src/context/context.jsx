@@ -8,8 +8,8 @@ function ContextProvider({children}) {
     const [cartItems, setCartItems] = useState([])
     const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem("productFavorites")) || [])
     const [cartTotal, setCartTotal] = useState(0)
-    
-    
+    const [filteredProducts, setFilteredProducts] = useState([])
+
     const url = "https://fakestoreapi.com/products"
     useEffect(() => {
         fetch(url)
@@ -18,14 +18,10 @@ function ContextProvider({children}) {
                 setAllProducts(data)})
     }, [])
 
-    // useEffect(() => {
-    //     setAllProducts(ProductsData)
-    // }, [])
-    
-       
+          
     useEffect(()=> {
         JSON.parse(localStorage.getItem("productFavorites"))
-    }) 
+    },[favorites]) 
   
    
     function saveToLocalStorage(products){
@@ -79,6 +75,11 @@ function ContextProvider({children}) {
          setCartItems(removeItemFromCart(id))
        
      }
+
+     function filteredProductsBySearch(searchTerm){
+        const filteredProducts = allProducts.filter(product => product.title.toLowerCase().includes(searchTerm.toLowerCase()))
+        setFilteredProducts(filteredProducts)
+     }
      
      function clearItemFromCart(id){
          const newCartItems = cartItems.filter(cartItem => cartItem.id !== id)
@@ -95,7 +96,7 @@ function ContextProvider({children}) {
     //     setCartItems([])
     // }
     return (
-        <Context.Provider value={{allProducts, favorites, addToFavorites, removeFromFavorites, cartItems, addToCart, removeFromCart, cartTotal, clearItemFromCart}}>
+        <Context.Provider value={{allProducts, filteredProductsBySearch, filteredProducts, favorites, addToFavorites, removeFromFavorites, cartItems, addToCart, removeFromCart, cartTotal, clearItemFromCart}}>
             {children}
         </Context.Provider>
     )

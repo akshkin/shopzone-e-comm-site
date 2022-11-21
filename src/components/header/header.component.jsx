@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react"
-import { Link, Outlet } from "react-router-dom"
+import { Link, Outlet, useNavigate } from "react-router-dom"
 
 import {Context} from "../../context/context"
 import { Icon } from '@iconify/react';
@@ -12,10 +12,20 @@ import { UserContext } from "../../context/user.context";
 
 function Header() {
     //const [isOpen, setIsOpen] = useState(false)
-    const { cartItems, favorites} = useContext(Context)
+    const [searchTerm, setSearchTerm] = useState("")
+    const { cartItems, favorites, filteredProductsBySearch } = useContext(Context)
     const { currentUser } = useContext(UserContext)
-    
-    const cartIcon= cartItems.length > 0 ? "ri:handbag-fill" : "ri:handbag-line"
+    const navigate = useNavigate()
+    const cartIcon = cartItems.length > 0 ? "ri:handbag-fill" : "ri:handbag-line"
+
+    // function handleSubmit(event){
+    //     event.preventDeafult()
+    //     if(searchTerm){
+    //         navigate(`/search/${searchTerm}`)
+    //         //filteredProductsBySearch(searchTerm)
+    //     }
+    //     setSearchTerm("")
+    // }
     
     return (
         <>
@@ -24,8 +34,7 @@ function Header() {
                     <span>SHOPZONE</span>
                 </Link>
                 
-                <NavLinks>
-                    
+                <NavLinks>                    
                     {currentUser ? <span style={{cursor: "pointer"}} onClick={signOutUser}>SIGN OUT</span> : <NavLink to="/sign-in">SIGN IN</NavLink>}
                     <NavLink to="/favorites">
                         {favorites.length > 0 && <span className="num-of-items favorites">{favorites.length}</span>}
@@ -38,6 +47,14 @@ function Header() {
                 </NavLinks>
 
             </HeaderContainer>
+            {/* <form onSubmit={handleSubmit}>
+                <input 
+                    type="search"
+                    placeholder="Search products"
+                    onChange={(e) => setSearchTerm(e.target.value) }
+                />
+                <button>Search</button>
+            </form> */}
             <Outlet />
         </>
     )
