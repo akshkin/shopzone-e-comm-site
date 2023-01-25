@@ -25,9 +25,9 @@ function Cart() {
             {!cartItems.length ? (
                 <div>
                     <img src={CartImg} alt="empty shopping cart"/>
-                    <h3>Your cart is empty. Let's add some items!</h3>
+                    <Link to="/" ><h3>Your cart is empty. Let's add some items!</h3></Link>
                     {
-                        favorites.length &&
+                        favorites.length > 0 &&
                         <Button buttonType={BUTTON_TYPES.inverted}><Link to="/favorites">ADD ITEMS FROM FAVORITES</Link></Button>
                     }
                     

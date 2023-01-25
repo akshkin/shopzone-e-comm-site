@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { UserContext } from "../../context/user.context"
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase.utils"
-import Button, {BUTTON_TYPES} from "../button/button.component"
+import {BUTTON_TYPES} from "../button/button.component"
 import { FormContainer, Input, ErrorText, SignInButton} from "../sign-in/sign-in.style"
 
 const defaultFormFields = {
@@ -39,7 +39,6 @@ function SignUp(){
 
   }
 
-  console.log(currentUser)
   function handleChange(event){
     const {name, value} = event.target
     setFormFields(prevFormFields =>( {...prevFormFields, [name]:value}))
