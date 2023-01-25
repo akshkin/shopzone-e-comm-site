@@ -1,7 +1,14 @@
 import styled from "styled-components"
 
 export const ButtonContainer = styled.div`
-  display: none;
+  /* display: none; */
+  visibility: hidden;
+  width: 100%;
+  position: absolute;
+  top: 60%;
+  left: 6%;
+  transform: translateY(350%);
+  transition: transform 0.5s ease-in;
 `
 
 export const ProductContainer = styled.div`
@@ -17,14 +24,13 @@ export const ProductContainer = styled.div`
   border-radius: 5px;
       
     &:hover{
-      ${ButtonContainer}{
-        width: 100%;
-        position: absolute;
-        top: 70%;
-        left: 6%;
+      ${ButtonContainer}{       
+        visibility: visible;
+        transform: translateY(0);
         display: flex;
+        
       }
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
     }    
 `
 

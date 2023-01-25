@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 
 export const HeaderContainer = styled.header`
-    height: 50px;
+    height: 70px;
     max-width: 100%;
     box-shadow: 0px 2px 10px -5px rgba(21,6,5,0.2);
     padding: 1em;
@@ -26,8 +26,8 @@ export const HeaderContainer = styled.header`
         border-radius: 50%;
         width: 15px;
         height: 15px;
-        padding: 0.3em;
-        /* padding-bottom: 0.3em; */
+        font-size: 0.75rem;
+        padding: 0.3em 0.6em;
     }
 
     .num-cart{
@@ -36,8 +36,9 @@ export const HeaderContainer = styled.header`
         top: 3.5%;
         background-color: #252525;
         color: white;
-        border-radius: 70%;
-        padding: 0.4em;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        padding: 0.4em 0.6em;
     }
 
    
@@ -53,18 +54,12 @@ export const HeaderContainer = styled.header`
 ` 
 export const NavLinks = styled.nav`
     display: flex;
-    /* transition: translateX(0%); */
     justify-content: space-evenly;
-    /* margin-left: 2em; */
 
     Link{
         margin-left: 1em;
     }
-    /* @media (min-width: 600px) {
-        /* display: flex; */
-        /* position: unset; */
-        /* justify-content: space-evenly; */
-        /* margin-left: 2em; */
+    
     
 `
 

@@ -50,7 +50,7 @@ function SignUp(){
     }
     if(currentUser){
       setTimeout(() => {
-        navigate("/")
+        navigate("/products")
       }, 1000)
     }
   }

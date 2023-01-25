@@ -12,9 +12,7 @@ html, body {
   padding: 0;
   font-weight: 300;
 }
-body{
-  min-height: 100vh;
-}
+
 img{
   width: 200px;
   height: 300px;

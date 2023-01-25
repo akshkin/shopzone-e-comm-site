@@ -4,9 +4,10 @@ import CartItem from "../../components/cart-item/cart-item.component"
 import Button, { BUTTON_TYPES } from "../../components/button/button.component"
 import {Context} from "../../context/context"
 import { CartContainer, CartItemsContainer } from "./cart.style"
+import CartImg from "../../images/shopping-cart.png"
 
 function Cart() {
-    const {cartItems, cartTotal} = useContext(Context)
+    const {cartItems, cartTotal, favorites} = useContext(Context)
     
     const cartCount = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0)
     
@@ -23,9 +24,13 @@ function Cart() {
             <CartItemsContainer>{cartItemElements}</CartItemsContainer>
             {!cartItems.length ? (
                 <div>
-                    <img scr="/images/shopping-cart.png" alt="empty shopping cart"/>
+                    <img src={CartImg} alt="empty shopping cart"/>
                     <h3>Your cart is empty. Let's add some items!</h3>
-                    <Button buttonType={BUTTON_TYPES.inverted}><Link to="/favorites">ADD ITEMS FROM FAVORITES</Link></Button>
+                    {
+                        favorites.length &&
+                        <Button buttonType={BUTTON_TYPES.inverted}><Link to="/favorites">ADD ITEMS FROM FAVORITES</Link></Button>
+                    }
+                    
                 </div> ) : (
             
                 <div className="place-order">

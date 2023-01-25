@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import Hero from "../../components/hero/hero.component"
 import { CategoriesContainer, CategoryItemContainer, BackgroundImage, Body } from "./home.style"
 const categories = [
     {
@@ -31,22 +32,25 @@ const categories = [
 function Home(){
     
     return (
-        <CategoriesContainer>
-            {categories.map(({category, imageUrl, id, route}) => {
-                return (
-                    <CategoryItemContainer key={id} >
-                        <Link to={route}>
-                            <BackgroundImage imageUrl={imageUrl}/>
-                            <Body>
-                                <h3>{category}</h3>
-                                <span>SHOP NOW</span>
-                            </Body>
-                        </Link> 
-                    </CategoryItemContainer>
-                )
-                
-            })}
-        </CategoriesContainer>
+        <>
+            <Hero />
+            <CategoriesContainer>
+                {categories.map(({category, imageUrl, id, route}) => {
+                    return (
+                        <CategoryItemContainer key={id} >
+                            <Link to={route}>
+                                <BackgroundImage imageUrl={imageUrl}/>
+                                <Body>
+                                    <h3>{category}</h3>
+                                    <span>SHOP NOW</span>
+                                </Body>
+                            </Link> 
+                        </CategoryItemContainer>
+                    )
+                    
+                })}
+            </CategoriesContainer>
+        </>
     )
     
 }

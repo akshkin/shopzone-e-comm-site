@@ -5,15 +5,14 @@ export const CartContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 1em;
-  margin: 0 auto;
+  margin: 1em auto;
   gap: 2em;
 
   .place-order{
-    /* align-self: flex-end; */
     max-width: 80%;
     margin-left: 2em;
     border: 1px solid lightgray;   
-    padding: 2em;
+    padding: 1.5em 2em;
 
     button{
       width: 100%;
