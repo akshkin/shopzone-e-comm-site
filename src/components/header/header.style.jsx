@@ -31,14 +31,14 @@ export const HeaderContainer = styled.header`
     padding: 0.3em 0.6em;
   }
   .favorites {
-    background-color: red;
+    background-color: coral;
   }
 
-  .num-cart {
-    background-color: #252525;
-  }
   .cart {
     font-size: 1.5rem;
+  }
+  .num-cart {
+    background-color: #252525;
   }
 
   button {
@@ -80,6 +80,7 @@ export const Input = styled.input`
   margin-top: 0.5em;
   width: 250px;
   border: 1px solid lightcoral;
+  font-size: inherit;
 
   &:focus {
     outline: 1px solid lightblue;

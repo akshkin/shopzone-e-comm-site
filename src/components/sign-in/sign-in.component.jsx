@@ -19,13 +19,16 @@ function SignIn() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
     try {
       const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(user);
+      if (user) {
+        setTimeout(() => {
+          navigate("/products");
+        }, 500);
+      }
       setFormFields(defaultFormFields);
     } catch (error) {
       setError(error);
@@ -40,11 +43,11 @@ function SignIn() {
         setError("");
       }, 1000);
     }
-    if (currentUser) {
-      setTimeout(() => {
-        navigate("/products");
-      });
-    }
+    // if (currentUser) {
+    //   setTimeout(() => {
+    //     navigate("/products");
+    //   });
+    // }
   }
 
   return (

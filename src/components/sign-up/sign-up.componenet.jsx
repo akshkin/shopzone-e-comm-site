@@ -1,63 +1,71 @@
-import { useContext, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { UserContext } from "../../context/user.context"
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase.utils"
-import {BUTTON_TYPES} from "../button/button.component"
-import { FormContainer, Input, ErrorText, SignInButton} from "../sign-in/sign-in.style"
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/user.context";
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+} from "../../utils/firebase.utils";
+import { BUTTON_TYPES } from "../button/button.component";
+import {
+  FormContainer,
+  Input,
+  ErrorText,
+  SignInButton,
+} from "../sign-in/sign-in.style";
 
 const defaultFormFields = {
   firstName: "",
   email: "",
   password: "",
-  confirmPassword: ""
-}
+  confirmPassword: "",
+};
 
-function SignUp(){
-  const [formFields, setFormFields] = useState(defaultFormFields)
-  const {firstName, email, password, confirmPassword} = formFields
-  const [error, setError] = useState("")
-  const navigate = useNavigate()
-  const {currentUser} = useContext(UserContext)
+function SignUp() {
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { firstName, email, password, confirmPassword } = formFields;
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext);
 
-  async function handleSubmit(event){
-    event.preventDefault()
+  async function handleSubmit(event) {
+    event.preventDefault();
     if (password !== confirmPassword) {
-      setError("Passwords do not match")
+      setError("Passwords do not match");
     }
     try {
-      const response = await createAuthUserWithEmailAndPassword(email, password)
-      console.log(response)      
-
+      const response = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
       await createUserDocumentFromAuth(response, {
         displayName: firstName,
-        email
-      })
-      setFormFields(defaultFormFields)
-    } catch (error){
-      setError(error)
+        email,
+      });
+      if (response) {
+        setTimeout(() => {
+          navigate("/products");
+        }, 500);
+      }
+      setFormFields(defaultFormFields);
+    } catch (error) {
+      setError("Something went wrong! Please try again.");
     }
-
   }
 
-  function handleChange(event){
-    const {name, value} = event.target
-    setFormFields(prevFormFields =>( {...prevFormFields, [name]:value}))
-    if(error){
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setFormFields((prevFormFields) => ({ ...prevFormFields, [name]: value }));
+    if (error) {
       setTimeout(() => {
-        setError("")
-      }, 1000)
-    }
-    if(currentUser){
-      setTimeout(() => {
-        navigate("/products")
-      }, 1000)
+        setError("");
+      }, 1000);
     }
   }
 
   return (
     <FormContainer>
       <form onSubmit={handleSubmit}>
-      <Input 
+        <Input
           type="text"
           name="firstName"
           value={firstName}
@@ -65,7 +73,7 @@ function SignUp(){
           required
           onChange={handleChange}
         />
-        <Input 
+        <Input
           type="email"
           name="email"
           value={email}
@@ -73,8 +81,8 @@ function SignUp(){
           required
           onChange={handleChange}
         />
-        
-        <Input 
+
+        <Input
           type="password"
           name="password"
           value={password}
@@ -82,7 +90,7 @@ function SignUp(){
           required
           onChange={handleChange}
         />
-        <Input 
+        <Input
           type="password"
           name="confirmPassword"
           value={confirmPassword}
@@ -92,10 +100,12 @@ function SignUp(){
         />
         {error && <ErrorText>{error.message}</ErrorText>}
         <SignInButton buttonType={BUTTON_TYPES.base}>Sign Up</SignInButton>
-        <p>Already a user? <Link to="/sign-in">Sign in!</Link></p>
+        <p>
+          Already a user? <Link to="/sign-in">Sign in!</Link>
+        </p>
       </form>
     </FormContainer>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;
