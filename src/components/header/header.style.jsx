@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled.header`
-  height: 70px;
   max-width: 100%;
   box-shadow: 0px 2px 10px -5px rgba(21, 6, 5, 0.2);
   padding: 1em;
   display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
   justify-content: space-between;
   align-items: center;
 
@@ -36,6 +37,9 @@ export const HeaderContainer = styled.header`
   .num-cart {
     background-color: #252525;
   }
+  .cart {
+    font-size: 1.5rem;
+  }
 
   button {
     border: none;
@@ -50,6 +54,7 @@ export const HeaderContainer = styled.header`
 export const NavLinks = styled.nav`
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
 
   Link {
     margin-left: 1em;
@@ -58,4 +63,26 @@ export const NavLinks = styled.nav`
 
 export const NavLink = styled(Link)`
   margin-left: 1em;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  align-items: baseline;
+  gap: 1em;
+`;
+
+export const Input = styled.input`
+  border-radius: 5px;
+  display: block;
+  height: 40px;
+  padding: 0.5em;
+  font-family: inherit;
+  margin-top: 0.5em;
+  width: 250px;
+  border: 1px solid lightcoral;
+
+  &:focus {
+    outline: 1px solid lightblue;
+    border: none;
+  }
 `;

@@ -26,3 +26,9 @@ a:hover{
   color: darkgray;
 }
 
+@media (min-width: 800px) {
+  html{
+    font-size: 120%;
+  }  
+}
+

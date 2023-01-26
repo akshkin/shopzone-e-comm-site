@@ -4,8 +4,13 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Context } from "../../context/context";
 import { Icon } from "@iconify/react";
 import { signOutUser } from "../../utils/firebase.utils";
-//import Button, { BUTTON_TYPES } from "../button/button.component";
-import { HeaderContainer, NavLinks, NavLink } from "./header.style";
+import {
+  HeaderContainer,
+  NavLinks,
+  NavLink,
+  Form,
+  Input,
+} from "./header.style";
 import { UserContext } from "../../context/user.context";
 
 function Header() {
@@ -13,7 +18,20 @@ function Header() {
   const { cartItems, favorites, filteredProductsBySearch } =
     useContext(Context);
   const { currentUser } = useContext(UserContext);
+
   const cartIcon = cartItems.length > 0 ? "ri:handbag-fill" : "ri:handbag-line";
+  const navigate = useNavigate();
+
+  function handleChange(event) {
+    setSearchTerm(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    filteredProductsBySearch(searchTerm);
+    navigate(`/search/${searchTerm}`);
+    setSearchTerm("");
+  }
 
   return (
     <>
@@ -21,7 +39,6 @@ function Header() {
         <Link to="/">
           <span>SHOPZONE</span>
         </Link>
-
         <NavLinks>
           {currentUser ? (
             <span style={{ cursor: "pointer" }} onClick={signOutUser}>
@@ -43,6 +60,14 @@ function Header() {
             <Icon className="cart" icon={cartIcon} />
           </NavLink>
         </NavLinks>
+        <Form onSubmit={handleSubmit}>
+          <label>Search</label>
+          <Input
+            type="search"
+            onChange={handleChange}
+            placeholder="Search products"
+          />
+        </Form>
       </HeaderContainer>
 
       <Outlet />

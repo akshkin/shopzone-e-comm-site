@@ -10,13 +10,17 @@ export const ProductContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  min-width: 250px;
+  width: 250px;
   padding: 1em;
   gap: 0.25em;
   margin: 0 auto;
   text-align: left;
   border: 1px solid lightgray;
   border-radius: 5px;
+
+  @media (min-width: 800px) {
+    width: 300px;
+  }
 `;
 
 export const ProductTitle = styled.h3`

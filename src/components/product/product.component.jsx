@@ -13,14 +13,8 @@ import {
 } from "./product.style";
 
 function Product({ product }) {
-  const {
-    favorites,
-    addToFavorites,
-    removeFromFavorites,
-    cartItems,
-    addToCart,
-    removeFromCart,
-  } = useContext(Context);
+  const { favorites, addToFavorites, removeFromFavorites, addToCart } =
+    useContext(Context);
 
   function heartIcon() {
     if (favorites.some((favorite) => favorite.id === product.id)) {
