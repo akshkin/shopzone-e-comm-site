@@ -1,40 +1,26 @@
 import styled from "styled-components";
 
 export const ButtonContainer = styled.div`
-  /* display: none; */
-  visibility: hidden;
+  display: flex;
   width: 100%;
-  position: absolute;
-  top: 60%;
-  left: 6%;
-  transform: translateY(350%);
-  transition: transform 0.5s ease-in;
+  justify-content: center;
 `;
 
 export const ProductContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 220px;
+  min-width: 250px;
   padding: 1em;
   gap: 0.25em;
   margin: 0 auto;
   text-align: left;
   border: 1px solid lightgray;
   border-radius: 5px;
-
-  &:hover {
-    ${ButtonContainer} {
-      visibility: visible;
-      transform: translateY(0);
-      display: flex;
-    }
-  }
 `;
 
 export const ProductTitle = styled.h3`
   font-size: 1rem;
-  margin-bottom: 0;
   font-weight: 300;
 `;
 export const Image = styled.img`
@@ -45,7 +31,7 @@ export const Image = styled.img`
   padding: 1em;
 `;
 export const ProductPrice = styled.p`
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: normal;
-  margin: 0;
+  margin-top: 0;
 `;

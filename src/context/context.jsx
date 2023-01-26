@@ -18,7 +18,12 @@ function ContextProvider({ children }) {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setAllProducts(data);
+        console.log(data);
+        const dataWithNewPrice = data.map((product) => ({
+          ...product,
+          price: (product.price * 10).toFixed(2),
+        }));
+        setAllProducts([...dataWithNewPrice]);
       });
   }, []);
 

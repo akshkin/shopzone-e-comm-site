@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Button, { BUTTON_TYPES } from "../button/button.component";
 import PropTypes from "prop-types";
@@ -13,7 +13,6 @@ import {
 } from "./product.style";
 
 function Product({ product }) {
-  const [hovered, setHovered] = useState(false);
   const {
     favorites,
     addToFavorites,
@@ -31,42 +30,19 @@ function Product({ product }) {
           onClick={() => removeFromFavorites(product.id)}
         />
       );
-    } else if (hovered) {
+    } else {
       return (
         <Icon icon="ri:heart-line" onClick={() => addToFavorites(product)} />
       );
     }
   }
 
-  function cartIcon() {
-    const alreadyInCart = cartItems.some((item) => item.id === product.id);
-    if (alreadyInCart) {
-      return (
-        <i
-          className="ri-shopping-cart-fill cart"
-          onClick={() => removeFromCart(product.id)}
-        ></i>
-      );
-    } else if (hovered) {
-      return (
-        <i
-          className="ri-add-circle-line cart"
-          onClick={() => addToCart(product)}
-        ></i>
-      );
-    }
-  }
   if (!product) {
     return <></>;
   }
   const { image, title, id, price } = product;
   return (
-    <ProductContainer
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {cartIcon()}
-
+    <ProductContainer>
       <Image src={image} alt={`${title}`} />
       <ButtonContainer>
         <Button
