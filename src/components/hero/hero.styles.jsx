@@ -14,11 +14,11 @@ export const StyledHero = styled.div`
 export const Heading = styled.h1`
   padding: 1em;
   position: absolute;
-  top: 0;
+  top: -8%;
   left: 20;
-  font-size: 2.5rem;
+  font-size: 2rem;
 
-  @media (min-width: 700px) {
-    font-size: 3rem;
+  @media (min-width: 800px) {
+    font-size: 2.5rem;
   }
 `;

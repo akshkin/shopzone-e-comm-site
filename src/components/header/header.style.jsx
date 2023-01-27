@@ -9,7 +9,7 @@ export const HeaderContainer = styled.header`
   flex-wrap: wrap;
   gap: 1em;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
 
   & svg {
     margin-right: 0.2em;
@@ -51,18 +51,15 @@ export const HeaderContainer = styled.header`
     }
   }
 `;
+
+export const NavLink = styled(Link)`
+  margin-right: 1em;
+`;
+
 export const NavLinks = styled.nav`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-
-  Link {
-    margin-left: 1em;
-  }
-`;
-
-export const NavLink = styled(Link)`
-  margin-left: 1em;
 `;
 
 export const Form = styled.form`
@@ -78,12 +75,16 @@ export const Input = styled.input`
   padding: 0.5em;
   font-family: inherit;
   margin-top: 0.5em;
-  width: 250px;
+  width: 175px;
   border: 1px solid lightcoral;
   font-size: inherit;
 
   &:focus {
     outline: 1px solid lightblue;
     border: none;
+  }
+
+  @media (min-width: 350px) {
+    width: 250px;
   }
 `;

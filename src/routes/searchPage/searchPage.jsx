@@ -9,8 +9,7 @@ import { SearchTitle } from "./searchPage.styles";
 function SearchPage() {
   const { query } = useParams();
   const { filteredProducts, sortProducts } = useContext(Context);
-  //console.log(filteredProducts);
-
+ 
   sortProducts(filteredProducts);
 
   return (

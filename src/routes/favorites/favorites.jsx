@@ -8,6 +8,7 @@ function Favorites() {
   const favoriteElements = favorites.map((favorite) => (
     <Product key={favorite.id} product={favorite} />
   ));
+  if (favorites.length === 0) return <p>No products added to Favorites</p>;
   return <CategoryContainer>{favoriteElements}</CategoryContainer>;
 }
 export default Favorites;
