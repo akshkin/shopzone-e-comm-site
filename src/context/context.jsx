@@ -128,6 +128,7 @@ function ContextProvider({ children }) {
     addToFavorites,
     removeFromFavorites,
     cartItems,
+    setCartItems,
     addToCart,
     removeFromCart,
     cartTotal,

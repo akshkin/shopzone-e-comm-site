@@ -25,6 +25,7 @@ export const CartItemContainer = styled.div`
 
   @media (min-width: 500px) {
     display: flex;
+    gap: 1em;
     align-items: center;
   }
 `;
