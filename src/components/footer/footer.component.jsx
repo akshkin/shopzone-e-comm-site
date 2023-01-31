@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import Logo from "../../images/logo.png";
 import {
   FooterContainer,
   FooterLinksContainer,
@@ -10,7 +11,7 @@ function Footer() {
   return (
     <FooterContainer>
       <Link style={{ fontWeight: "bold" }} to="/">
-        SHOPZONE
+        <img src={Logo} className="logo" alt="logo" />
       </Link>
       <FooterLinksContainer>
         <FooterLink>

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-
+import Logo from "../../images/logo.png";
 import { Context } from "../../context/context";
 import { Icon } from "@iconify/react";
 import {
@@ -43,7 +43,7 @@ function Header() {
     <>
       <HeaderContainer>
         <Link to="/">
-          <span>SHOPZONE</span>
+          <img src={Logo} alt="logo" className="logo" />
         </Link>
         <NavLinks>
           {currentUser ? (

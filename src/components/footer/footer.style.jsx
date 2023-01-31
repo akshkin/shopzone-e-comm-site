@@ -7,6 +7,11 @@ export const FooterContainer = styled.footer`
   flex-direction: column;
   align-items: center;
   padding: 1em;
+
+  .logo {
+    width: 100px;
+    height: auto;
+  }
 `;
 export const FooterLinksContainer = styled.ul`
   list-style: none;

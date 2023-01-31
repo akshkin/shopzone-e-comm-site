@@ -18,6 +18,17 @@ export const HeaderContainer = styled.header`
     width: 70px;
   }
 
+  .logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: -2.5em;
+
+    @media (min-width: 700px) {
+      width: 100px;
+      /* margin-bottom: -2.5em; */
+    }
+  }
+
   .faves {
     margin-right: 1em;
     position: relative;
