@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import CartItem from "../../components/cart-item/cart-item.component";
-import Button, { BUTTON_TYPES } from "../../components/button/button.component";
+import { CartItem, Button, Order } from "../../components";
+//import CartItem from "../../components/cart-item/cart-item.component";
+import { BUTTON_TYPES } from "../../components/button/button.component";
 import { Context } from "../../context/context";
 import { CartContainer, CartItemsContainer } from "./cart.style";
 import CartImg from "../../images/shopping-cart.png";
-import Order from "../../components/order/order.component";
+//import Order from "../../components/order/order.component";
 
 function Cart() {
   const { cartItems, cartTotal, favorites, setCartItems } = useContext(Context);
@@ -31,10 +32,12 @@ function Cart() {
   });
 
   function placeOrder() {
-    setTimeout(() => {
-      setOrderPlaced(true);
-    }, 300);
-    setCartItems([]);
+    if (window.confirm("Confirm payment?")) {
+      setTimeout(() => {
+        setOrderPlaced(true);
+      }, 300);
+      setCartItems([]);
+    }
   }
 
   if (orderPlaced)

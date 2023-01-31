@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const StyledOrder = styled.div`
   padding: 1em;
   margin: 0 auto;
+  max-width: 700px;
 `;
 
 export const OrderItemTotal = styled.h4`
