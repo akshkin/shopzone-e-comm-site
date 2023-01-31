@@ -31,6 +31,11 @@ export const CartItemContainer = styled.div`
 `;
 export const CartItemInfo = styled.div`
   justify-content: flex-start;
+
+  h3,
+  h4 {
+    margin-top: 0;
+  }
 `;
 
 export const Quantity = styled.span`

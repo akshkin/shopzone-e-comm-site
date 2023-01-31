@@ -21,11 +21,17 @@ export const HeaderContainer = styled.header`
   .logo {
     width: 80px;
     height: auto;
+    margin-top: -2.2em;
     margin-bottom: -2.5em;
     margin-left: -1.3em;
 
-    @media (min-width: 700px) {
+    @media (min-width: 400px) {
+      margin-bottom: -2.5em;
+    }
+
+    @media (min-width: 600px) {
       width: 100px;
+      margin-top: -1em;
     }
   }
 
@@ -81,6 +87,11 @@ export const NavLinks = styled.nav`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  padding-top: 1em;
+
+  @media (min-width: 400px) {
+    padding-top: 0;
+  }
 `;
 
 export const Form = styled.form`

@@ -3,6 +3,7 @@ import Button from "../button/button.component";
 import { Link } from "react-router-dom";
 
 export const FormPage = styled.main`
+  padding: 1em;
   min-height: 100vh;
   background-color: #c4c4c4;
   background-image: url("/images/auth-bg.jpg");
