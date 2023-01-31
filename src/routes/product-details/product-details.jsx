@@ -8,10 +8,8 @@ import { MainProductContainer, ButtonContainer } from "./product-details.style";
 function ProductDetail() {
   const { productId } = useParams();
   const { allProducts, addToFavorites, addToCart } = useContext(Context);
-  const thisProduct = allProducts.find(
-    (product) => product.id.toString() === productId
-  );
-
+  const thisProduct = allProducts.find((product) => product._id === productId);
+  console.log(thisProduct);
   if (!thisProduct) return <></>;
   const { image, title, category, rating, price, description } = thisProduct;
   return (

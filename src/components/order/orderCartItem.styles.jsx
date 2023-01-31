@@ -11,10 +11,12 @@ export const OrderItemTotal = styled.h4`
 `;
 
 export const StyledLink = styled(Link)`
+  display: block;
   background-color: coral;
   color: white;
   padding: 0.5em 1.5em;
   transition: background 0.2s;
+  margin: 1em auto 2em;
 
   &:hover,
   &:focus {

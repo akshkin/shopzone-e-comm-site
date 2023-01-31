@@ -4,6 +4,10 @@ export const ButtonContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
+
+  button {
+    flex-grow: 1;
+  }
 `;
 
 export const ProductContainer = styled.div`
@@ -11,7 +15,6 @@ export const ProductContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 250px;
-  padding: 1em;
   gap: 0.25em;
   margin: 0 auto;
   text-align: left;
@@ -26,16 +29,16 @@ export const ProductContainer = styled.div`
 export const ProductTitle = styled.h3`
   font-size: 1rem;
   font-weight: 300;
+  margin: 1em;
 `;
 export const Image = styled.img`
-  max-width: 200px;
-  height: 250px;
+  width: 100%;
+  max-width: 300px;
   object-fit: cover;
   margin: 0 auto;
-  padding: 1em;
 `;
 export const ProductPrice = styled.p`
   font-size: 1rem;
   font-weight: normal;
-  margin-top: 0;
+  margin: 0 1em 1em;
 `;

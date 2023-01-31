@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ProductsData } from "../data";
 
 const Context = React.createContext();
 
@@ -13,16 +12,18 @@ function ContextProvider({ children }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [sortBy, setSortBy] = useState("falling");
 
-  const url = "https://fakestoreapi.com/products";
+  //https://fakestoreapi.com/products
+  const url = "https://shopzone-server.onrender.com/products";
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        const dataWithNewPrice = data.map((product) => ({
-          ...product,
-          price: (product.price * 10).toFixed(2),
-        }));
-        setAllProducts([...dataWithNewPrice]);
+        console.log(data);
+        // const dataWithNewPrice = data.map((product) => ({
+        //   ...product,
+        //   price: (product.price * 10).toFixed(2),
+        // }));
+        setAllProducts(data);
       });
   }, []);
 
@@ -41,18 +42,18 @@ function ContextProvider({ children }) {
     }
   }
   function removeFromFavorites(id) {
-    const newFavorites = favorites.filter((favorite) => favorite.id !== id);
+    const newFavorites = favorites.filter((favorite) => favorite._id !== id);
     setFavorites(newFavorites);
     saveToLocalStorage(newFavorites);
   }
 
   function addItemToCart(newItem) {
     const existingItemInCart = cartItems.find(
-      (cartItem) => cartItem.id === newItem.id
+      (cartItem) => cartItem._id === newItem._id
     );
     if (existingItemInCart) {
       return cartItems.map((cartItem) =>
-        cartItem.id === newItem.id
+        cartItem._id === newItem._id
           ? { ...cartItem, quantity: cartItem.quantity + 1 }
           : cartItem
       );
@@ -66,12 +67,14 @@ function ContextProvider({ children }) {
   }
 
   function removeItemFromCart(id) {
-    const existingItemInCart = cartItems.find((cartItem) => cartItem.id === id);
+    const existingItemInCart = cartItems.find(
+      (cartItem) => cartItem._id === id
+    );
     if (existingItemInCart.quantity === 1) {
-      return cartItems.filter((cartItem) => cartItem.id !== id);
+      return cartItems.filter((cartItem) => cartItem._id !== id);
     } else {
       return cartItems.map((cartItem) =>
-        cartItem.id === id
+        cartItem._id === id
           ? { ...cartItem, quantity: cartItem.quantity - 1 }
           : cartItem
       );
@@ -92,7 +95,7 @@ function ContextProvider({ children }) {
   }
 
   function clearItemFromCart(id) {
-    const newCartItems = cartItems.filter((cartItem) => cartItem.id !== id);
+    const newCartItems = cartItems.filter((cartItem) => cartItem._id !== id);
     setCartItems(newCartItems);
   }
 

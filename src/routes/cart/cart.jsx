@@ -24,7 +24,7 @@ function Cart() {
 
   const cartItemElements = cartItems.map((item) => {
     return (
-      <div key={item.id} className="product cart-product">
+      <div key={item._id} className="product cart-product">
         <CartItem item={item} />
       </div>
     );

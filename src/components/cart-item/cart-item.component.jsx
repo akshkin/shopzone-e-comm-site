@@ -1,8 +1,6 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import Product from "../../components/product/product.component";
 import { Context } from "../../context/context";
-import { Icon } from "@iconify/react";
 import {
   StyledIcon,
   CartItemContainer,
@@ -17,20 +15,20 @@ function CartItem({ item }) {
 
   const trashIcon = hovered ? "ri-delete-bin-5-fill" : "ri-delete-bin-5-line";
 
-  const { id, image, title, price, quantity } = item;
+  const { _id, image, title, price, quantity } = item;
   return (
     <>
       <CartItemContainer>
         <img src={image} alt={`${title}`} />
         <CartItemInfo>
           <h3>
-            <Link to={`/products/${id}`}>{title}</Link>
+            <Link to={`/products/${_id}`}>{title}</Link>
           </h3>
           <p>SEK {price * quantity}</p>
           <QuantityContainer>
             <StyledIcon
               icon="ri:subtract-fill"
-              onClick={() => removeFromCart(id)}
+              onClick={() => removeFromCart(_id)}
             />
             <Quantity> {quantity} </Quantity>
             <StyledIcon icon="ri:add-line" onClick={() => addToCart(item)} />
@@ -41,7 +39,7 @@ function CartItem({ item }) {
             icon={trashIcon}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            onClick={() => clearItemFromCart(id)}
+            onClick={() => clearItemFromCart(_id)}
           />
         </CartItemInfo>
       </CartItemContainer>

@@ -7,7 +7,7 @@ import Sort from "../../components/sort/sort.component";
 function Products() {
   const { allProducts, sortProducts } = useContext(Context);
   const productElements = allProducts.map((product) => (
-    <Product key={product.id} product={product} />
+    <Product key={product._id} product={product} />
   ));
 
   sortProducts(allProducts);

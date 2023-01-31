@@ -1,9 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-} from "../../utils/firebase.utils";
+import { UserContext } from "../../context/user.context";
 import { BUTTON_TYPES } from "../button/button.component";
 import {
   FormPage,
@@ -15,7 +12,7 @@ import {
 } from "../sign-in/sign-in.style";
 
 const defaultFormFields = {
-  firstName: "",
+  name: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -23,33 +20,21 @@ const defaultFormFields = {
 
 function SignUp() {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { firstName, email, password, confirmPassword } = formFields;
+  const { name, email, password, confirmPassword } = formFields;
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setCurrentUser, signUp } = useContext(UserContext);
 
   async function handleSubmit(event) {
     event.preventDefault();
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      return setError("Passwords do not match");
     }
-    try {
-      const response = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await createUserDocumentFromAuth(response, {
-        displayName: firstName,
-        email,
-      });
-      if (response) {
-        setTimeout(() => {
-          navigate("/products");
-        }, 500);
-      }
-      setFormFields(defaultFormFields);
-    } catch (error) {
-      setError("Something went wrong! Please try again.");
-    }
+    const data = await signUp(formFields);
+    if (!data.error) {
+      setCurrentUser(data);
+      navigate("/products");
+    } else setError(data.error.message);
   }
 
   function handleChange(event) {
@@ -69,8 +54,8 @@ function SignUp() {
         <form onSubmit={handleSubmit}>
           <Input
             type="text"
-            name="firstName"
-            value={firstName}
+            name="name"
+            value={name}
             placeholder="Name"
             required
             onChange={handleChange}
@@ -100,7 +85,7 @@ function SignUp() {
             required
             onChange={handleChange}
           />
-          {error && <ErrorText>{error.message}</ErrorText>}
+          {error && <ErrorText>{error}</ErrorText>}
           <SignInButton buttonType={BUTTON_TYPES.base}>Sign Up</SignInButton>
           <p>
             Already a user?{" "}

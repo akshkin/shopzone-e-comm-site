@@ -17,11 +17,11 @@ function Product({ product }) {
     useContext(Context);
 
   function heartIcon() {
-    if (favorites.some((favorite) => favorite.id === product.id)) {
+    if (favorites.some((favorite) => favorite._id === product._id)) {
       return (
         <Icon
           icon="ri:heart-fill"
-          onClick={() => removeFromFavorites(product.id)}
+          onClick={() => removeFromFavorites(product._id)}
         />
       );
     } else {
@@ -34,7 +34,7 @@ function Product({ product }) {
   if (!product) {
     return <></>;
   }
-  const { image, title, id, price } = product;
+  const { image, title, _id, price } = product;
   return (
     <ProductContainer>
       <Image src={image} alt={`${title}`} />
@@ -48,7 +48,7 @@ function Product({ product }) {
         <Button buttonType={BUTTON_TYPES.inverted}>{heartIcon()}</Button>
       </ButtonContainer>
       <ProductTitle>
-        <Link to={`/products/${id}`}>{title}</Link>
+        <Link to={`/products/${_id}`}>{title}</Link>
       </ProductTitle>
       <ProductPrice>SEK {price}</ProductPrice>
     </ProductContainer>
@@ -56,7 +56,7 @@ function Product({ product }) {
 }
 Product.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,

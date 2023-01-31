@@ -9,7 +9,7 @@ import { SearchTitle } from "./searchPage.styles";
 function SearchPage() {
   const { query } = useParams();
   const { filteredProducts, sortProducts } = useContext(Context);
- 
+
   sortProducts(filteredProducts);
 
   return (
@@ -21,7 +21,7 @@ function SearchPage() {
       <ProductsContainer>
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <Product key={product.id} product={product} />
+            <Product key={product._id} product={product} />
           ))
         ) : (
           <p>No results found. Please try another search!</p>

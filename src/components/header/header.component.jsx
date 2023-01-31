@@ -3,7 +3,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 
 import { Context } from "../../context/context";
 import { Icon } from "@iconify/react";
-import { signOutUser } from "../../utils/firebase.utils";
+//import { signOutUser } from "../../utils/firebase.utils";
 import {
   HeaderContainer,
   NavLinks,
@@ -17,7 +17,7 @@ function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const { cartItems, favorites, filteredProductsBySearch } =
     useContext(Context);
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, signOut } = useContext(UserContext);
 
   const cartIcon = cartItems.length > 0 ? "ri:handbag-fill" : "ri:handbag-line";
   const navigate = useNavigate();
@@ -31,6 +31,11 @@ function Header() {
     filteredProductsBySearch(searchTerm);
     navigate(`/search/${searchTerm}`);
     setSearchTerm("");
+  }
+
+  async function signOutUser() {
+    await signOut();
+    navigate("/");
   }
 
   return (
