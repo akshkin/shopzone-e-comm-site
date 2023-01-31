@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CartItem, Button, Order } from "../../components";
 //import CartItem from "../../components/cart-item/cart-item.component";
@@ -12,11 +12,16 @@ function Cart() {
   const { cartItems, cartTotal, favorites, setCartItems } = useContext(Context);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderItems, setOrderItems] = useState([...cartItems]);
+  const [orderTotal, setOrderTotal] = useState(0);
+  console.log(orderItems);
 
-  const orderTotal = orderItems.reduce(
-    (total, orderItem) => total + orderItem.quantity * orderItem.price,
-    0
-  );
+  useEffect(() => {
+    const newTotal = orderItems.reduce(
+      (total, orderItem) => total + orderItem.quantity * orderItem.price,
+      0
+    );
+    setOrderTotal(newTotal);
+  }, [cartItems, orderItems]);
 
   const cartCount = cartItems.reduce(
     (total, cartItem) => total + cartItem.quantity,

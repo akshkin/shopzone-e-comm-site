@@ -22,10 +22,10 @@ export const HeaderContainer = styled.header`
     width: 80px;
     height: auto;
     margin-bottom: -2.5em;
+    margin-left: -1.3em;
 
     @media (min-width: 700px) {
       width: 100px;
-      /* margin-bottom: -2.5em; */
     }
   }
 
