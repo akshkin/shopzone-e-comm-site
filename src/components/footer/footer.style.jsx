@@ -6,11 +6,14 @@ export const FooterContainer = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1em;
 `;
 export const FooterLinksContainer = styled.ul`
   list-style: none;
   padding: 0;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1em;
 `;
 

@@ -17,7 +17,7 @@ function SearchPage() {
       <SearchTitle>
         Showing results for <span>{query}</span>
       </SearchTitle>
-      <Sort />
+      {filteredProducts.length > 0 ? <Sort /> : null}
       <ProductsContainer>
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (

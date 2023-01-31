@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -24,6 +25,10 @@ a{
 }
 a:hover{
   color: darkgray;
+}
+
+.App footer{
+  flex-grow: 1;
 }
 
 @media (min-width: 800px) {

@@ -13,10 +13,10 @@ function Order({ orderItems, orderTotal }) {
       <h4>Order summary</h4>
       <div>
         {orderItems.map((cartItem) => (
-          <OrderCartItem cartItem={cartItem} />
+          <OrderCartItem key={cartItem._id} cartItem={cartItem} />
         ))}
       </div>
-      <OrderItemTotal>Total: {orderTotal}</OrderItemTotal>
+      <OrderItemTotal>Total: SEK {orderTotal}</OrderItemTotal>
       <StyledLink to="/products">Keep shopping</StyledLink>
     </StyledOrder>
   );

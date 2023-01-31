@@ -9,7 +9,9 @@ import {
 function Footer() {
   return (
     <FooterContainer>
-      <Link to="/">SHOPZONE</Link>
+      <Link style={{ fontWeight: "bold" }} to="/">
+        SHOPZONE
+      </Link>
       <FooterLinksContainer>
         <FooterLink>
           <Link to="/mens">Mens Clothing</Link>
@@ -22,6 +24,12 @@ function Footer() {
         </FooterLink>
         <FooterLink>
           <Link to="/electronics">Electronics</Link>
+        </FooterLink>
+        <FooterLink>
+          <Link to="/favorites">Favorites</Link>
+        </FooterLink>
+        <FooterLink>
+          <Link to="/products">All products</Link>
         </FooterLink>
       </FooterLinksContainer>
       <FooterLinksContainer>

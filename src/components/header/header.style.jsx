@@ -20,6 +20,7 @@ export const HeaderContainer = styled.header`
 
   .faves {
     margin-right: 1em;
+    position: relative;
   }
   .favorites,
   .num-cart {
@@ -28,17 +29,26 @@ export const HeaderContainer = styled.header`
     width: 15px;
     height: 15px;
     font-size: 0.75rem;
-    padding: 0.3em 0.6em;
+    margin-left: 1em;
+    display: grid;
+    place-content: center;
+    padding: 0.8em;
   }
   .favorites {
     background-color: coral;
+    position: absolute;
+    margin-top: -1em;
+    margin-left: 5em;
   }
 
   .cart {
     font-size: 1.5rem;
+    position: relative;
   }
   .num-cart {
     background-color: #252525;
+    margin-top: -0.7em;
+    position: absolute;
   }
 
   button {

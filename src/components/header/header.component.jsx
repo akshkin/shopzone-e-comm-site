@@ -3,7 +3,6 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 
 import { Context } from "../../context/context";
 import { Icon } from "@iconify/react";
-//import { signOutUser } from "../../utils/firebase.utils";
 import {
   HeaderContainer,
   NavLinks,
@@ -28,8 +27,10 @@ function Header() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    filteredProductsBySearch(searchTerm);
-    navigate(`/search/${searchTerm}`);
+    if (searchTerm) {
+      filteredProductsBySearch(searchTerm);
+      navigate(`/search/${searchTerm}`);
+    }
     setSearchTerm("");
   }
 
