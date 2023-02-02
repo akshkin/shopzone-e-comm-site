@@ -1,8 +1,11 @@
-import { useState, useContext, createContext } from "react";
+import { useState, createContext } from "react";
 
 export const UserContext = createContext({
   currentUser: null,
   setCurrentUser: () => null,
+  signIn: () => {},
+  signUp: () => {},
+  signOut: () => {},
 });
 
 export function UserProvider({ children }) {
@@ -21,10 +24,6 @@ export function UserProvider({ children }) {
         body: JSON.stringify(formFields),
       });
       const data = await response.json();
-      // if (response.status.code !== 200) {
-      //   return;
-      // }
-      // setCurrentUser(data);
       return data;
     } catch (error) {
       return error;
@@ -66,5 +65,6 @@ export function UserProvider({ children }) {
   }
 
   const value = { currentUser, setCurrentUser, signIn, signUp, signOut };
+
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

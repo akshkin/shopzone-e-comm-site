@@ -10,11 +10,25 @@ import {
 } from "./routes";
 import { Header, Footer, SignIn, SignUp } from "./components";
 import "./App.css";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function App() {
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const allProducts = useSelector((state) => state.allProducts);
+
+  function filteredProductsBySearch(searchTerm) {
+    const filteredProducts = allProducts.products.filter((product) => {
+      const name =
+        product.title.toLowerCase() || product.description.toLowerCase;
+      return name.includes(searchTerm.toLowerCase());
+    });
+    setFilteredProducts(filteredProducts);
+  }
+
   return (
     <div className="App">
-      <Header />
+      <Header filteredProductsBySearch={filteredProductsBySearch} />
       <main>
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -25,7 +39,10 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route exact path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/search/:query" element={<SearchPage />} />
+          <Route
+            path="/search/:query"
+            element={<SearchPage filteredProducts={filteredProducts} />}
+          />
         </Routes>
       </main>
       <Footer />

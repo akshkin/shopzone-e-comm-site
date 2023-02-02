@@ -12,17 +12,11 @@ function ContextProvider({ children }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [sortBy, setSortBy] = useState("falling");
 
-  //https://fakestoreapi.com/products
   const url = "https://shopzone-server.onrender.com/products";
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        // const dataWithNewPrice = data.map((product) => ({
-        //   ...product,
-        //   price: (product.price * 10).toFixed(2),
-        // }));
         setAllProducts(data);
       });
   }, []);

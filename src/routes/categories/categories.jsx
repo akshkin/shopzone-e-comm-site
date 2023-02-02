@@ -1,14 +1,25 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, Outlet } from "react-router-dom";
 import Product from "../../components/product/product.component";
 import Sort from "../../components/sort/sort.component";
-import { Context } from "../../context/context";
+import useSort from "../../hooks/useSort";
+import { listProducts } from "../../store/product/product.actions";
 import { CategoryContainer } from "./categories.style";
 
 function Category() {
   const { category } = useParams();
-  const { allProducts, sortProducts } = useContext(Context);
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const allProducts = useSelector((state) => state.allProducts);
+  const { sortBy, products } = allProducts;
+  const [categoryProducts, setCategoryProducts] = useState([]);
+  const sortProducts = useSort(sortBy, categoryProducts);
+
+  sortProducts(categoryProducts);
+
+  useEffect(() => {
+    dispatch(listProducts());
+  }, []);
 
   useEffect(() => {
     const categories = {
@@ -17,31 +28,29 @@ function Category() {
       jewelery: jeweleryCategory,
       electronics: electronicsCategory,
     };
-    setProducts(categories[category]);
+    setCategoryProducts(categories[category]);
   }, [category, allProducts]);
 
-  const mensCategory = allProducts.filter(
+  const mensCategory = products.filter(
     (product) => product.category === "men's clothing"
   );
-  const womensCategory = allProducts.filter(
+  const womensCategory = products.filter(
     (product) => product.category === "women's clothing"
   );
-  const jeweleryCategory = allProducts.filter(
+  const jeweleryCategory = products.filter(
     (product) => product.category === "jewelery"
   );
-  const electronicsCategory = allProducts.filter(
+  const electronicsCategory = products.filter(
     (product) => product.category === "electronics"
   );
-
-  sortProducts(products);
 
   return (
     <>
       <h2>{category.toUpperCase()}</h2>
-      <Sort products={products} />
+      <Sort />
       <CategoryContainer>
-        {products &&
-          products.map((product) => {
+        {categoryProducts &&
+          categoryProducts.map((product) => {
             return <Product key={product._id} product={product} />;
           })}
       </CategoryContainer>

@@ -7,6 +7,7 @@ import {
   BackgroundImage,
   Body,
 } from "./home.style";
+
 const categories = [
   {
     id: 1,

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Logo from "../../images/logo.png";
-import { Context } from "../../context/context";
 import { Icon } from "@iconify/react";
 import {
   HeaderContainer,
@@ -11,11 +10,12 @@ import {
   Input,
 } from "./header.style";
 import { UserContext } from "../../context/user.context";
+import { useSelector } from "react-redux";
 
-function Header() {
+function Header({ filteredProductsBySearch }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const { cartItems, favorites, filteredProductsBySearch } =
-    useContext(Context);
+  const { cartItems } = useSelector((state) => state.cartItems);
+  const { favorites } = useSelector((state) => state.favorites);
   const { currentUser, signOut } = useContext(UserContext);
 
   const cartIcon = cartItems.length > 0 ? "ri:handbag-fill" : "ri:handbag-line";
@@ -34,8 +34,8 @@ function Header() {
     setSearchTerm("");
   }
 
-  async function signOutUser() {
-    await signOut();
+  function signOutUser() {
+    signOut();
     navigate("/");
   }
 

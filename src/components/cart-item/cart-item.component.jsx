@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Context } from "../../context/context";
 import {
   StyledIcon,
   CartItemContainer,
@@ -8,14 +8,32 @@ import {
   Quantity,
   QuantityContainer,
 } from "./cart-item.style";
+import {
+  removeFromCart,
+  addToCart,
+  clearFromCart,
+} from "../../store/cart/cart.actions";
 
 function CartItem({ item }) {
   const [hovered, setHovered] = useState(false);
-  const { removeFromCart, addToCart, clearItemFromCart } = useContext(Context);
+  const dispatch = useDispatch();
 
   const trashIcon = hovered ? "ri-delete-bin-5-fill" : "ri-delete-bin-5-line";
 
   const { _id, image, title, price, quantity } = item;
+
+  function removeItemFromCart(id) {
+    dispatch(removeFromCart(id));
+  }
+
+  function addItemToCart(item) {
+    dispatch(addToCart(item));
+  }
+
+  function clearItemFromCart(id) {
+    dispatch(clearFromCart(id));
+  }
+
   return (
     <>
       <CartItemContainer>
@@ -28,10 +46,13 @@ function CartItem({ item }) {
           <QuantityContainer>
             <StyledIcon
               icon="ri:subtract-fill"
-              onClick={() => removeFromCart(_id)}
+              onClick={() => removeItemFromCart(_id)}
             />
             <Quantity> {quantity} </Quantity>
-            <StyledIcon icon="ri:add-line" onClick={() => addToCart(item)} />
+            <StyledIcon
+              icon="ri:add-line"
+              onClick={() => addItemToCart(item)}
+            />
           </QuantityContainer>
           <StyledIcon
             display="block"

@@ -29,9 +29,6 @@ a:hover{
 .App main{
   flex-grow: 1;
 }
-/* .App footer{
-  flex-grow: 1;
-} */
 
 @media (min-width: 800px) {
   html{
