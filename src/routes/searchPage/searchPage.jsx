@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Product from "../../components/product/product.component";
 import Sort from "../../components/sort/sort.component";
-import { Context } from "../../context/context";
+import useSort from "../../hooks/useSort";
 import { ProductsContainer } from "../products/products.style";
 import { SearchTitle } from "./searchPage.styles";
 
-function SearchPage() {
+function SearchPage({ filteredProducts }) {
   const { query } = useParams();
-  const { filteredProducts, sortProducts } = useContext(Context);
+  const { sortBy } = useSelector((state) => state.allProducts);
+  const sortProducts = useSort(sortBy);
 
   sortProducts(filteredProducts);
 

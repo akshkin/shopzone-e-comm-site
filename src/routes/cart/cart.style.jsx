@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const CartContainer = styled.div`
   display: flex;
@@ -8,30 +8,33 @@ export const CartContainer = styled.div`
   margin: 1em auto;
   gap: 2em;
 
-  .place-order{
-    max-width: 80%;
-    margin-left: 2em;
-    border: 1px solid lightgray;   
-    padding: 1.5em 2em;
-
-    button{
-      width: 100%;
-    }
-    
-}
-
   @media (min-width: 700px) {
     max-width: 800px;
     flex-direction: row;
     justify-content: center;
-
-    .place-order{
-       align-self: flex-start;
-   }
   }
-`
+`;
+
+export const PlaceOrder = styled.div`
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid lightgray;
+  padding: 1.5em 2em;
+
+  h4 {
+    margin-top: 0;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  @media (min-width: 700px) {
+    align-self: flex-start;
+  }
+`;
 
 export const CartItemsContainer = styled.div`
-    align-self: center;
-    
-`
+  align-self: center;
+`;

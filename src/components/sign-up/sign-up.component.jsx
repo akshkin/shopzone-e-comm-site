@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/user.context";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { signUpUser } from "../../store/user/user.actions";
 import { BUTTON_TYPES } from "../button/button.component";
 import {
   FormPage,
@@ -21,28 +22,37 @@ const defaultFormFields = {
 function SignUp() {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { name, email, password, confirmPassword } = formFields;
-  const [error, setError] = useState("");
+  const [errorText, setErrorText] = useState("");
   const navigate = useNavigate();
-  const { setCurrentUser, signUp } = useContext(UserContext);
+  const user = useSelector((state) => state.user);
+  const { loading, error } = user;
+  const dispatch = useDispatch();
 
-  async function handleSubmit(event) {
+  useEffect(() => {
+    if (user?.user?.token && !loading) {
+      navigate("/products");
+    }
+  }, [user, dispatch]);
+
+  function handleSubmit(event) {
     event.preventDefault();
     if (password !== confirmPassword) {
-      return setError("Passwords do not match");
+      return setErrorText("Passwords do not match");
     }
-    const data = await signUp(formFields);
-    if (!data.error) {
-      setCurrentUser(data);
-      navigate("/products");
-    } else setError(data.error.message);
+    dispatch(signUpUser(formFields));
+    if (!error && user?.user) {
+      navigate("/");
+    } else {
+      setErrorText(error);
+    }
   }
 
   function handleChange(event) {
     const { name, value } = event.target;
     setFormFields((prevFormFields) => ({ ...prevFormFields, [name]: value }));
-    if (error) {
+    if (user.error) {
       setTimeout(() => {
-        setError("");
+        setErrorText("");
       }, 1000);
     }
   }
@@ -85,8 +95,10 @@ function SignUp() {
             required
             onChange={handleChange}
           />
-          {error && <ErrorText>{error}</ErrorText>}
-          <SignInButton buttonType={BUTTON_TYPES.base}>Sign Up</SignInButton>
+          {errorText && <ErrorText>{errorText}</ErrorText>}
+          <SignInButton type="submit" buttonType={BUTTON_TYPES.base}>
+            Sign Up
+          </SignInButton>
           <p>
             Already a user?{" "}
             <UnderlinedLink to="/sign-in">Sign in!</UnderlinedLink>

@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Button, { BUTTON_TYPES } from "../button/button.component";
 import PropTypes from "prop-types";
-import { Context } from "../../context/context";
 import { Icon } from "@iconify/react";
 import {
   ProductContainer,
@@ -11,24 +10,44 @@ import {
   ProductTitle,
   ProductPrice,
 } from "./product.style";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../store/cart/cart.actions";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../store/favorites/favorites.actions";
 
 function Product({ product }) {
-  const { favorites, addToFavorites, removeFromFavorites, addToCart } =
-    useContext(Context);
+  const dispatch = useDispatch();
+  const { favorites } = useSelector((state) => state.favorites);
+
+  function addItemToFavorites(item) {
+    dispatch(addToFavorites(item));
+  }
+  function removeItemFromFavorites(id) {
+    dispatch(removeFromFavorites(id));
+  }
 
   function heartIcon() {
-    if (favorites.some((favorite) => favorite._id === product._id)) {
+    if (favorites?.find((favorite) => favorite._id === product._id)) {
       return (
         <Icon
           icon="ri:heart-fill"
-          onClick={() => removeFromFavorites(product._id)}
+          onClick={() => removeItemFromFavorites(product._id)}
         />
       );
     } else {
       return (
-        <Icon icon="ri:heart-line" onClick={() => addToFavorites(product)} />
+        <Icon
+          icon="ri:heart-line"
+          onClick={() => addItemToFavorites(product)}
+        />
       );
     }
+  }
+
+  function addItemToCart(item) {
+    dispatch(addToCart(item));
   }
 
   if (!product) {
@@ -41,7 +60,7 @@ function Product({ product }) {
       <ButtonContainer>
         <Button
           buttonType={BUTTON_TYPES.base}
-          onClick={() => addToCart(product)}
+          onClick={() => addItemToCart(product)}
         >
           Add to Cart
         </Button>

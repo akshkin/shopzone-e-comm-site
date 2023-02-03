@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Logo from "../../images/logo.png";
-import { Context } from "../../context/context";
 import { Icon } from "@iconify/react";
 import {
   HeaderContainer,
@@ -10,16 +9,18 @@ import {
   Form,
   Input,
 } from "./header.style";
-import { UserContext } from "../../context/user.context";
+import { useDispatch, useSelector } from "react-redux";
+import { signOutUser } from "../../store/user/user.actions";
 
-function Header() {
+function Header({ filteredProductsBySearch }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const { cartItems, favorites, filteredProductsBySearch } =
-    useContext(Context);
-  const { currentUser, signOut } = useContext(UserContext);
+  const { cartItems } = useSelector((state) => state.cartItems);
+  const { favorites } = useSelector((state) => state.favorites);
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const cartIcon = cartItems.length > 0 ? "ri:handbag-fill" : "ri:handbag-line";
-  const navigate = useNavigate();
 
   function handleChange(event) {
     setSearchTerm(event.target.value);
@@ -34,8 +35,8 @@ function Header() {
     setSearchTerm("");
   }
 
-  async function signOutUser() {
-    await signOut();
+  function signOut() {
+    dispatch(signOutUser());
     navigate("/");
   }
 
@@ -46,8 +47,11 @@ function Header() {
           <img src={Logo} alt="logo" className="logo" />
         </Link>
         <NavLinks>
-          {currentUser ? (
-            <span style={{ cursor: "pointer" }} onClick={signOutUser}>
+          {user ? (
+            <span
+              style={{ cursor: "pointer", paddingRight: "1em" }}
+              onClick={signOut}
+            >
               SIGN OUT
             </span>
           ) : (
