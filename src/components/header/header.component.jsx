@@ -47,7 +47,7 @@ function Header({ filteredProductsBySearch }) {
           <img src={Logo} alt="logo" className="logo" />
         </Link>
         <NavLinks>
-          {user ? (
+          {user?.token ? (
             <span
               style={{ cursor: "pointer", paddingRight: "1em" }}
               onClick={signOut}
@@ -55,7 +55,7 @@ function Header({ filteredProductsBySearch }) {
               SIGN OUT
             </span>
           ) : (
-            <NavLink to="/sign-in">SIGN IN</NavLink>
+            <NavLink to="/auth">SIGN IN</NavLink>
           )}
           <NavLink to="/favorites">
             {favorites.length > 0 && (

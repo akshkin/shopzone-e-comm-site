@@ -2,7 +2,7 @@ import Product from "../../components/product/product.component";
 import { ProductsContainer } from "./products.style";
 import Sort from "../../components/sort/sort.component";
 import { useSelector } from "react-redux";
-import { ErrorText } from "../../components/sign-in/sign-in.style";
+import { ErrorText } from "../auth/auth.style";
 import useSort from "../../hooks/useSort";
 
 function Products() {

@@ -5,6 +5,4 @@ export { default as Header } from "./header/header.component";
 export { default as Hero } from "./hero/hero.component";
 export { default as Order } from "./order/order.component";
 export { default as Product } from "./product/product.component";
-export { default as SignIn } from "./sign-in/sign-in.component";
-export { default as SignUp } from "./sign-up/sign-up.component";
 export { default as Sort } from "./sort/sort.component";
