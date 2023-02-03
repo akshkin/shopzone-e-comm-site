@@ -9,7 +9,7 @@ import { CategoryContainer } from "./categories.style";
 
 function Category() {
   const { category } = useParams();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.allProducts);
   const { sortBy, products } = allProducts;
   const [categoryProducts, setCategoryProducts] = useState([]);
@@ -17,9 +17,9 @@ function Category() {
 
   sortProducts(categoryProducts);
 
-  useEffect(() => {
-    dispatch(listProducts());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(listProducts());
+  // }, []);
 
   useEffect(() => {
     const categories = {

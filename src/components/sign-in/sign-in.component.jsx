@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/user.context";
+import { signInUser } from "../../store/user/user.actions";
 import { BUTTON_TYPES } from "../button/button.component";
 import {
   FormPage,
@@ -19,27 +20,33 @@ const defaultFormFields = {
 function SignIn() {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-  const [error, setError] = useState("");
-  const { setCurrentUser, signIn } = useContext(UserContext);
+  const [errorText, setErrorText] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const { loading, error } = user;
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const data = await signIn(formFields);
-    if (!data.error) {
-      setCurrentUser(data);
+  useEffect(() => {
+    if (user?.user?.token && !loading) {
       navigate("/products");
-    } else setError(data.error.message);
+    }
+  }, [user, dispatch]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    dispatch(signInUser(formFields));
+
+    if (error) {
+      setErrorText(user.error);
+      setTimeout(() => {
+        setErrorText("");
+      }, 2000);
+    }
   }
 
   function handleChange(event) {
     const { name, value } = event.target;
     setFormFields((prevFormFields) => ({ ...prevFormFields, [name]: value }));
-    if (error) {
-      setTimeout(() => {
-        setError("");
-      }, 1000);
-    }
   }
 
   return (
@@ -63,8 +70,10 @@ function SignIn() {
             required
             onChange={handleChange}
           />
-          {error && <ErrorText>{error}</ErrorText>}
-          <SignInButton buttonType={BUTTON_TYPES.base}>Sign In</SignInButton>
+          {errorText && <ErrorText>{errorText}</ErrorText>}
+          <SignInButton type="submit" buttonType={BUTTON_TYPES.base}>
+            Sign In
+          </SignInButton>
           <p>
             Don't have an account?{" "}
             <UnderlinedLink to="/sign-up">Sign up!</UnderlinedLink>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CartItem, Button, Order } from "../../components";
 import { BUTTON_TYPES } from "../../components/button/button.component";
-import { CartContainer, CartItemsContainer } from "./cart.style";
+import { CartContainer, CartItemsContainer, PlaceOrder } from "./cart.style";
 import CartImg from "../../images/shopping-cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../store/cart/cart.actions";
@@ -73,13 +73,13 @@ function Cart() {
           )}
         </div>
       ) : (
-        <div className="place-order">
+        <PlaceOrder>
           <h4>Price details ({cartCount} items): </h4>
           <p>Total amount: SEK {cartTotal.toFixed(2)}</p>
           <Button onClick={placeOrder} type={BUTTON_TYPES.base}>
             Place order
           </Button>
-        </div>
+        </PlaceOrder>
       )}
     </CartContainer>
   );

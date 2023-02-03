@@ -21,6 +21,7 @@ export const CartItemContainer = styled.div`
 
   img {
     height: 150px;
+    object-fit: cover;
   }
 
   @media (min-width: 500px) {

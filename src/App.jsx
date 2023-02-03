@@ -10,11 +10,18 @@ import {
 } from "./routes";
 import { Header, Footer, SignIn, SignUp } from "./components";
 import "./App.css";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "./store/product/product.actions";
 
 function App() {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(listProducts());
+  }, []);
+
   const allProducts = useSelector((state) => state.allProducts);
 
   function filteredProductsBySearch(searchTerm) {

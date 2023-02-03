@@ -1,6 +1,4 @@
-import { useContext } from "react";
-import { useParams, Outlet } from "react-router-dom";
-import { Context } from "../../context/context";
+import { useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Button, { BUTTON_TYPES } from "../../components/button/button.component";
 import { MainProductContainer, ButtonContainer } from "./product-details.style";
@@ -15,7 +13,7 @@ function ProductDetail() {
   const allProducts = useSelector((state) => state.allProducts);
   const dispatch = useDispatch();
   const { loading, products, error } = allProducts;
-  //const { allProducts, addToFavorites, addToCart } = useContext(Context);
+
   const thisProduct = products.find((product) => product._id === productId);
 
   function addItemToCart(item) {
@@ -32,7 +30,6 @@ function ProductDetail() {
 
   return (
     <>
-      {/* <Outlet /> */}
       {loading ? (
         <h3>Loading...</h3>
       ) : error ? (

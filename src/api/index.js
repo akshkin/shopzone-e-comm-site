@@ -13,10 +13,10 @@ export const fetchProducts = () => API.get("/products");
 
 export const fetchProductDetails = (id) => API.get(`/products/${id}`);
 
-export const signIn = (formFields) => API.post("/users/signin");
+export const signIn = (formFields) => API.post("/users/signin", formFields);
 
 export const signOut = () => API.post("/users/signout");
 
-export const signUp = (formFields) => API.post("/users/signup");
+export const signUp = (formFields) => API.post("/users/signup", formFields);
 
 export const getProfile = () => API.get("/users/profile");

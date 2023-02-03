@@ -20,8 +20,6 @@ import {
 function Product({ product }) {
   const dispatch = useDispatch();
   const { favorites } = useSelector((state) => state.favorites);
-  console.log(favorites);
-  console.log(typeof favorites);
 
   function addItemToFavorites(item) {
     dispatch(addToFavorites(item));
