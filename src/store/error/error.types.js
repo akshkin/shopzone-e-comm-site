@@ -1,0 +1,4 @@
+export const ERROR_ACTION_TYPES = {
+  SET_ERROR: "SET_ERROR",
+  REMOVE_ERROR: "REMOVE_ERROR",
+};

@@ -6,9 +6,10 @@ import {
   Favorites,
   ProductDetail,
   Category,
+  Auth,
   SearchPage,
 } from "./routes";
-import { Header, Footer, SignIn, SignUp } from "./components";
+import { Header, Footer, SignIn } from "./components";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,12 +18,11 @@ import { listProducts } from "./store/product/product.actions";
 function App() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const dispatch = useDispatch();
+  const allProducts = useSelector((state) => state.allProducts);
 
   useEffect(() => {
     dispatch(listProducts());
   }, []);
-
-  const allProducts = useSelector((state) => state.allProducts);
 
   function filteredProductsBySearch(searchTerm) {
     const filteredProducts = allProducts.products.filter((product) => {
@@ -44,8 +44,7 @@ function App() {
           <Route path="/:category" element={<Category />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/cart" element={<Cart />} />
-          <Route exact path="/sign-in" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
+          <Route exact path="/auth" element={<Auth />} />
           <Route
             path="/search/:query"
             element={<SearchPage filteredProducts={filteredProducts} />}

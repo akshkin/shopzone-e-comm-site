@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import Button, { BUTTON_TYPES } from "../../components/button/button.component";
 import { MainProductContainer, ButtonContainer } from "./product-details.style";
 import { useDispatch, useSelector } from "react-redux";
-import { ErrorText } from "../../components/sign-in/sign-in.style";
+import { ErrorText } from "../auth/auth.style";
 import { addToCart } from "../../store/cart/cart.actions";
 import { addToFavorites } from "../../store/favorites/favorites.actions";
 

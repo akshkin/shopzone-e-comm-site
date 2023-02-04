@@ -1,5 +1,6 @@
 import { signIn, signUp, signOut } from "../../api";
 import { USER_ACTION_TYPES } from "./user.types";
+import { setError } from "../error/error.actions";
 
 export const signInUser = (formFields) => async (dispatch) => {
   try {
@@ -14,13 +15,13 @@ export const signInUser = (formFields) => async (dispatch) => {
 
     localStorage.setItem("user", JSON.stringify(data));
   } catch (error) {
-    dispatch({
-      type: USER_ACTION_TYPES.USER_SIGNIN_FAIL,
-      payload:
-        error.response && error.response.data.error.message
-          ? error.response.data.error.message
-          : error.message,
-    });
+    const errorMessage = error.response.data.error.message;
+    if (errorMessage) {
+      dispatch({
+        type: USER_ACTION_TYPES.USER_SIGNIN_FAIL,
+      });
+      dispatch(setError(errorMessage));
+    }
   }
 };
 
@@ -37,13 +38,13 @@ export const signUpUser = (formFields) => async (dispatch) => {
 
     localStorage.setItem("user", JSON.stringify(data));
   } catch (error) {
-    dispatch({
-      type: USER_ACTION_TYPES.USER_SIGNIN_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
+    const errorMessage = error.response.data.error.message;
+    if (errorMessage) {
+      dispatch({
+        type: USER_ACTION_TYPES.USER_SIGNIN_FAIL,
+      });
+      dispatch(setError(errorMessage));
+    }
   }
 };
 
@@ -56,12 +57,20 @@ export const signOutUser = () => async (dispatch, getState) => {
 
     localStorage.removeItem("user");
   } catch (error) {
-    dispatch({
-      type: USER_ACTION_TYPES.USER_SIGNIN_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
+    // dispatch({
+    //   type: USER_ACTION_TYPES.USER_SIGNIN_FAIL,
+    //   payload:
+    //     error.response && error.response.data.message
+    //       ? error.response.data.message
+    //       : error.message,
+    // });
+    const errorMessage = error.response.data.errors[0].message;
+    console.log(error);
+    // if (errorMessage) {
+    //   dispatch({
+    //     type: USER_ACTION_TYPES.USER_SIGNIN_FAIL,
+    //   });
+    //   dispatch(setError(errorMessage));
+    // }
   }
 };

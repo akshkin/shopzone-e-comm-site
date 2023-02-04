@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Button from "../button/button.component";
+import Button from "../../components/button/button.component";
 import { Link } from "react-router-dom";
 
 export const FormPage = styled.main`
