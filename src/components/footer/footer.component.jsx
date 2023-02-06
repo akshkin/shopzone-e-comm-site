@@ -37,22 +37,23 @@ function Footer() {
         <FooterLink>
           <a href="www.facebook.com">
             {" "}
-            <Icon icon="ri:facebook-box-fill" />
+            <Icon className="icon" icon="ri:facebook-box-fill" />
           </a>
         </FooterLink>
         <FooterLink>
           <a href="www.instagram.com">
-            <Icon icon="ri:instagram-line" />
+            <Icon className="icon" icon="ri:instagram-line" />
           </a>
         </FooterLink>
         <FooterLink>
           <a href="www.twitter.com">
-            <Icon icon="ri:twitter-fill" />
+            <Icon className="icon" icon="ri:twitter-fill" />
           </a>
         </FooterLink>
       </FooterLinksContainer>
       <p>
-        <Icon icon="ri:copyright-line" /> www.shopzone.com. All rights reserved.
+        <Icon className="icon" icon="ri:copyright-line" /> www.shopzone.com. All
+        rights reserved.
       </p>
     </FooterContainer>
   );
