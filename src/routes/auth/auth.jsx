@@ -33,7 +33,7 @@ function Auth() {
   const { message } = useSelector((state) => state.error);
 
   useEffect(() => {
-    if (user?.token && !loading) {
+    if (user && !loading) {
       navigate("/products");
     }
   }, [user, dispatch]);

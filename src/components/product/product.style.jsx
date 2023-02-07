@@ -8,6 +8,10 @@ export const ButtonContainer = styled.div`
   button {
     flex-grow: 1;
   }
+
+  .heart {
+    color: red;
+  }
 `;
 
 export const ProductContainer = styled.div`

@@ -1,4 +1,13 @@
 import styled from "styled-components";
+import { ReactComponent as CartImg } from "../../images/shopping-cart.svg";
+
+export const StyledCartImg = styled(CartImg)`
+  font-size: 18rem;
+
+  @media (min-width: 600px) {
+    font-size: 25rem;
+  }
+`;
 
 export const CartContainer = styled.div`
   display: flex;

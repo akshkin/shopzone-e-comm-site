@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CartItem, Button, Order } from "../../components";
 import { BUTTON_TYPES } from "../../components/button/button.component";
-import { CartContainer, CartItemsContainer, PlaceOrder } from "./cart.style";
-import CartImg from "../../images/shopping-cart.png";
+import {
+  CartContainer,
+  CartItemsContainer,
+  PlaceOrder,
+  StyledCartImg,
+} from "./cart.style";
+import { ReactComponent as CartImg } from "../../images/shopping-cart.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../store/cart/cart.actions";
 
@@ -62,7 +67,7 @@ function Cart() {
       <CartItemsContainer>{cartItemElements}</CartItemsContainer>
       {!cartItems.length ? (
         <div>
-          <img src={CartImg} alt="empty shopping cart" />
+          <StyledCartImg className="empty-cart" />
           <Link to="/products">
             <h3>Your cart is empty. Let's add some items!</h3>
           </Link>

@@ -4,7 +4,7 @@ const API = axios.create({ baseURL: "https://shopzone-server.onrender.com" });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("user")) {
-    req.headers.Authorization = JSON.parse(localStorage.getItem("user")).token;
+    req.headers.Authorization = JSON.parse(localStorage.getItem("user"));
   }
   return req;
 });

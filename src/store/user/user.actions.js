@@ -10,7 +10,7 @@ export const signInUser = (formFields) => async (dispatch) => {
     const { data } = await signIn(formFields);
     dispatch({
       type: USER_ACTION_TYPES.USER_SIGNIN_SUCCESS,
-      payload: data,
+      payload: data.token,
     });
 
     localStorage.setItem("user", JSON.stringify(data));
@@ -33,7 +33,7 @@ export const signUpUser = (formFields) => async (dispatch) => {
     const { data } = await signUp(formFields);
     dispatch({
       type: USER_ACTION_TYPES.USER_SIGNIN_SUCCESS,
-      payload: data,
+      payload: data.token,
     });
 
     localStorage.setItem("user", JSON.stringify(data));

@@ -47,7 +47,7 @@ function Header({ filteredProductsBySearch }) {
           <img src={Logo} alt="logo" className="logo" />
         </Link>
         <NavLinks>
-          {user?.token ? (
+          {user ? (
             <span
               style={{ cursor: "pointer", paddingRight: "1em" }}
               onClick={signOut}
