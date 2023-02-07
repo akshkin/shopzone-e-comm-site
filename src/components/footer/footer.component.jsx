@@ -35,18 +35,18 @@ function Footer() {
       </FooterLinksContainer>
       <FooterLinksContainer>
         <FooterLink>
-          <a href="www.facebook.com">
+          <a target="_blank" rel="noreferrer" href="https://www.facebook.com">
             {" "}
             <Icon className="icon" icon="ri:facebook-box-fill" />
           </a>
         </FooterLink>
         <FooterLink>
-          <a href="www.instagram.com">
+          <a target="_blank" rel="noreferrer" href="https://www.instagram.com">
             <Icon className="icon" icon="ri:instagram-line" />
           </a>
         </FooterLink>
         <FooterLink>
-          <a href="www.twitter.com">
+          <a target="_blank" rel="noreferrer" href="https://www.twitter.com">
             <Icon className="icon" icon="ri:twitter-fill" />
           </a>
         </FooterLink>
