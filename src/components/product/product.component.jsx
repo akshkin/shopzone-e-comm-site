@@ -33,6 +33,7 @@ function Product({ product }) {
       return (
         <Icon
           icon="ri:heart-fill"
+          className="heart"
           onClick={() => removeItemFromFavorites(product._id)}
         />
       );
@@ -40,6 +41,7 @@ function Product({ product }) {
       return (
         <Icon
           icon="ri:heart-line"
+          className="heart"
           onClick={() => addItemToFavorites(product)}
         />
       );
