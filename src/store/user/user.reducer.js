@@ -7,9 +7,9 @@ export const userReducer = (state = {}, action) => {
     case USER_ACTION_TYPES.USER_SIGNIN_REQUEST:
       return { loading: true };
     case USER_ACTION_TYPES.USER_SIGNIN_SUCCESS:
-      return { loading: false, user: payload };
+      return { loading: false, token: payload };
     case USER_ACTION_TYPES.USER_SIGNIN_FAIL:
-      return { loading: false, user: {} };
+      return { loading: false, token: "" };
     case USER_ACTION_TYPES.USER_SIGNOUT:
       return {};
     default:

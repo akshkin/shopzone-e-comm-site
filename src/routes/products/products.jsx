@@ -1,5 +1,5 @@
 import Product from "../../components/product/product.component";
-import { ProductsContainer } from "./products.style";
+import { ProductsContainer, StyledRiseLoader } from "./products.style";
 import Sort from "../../components/sort/sort.component";
 import { useSelector } from "react-redux";
 import { ErrorText } from "../auth/auth.style";
@@ -19,7 +19,7 @@ function Products() {
   return (
     <>
       {loading ? (
-        <h3>Loading</h3>
+        <StyledRiseLoader />
       ) : error ? (
         <ErrorText>{error}</ErrorText>
       ) : (

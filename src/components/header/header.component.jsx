@@ -16,7 +16,7 @@ function Header({ filteredProductsBySearch }) {
   const [searchTerm, setSearchTerm] = useState("");
   const { cartItems } = useSelector((state) => state.cartItems);
   const { favorites } = useSelector((state) => state.favorites);
-  const { user } = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -47,7 +47,7 @@ function Header({ filteredProductsBySearch }) {
           <img src={Logo} alt="logo" className="logo" />
         </Link>
         <NavLinks>
-          {user ? (
+          {token ? (
             <span
               style={{ cursor: "pointer", paddingRight: "1em" }}
               onClick={signOut}

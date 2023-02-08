@@ -1,25 +1,20 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams, Outlet } from "react-router-dom";
 import Product from "../../components/product/product.component";
 import Sort from "../../components/sort/sort.component";
 import useSort from "../../hooks/useSort";
-import { listProducts } from "../../store/product/product.actions";
+import { StyledRiseLoader } from "../products/products.style";
 import { CategoryContainer } from "./categories.style";
 
 function Category() {
   const { category } = useParams();
-  // const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.allProducts);
-  const { sortBy, products } = allProducts;
+  const { loading, sortBy, products } = allProducts;
   const [categoryProducts, setCategoryProducts] = useState([]);
   const sortProducts = useSort(sortBy, categoryProducts);
 
   sortProducts(categoryProducts);
-
-  // useEffect(() => {
-  //   dispatch(listProducts());
-  // }, []);
 
   useEffect(() => {
     const categories = {
@@ -31,21 +26,18 @@ function Category() {
     setCategoryProducts(categories[category]);
   }, [category, allProducts]);
 
-  const mensCategory = products.filter(
-    (product) => product.category === "men's clothing"
-  );
-  const womensCategory = products.filter(
-    (product) => product.category === "women's clothing"
-  );
-  const jeweleryCategory = products.filter(
-    (product) => product.category === "jewelery"
-  );
-  const electronicsCategory = products.filter(
-    (product) => product.category === "electronics"
-  );
+  function filterProducts(category) {
+    return products.filter((product) => product.category === category);
+  }
+
+  const mensCategory = filterProducts("men's clothing");
+  const womensCategory = filterProducts("women's clothing");
+  const jeweleryCategory = filterProducts("jewelery");
+  const electronicsCategory = filterProducts("electronics");
 
   return (
     <>
+      {loading && <StyledRiseLoader />}
       <h2>{category.toUpperCase()}</h2>
       <Sort />
       <CategoryContainer>
