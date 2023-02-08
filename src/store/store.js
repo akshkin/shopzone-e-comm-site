@@ -22,6 +22,7 @@ const reducer = combineReducers({
   error: errorReducer,
 });
 
+
 const persistConfig = {
   key: "root",
   storage,
@@ -30,18 +31,6 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-// const favoritesFromStorage = localStorage.getItem("productFavorites")
-//   ? JSON.parse(localStorage.getItem("productFavorites"))
-//   : [];
-
-// const userFromStorage = localStorage.getItem("user")
-//   ? JSON.parse(localStorage.getItem("user"))
-//   : {};
-
-// const initialState = {
-//   favorites: { favorites: favoritesFromStorage },
-//   user: { user: userFromStorage },
-// };
 
 let middleWares;
 
