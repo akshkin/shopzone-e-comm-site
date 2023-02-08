@@ -11,6 +11,7 @@ import {
   ErrorText,
   SignInButton,
 } from "./auth.style";
+import { StyledRiseLoader } from "../products/products.style";
 
 const defaultFormFields = {
   name: "",
@@ -29,14 +30,14 @@ function Auth() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.user);
+  const { token, loading } = useSelector((state) => state.user);
   const { message } = useSelector((state) => state.error);
 
   useEffect(() => {
-    if (user && !loading) {
+    if (token && !loading) {
       navigate("/products");
     }
-  }, [user, dispatch]);
+  }, [token, loading, dispatch]);
 
   useEffect(() => {
     if (message) {
@@ -129,6 +130,7 @@ function Auth() {
           </p>
         </form>
       </FormContainer>
+      {loading && <StyledRiseLoader />}
     </FormPage>
   );
 }

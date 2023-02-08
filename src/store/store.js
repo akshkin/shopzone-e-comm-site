@@ -11,6 +11,8 @@ import { cartReducer } from "./cart/cart.reducer";
 import { favoritesReducer } from "./favorites/favorites.reducer";
 import { userReducer } from "./user/user.reducer";
 import { errorReducer } from "./error/error.reducer";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const reducer = combineReducers({
   allProducts: productReducer,
@@ -19,6 +21,15 @@ const reducer = combineReducers({
   user: userReducer,
   error: errorReducer,
 });
+
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["favorites", "user", "cartItems"],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 
 let middleWares;
@@ -31,6 +42,10 @@ middleWares = [logger, thunk];
 
 const composedEnhancers = compose(applyMiddleware(...middleWares));
 
-const store = createStore(reducer, initialState, composedEnhancers);
+export const store = createStore(
+  persistedReducer,
+  undefined,
+  composedEnhancers
+);
 
-export default store;
+export const persistor = persistStore(store);

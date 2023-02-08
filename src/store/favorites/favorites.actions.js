@@ -5,10 +5,6 @@ export const addToFavorites = (item) => (dispatch, getState) => {
     type: FAVORITES_ACTION_TYPES.ADD_TO_FAVORITES,
     payload: item,
   });
-  localStorage.setItem(
-    "productFavorites",
-    JSON.stringify(getState().favorites.favorites)
-  );
 };
 
 export const removeFromFavorites = (id) => (dispatch, getState) => {
@@ -16,8 +12,4 @@ export const removeFromFavorites = (id) => (dispatch, getState) => {
     type: FAVORITES_ACTION_TYPES.REMOVE_FROM_FAVORITES,
     payload: id,
   });
-  localStorage.setItem(
-    "productFavorites",
-    JSON.stringify(getState().favorites.favorites)
-  );
 };
