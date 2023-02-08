@@ -20,18 +20,6 @@ const reducer = combineReducers({
   error: errorReducer,
 });
 
-const favoritesFromStorage = localStorage.getItem("productFavorites")
-  ? JSON.parse(localStorage.getItem("productFavorites"))
-  : [];
-
-const userFromStorage = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : {};
-
-const initialState = {
-  favorites: { favorites: favoritesFromStorage },
-  user: { user: userFromStorage },
-};
 
 let middleWares;
 
