@@ -6,9 +6,9 @@ This personal project was bootstrapped with [Create React App](https://github.co
 
 - React
 - React Router
+- Redux
 - Styled Components(CSS-in-JS)
-- Firebase authentication(Google API)
-- Fakestore API
+- REST API
 
 ## Main features
 
@@ -18,14 +18,13 @@ This personal project was bootstrapped with [Create React App](https://github.co
 
 - Users can sign up, sign in and sign out
 
-- Users can add itmes to "favorites" whuch persists across page refreshes
+- Users can add itmes to "favorites" which persists across page refreshes
 
 - Products can be added to cart and can also increase/decrease the quantity of products in cart
 
 - Users can search for products and sort products by rating/price
   
 ## Links
-- Code URL: [here](https://github.com/akshkin/shopzone-e-comm-site)
 - Live Site URL: [here](https://shopzone-project.netlify.app/)
 
 
