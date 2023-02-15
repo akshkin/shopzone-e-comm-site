@@ -1,5 +1,5 @@
-export default function useSort(sortBy, array) {
-  function sortProducts() {
+export default function useSort(sortBy) {
+  function sortProducts(array) {
     if (sortBy === "rising") {
       return array.sort(
         (productA, productB) => productA.price - productB.price

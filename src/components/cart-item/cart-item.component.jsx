@@ -2,17 +2,17 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
+  removeFromCart,
+  addToCart,
+  clearFromCart,
+} from "../../features/cartSlice";
+import {
   StyledIcon,
   CartItemContainer,
   CartItemInfo,
   Quantity,
   QuantityContainer,
 } from "./cart-item.style";
-import {
-  removeFromCart,
-  addToCart,
-  clearFromCart,
-} from "../../store/cart/cart.actions";
 
 function CartItem({ item }) {
   const [hovered, setHovered] = useState(false);
@@ -56,7 +56,7 @@ function CartItem({ item }) {
           </QuantityContainer>
           <StyledIcon
             display="block"
-            marginTop="0.5em"
+            margintop="0.5em"
             icon={trashIcon}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}

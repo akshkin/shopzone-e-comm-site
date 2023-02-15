@@ -5,7 +5,7 @@ export const StyledIcon = styled(Icon)`
   font-size: 1.3em;
   display: ${({ display }) => display};
   cursor: pointer;
-  margin-top: ${({ marginTop }) => marginTop};
+  margin-top: ${({ margintop }) => margintop};
 `;
 export const CartItemContainer = styled.div`
   padding: 1em;

@@ -3,13 +3,14 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Product from "../../components/product/product.component";
 import Sort from "../../components/sort/sort.component";
+import { getSortBy } from "../../features/productsSlice";
 import useSort from "../../hooks/useSort";
 import { ProductsContainer } from "../products/products.style";
 import { SearchTitle } from "./searchPage.styles";
 
 function SearchPage({ filteredProducts }) {
   const { query } = useParams();
-  const { sortBy } = useSelector((state) => state.allProducts);
+  const sortBy = useSelector(getSortBy);
   const sortProducts = useSort(sortBy);
 
   sortProducts(filteredProducts);

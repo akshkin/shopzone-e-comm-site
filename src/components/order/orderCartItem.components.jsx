@@ -2,7 +2,6 @@ import React from "react";
 import { CartItemContainer, CartItemInfo } from "../cart-item/cart-item.style";
 
 function OrderCartItem({ cartItem }) {
-  
   const { image, title, price, quantity } = cartItem;
   return (
     <CartItemContainer>

@@ -35,19 +35,30 @@ function Footer() {
       </FooterLinksContainer>
       <FooterLinksContainer>
         <FooterLink>
-          <a target="_blank" rel="noreferrer" href="https://www.facebook.com">
-            {" "}
-            <Icon className="icon" icon="ri:facebook-box-fill" />
+          <a
+            href="https://aksh-kin.netlify.app"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Icon className="icon" icon="mdi:web" />
           </a>
         </FooterLink>
         <FooterLink>
-          <a target="_blank" rel="noreferrer" href="https://www.instagram.com">
-            <Icon className="icon" icon="ri:instagram-line" />
+          <a
+            href="https://github.com/akshkin/shopzone-e-comm-site"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Icon className="icon" icon="fa-brands:github" />
           </a>
         </FooterLink>
         <FooterLink>
-          <a target="_blank" rel="noreferrer" href="https://www.twitter.com">
-            <Icon className="icon" icon="ri:twitter-fill" />
+          <a
+            href="https://www.linkedin.com/in/akshaya-kini-140902247/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Icon className="icon" icon="fa:linkedin-square" />
           </a>
         </FooterLink>
       </FooterLinksContainer>

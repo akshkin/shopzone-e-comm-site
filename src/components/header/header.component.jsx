@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Logo from "../../images/logo.png";
 import { Icon } from "@iconify/react";
@@ -10,13 +10,15 @@ import {
   Input,
 } from "./header.style";
 import { useDispatch, useSelector } from "react-redux";
-import { signOutUser } from "../../store/user/user.actions";
+import { selectCartItems } from "../../features/cartSlice";
+import { selectFavorites } from "../../features/favoritesSlice";
+import { getUser, signOutUser } from "../../features/userSlice";
 
 function Header({ filteredProductsBySearch }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const { cartItems } = useSelector((state) => state.cartItems);
-  const { favorites } = useSelector((state) => state.favorites);
-  const { token } = useSelector((state) => state.user);
+  const cartItems = useSelector(selectCartItems);
+  const favorites = useSelector(selectFavorites);
+  const token = useSelector(getUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

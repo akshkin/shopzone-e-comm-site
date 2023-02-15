@@ -9,23 +9,23 @@ import {
   Auth,
   SearchPage,
 } from "./routes";
-import { Header, Footer, SignIn } from "./components";
+import { Header, Footer } from "./components";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "./store/product/product.actions";
+import { listProducts, selectProducts } from "./features/productsSlice";
 
 function App() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.allProducts);
+  const products = useSelector(selectProducts);
 
   useEffect(() => {
     dispatch(listProducts());
   }, []);
 
   function filteredProductsBySearch(searchTerm) {
-    const filteredProducts = allProducts.products.filter((product) => {
+    const filteredProducts = products.filter((product) => {
       const name =
         product.title.toLowerCase() || product.description.toLowerCase;
       return name.includes(searchTerm.toLowerCase());

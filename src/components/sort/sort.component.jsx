@@ -1,7 +1,7 @@
 import React from "react";
 import { SortContainer, Label, Select } from "./sort.styles";
 import { useDispatch } from "react-redux";
-import { setSortBy } from "../../store/product/product.actions";
+import { setSortBy } from "../../features/productsSlice";
 
 function Sort() {
   const dispatch = useDispatch();
