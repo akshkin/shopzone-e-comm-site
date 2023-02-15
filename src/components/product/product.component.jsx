@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button, { BUTTON_TYPES } from "../button/button.component";
-import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
 import {
   ProductContainer,
@@ -11,15 +10,16 @@ import {
   ProductPrice,
 } from "./product.style";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../store/cart/cart.actions";
 import {
   addToFavorites,
   removeFromFavorites,
-} from "../../store/favorites/favorites.actions";
+  selectFavorites,
+} from "../../features/favoritesSlice";
+import { addToCart } from "../../features/cartSlice";
 
 function Product({ product }) {
   const dispatch = useDispatch();
-  const { favorites } = useSelector((state) => state.favorites);
+  const favorites = useSelector(selectFavorites);
 
   function addItemToFavorites(item) {
     dispatch(addToFavorites(item));
@@ -33,7 +33,6 @@ function Product({ product }) {
       return (
         <Icon
           icon="ri:heart-fill"
-          className="heart"
           onClick={() => removeItemFromFavorites(product._id)}
         />
       );
@@ -41,7 +40,6 @@ function Product({ product }) {
       return (
         <Icon
           icon="ri:heart-line"
-          className="heart"
           onClick={() => addItemToFavorites(product)}
         />
       );
@@ -75,14 +73,5 @@ function Product({ product }) {
     </ProductContainer>
   );
 }
-Product.propTypes = {
-  product: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    category: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }),
-};
+
 export default Product;

@@ -8,12 +8,11 @@ import {
   PlaceOrder,
   StyledCartImg,
 } from "./cart.style";
-import { ReactComponent as CartImg } from "../../images/shopping-cart.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../../store/cart/cart.actions";
+import { clearCart, selectCartItems } from "../../features/cartSlice";
 
 function Cart() {
-  const { cartItems } = useSelector((state) => state.cartItems);
+  const cartItems = useSelector(selectCartItems);
   const [cartTotal, setCartTotal] = useState(0);
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { signInUser, signUpUser } from "../../store/user/user.actions";
 import { BUTTON_TYPES } from "../../components/button/button.component";
 import {
   FormPage,
@@ -12,6 +11,13 @@ import {
   SignInButton,
 } from "./auth.style";
 import { StyledRiseLoader } from "../products/products.style";
+import {
+  errorMessage,
+  getUser,
+  signInUser,
+  signUpUser,
+  userLoading,
+} from "../../features/userSlice";
 
 const defaultFormFields = {
   name: "",
@@ -30,8 +36,9 @@ function Auth() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { token, loading } = useSelector((state) => state.user);
-  const { message } = useSelector((state) => state.error);
+  const token = useSelector(getUser);
+  const loading = useSelector(userLoading);
+  const error = useSelector(errorMessage);
 
   useEffect(() => {
     if (token && !loading) {
@@ -40,10 +47,10 @@ function Auth() {
   }, [token, loading, dispatch]);
 
   useEffect(() => {
-    if (message) {
-      setErrorText(message.message);
+    if (error) {
+      setErrorText(error);
     }
-  }, [message]);
+  }, [error]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -57,7 +64,7 @@ function Auth() {
         dispatch(signUpUser(formFields));
       }
     }
-    if (!message) {
+    if (!error) {
       setFormFields(defaultFormFields);
     }
   }

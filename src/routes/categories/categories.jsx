@@ -3,16 +3,22 @@ import { useSelector } from "react-redux";
 import { useParams, Outlet } from "react-router-dom";
 import Product from "../../components/product/product.component";
 import Sort from "../../components/sort/sort.component";
+import {
+  getSortBy,
+  productLoading,
+  selectProducts,
+} from "../../features/productsSlice";
 import useSort from "../../hooks/useSort";
 import { StyledRiseLoader } from "../products/products.style";
 import { CategoryContainer } from "./categories.style";
 
 function Category() {
   const { category } = useParams();
-  const allProducts = useSelector((state) => state.allProducts);
-  const { loading, sortBy, products } = allProducts;
+  const products = useSelector(selectProducts);
+  const loading = useSelector(productLoading);
+  const sortBy = useSelector(getSortBy);
   const [categoryProducts, setCategoryProducts] = useState([]);
-  const sortProducts = useSort(sortBy, categoryProducts);
+  const sortProducts = useSort(sortBy);
 
   sortProducts(categoryProducts);
 
@@ -24,10 +30,12 @@ function Category() {
       electronics: electronicsCategory,
     };
     setCategoryProducts(categories[category]);
-  }, [category, allProducts]);
+  }, [category, products]);
 
   function filterProducts(category) {
-    return products.filter((product) => product.category === category);
+    return (
+      products && products.filter((product) => product.category === category)
+    );
   }
 
   const mensCategory = filterProducts("men's clothing");

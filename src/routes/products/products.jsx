@@ -4,17 +4,25 @@ import Sort from "../../components/sort/sort.component";
 import { useSelector } from "react-redux";
 import { ErrorText } from "../auth/auth.style";
 import useSort from "../../hooks/useSort";
+import {
+  errorMessage,
+  getSortBy,
+  productLoading,
+  selectProducts,
+} from "../../features/productsSlice";
 
 function Products() {
-  const allProducts = useSelector((state) => state.allProducts);
-  const { loading, products, error, sortBy } = allProducts;
-  const sortProducts = useSort(sortBy, products);
+  const products = useSelector(selectProducts);
+  const loading = useSelector(productLoading);
+  const error = useSelector(errorMessage);
+  const sortBy = useSelector(getSortBy);
+  const sortProducts = useSort(sortBy);
 
   const productElements = products?.map((product) => (
     <Product key={product._id} product={product} />
   ));
 
-  sortProducts(products);
+  sortProducts([...products]);
 
   return (
     <>

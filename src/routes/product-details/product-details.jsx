@@ -4,15 +4,26 @@ import Button, { BUTTON_TYPES } from "../../components/button/button.component";
 import { MainProductContainer, ButtonContainer } from "./product-details.style";
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorText } from "../auth/auth.style";
-import { addToCart } from "../../store/cart/cart.actions";
-import { addToFavorites } from "../../store/favorites/favorites.actions";
+import {
+  errorMessage,
+  productLoading,
+  selectProducts,
+} from "../../features/productsSlice";
+import { addToCart } from "../../features/cartSlice";
+import {
+  addToFavorites,
+  removeFromFavorites,
+  selectFavorites,
+} from "../../features/favoritesSlice";
 
 function ProductDetail() {
   const { productId } = useParams();
 
-  const allProducts = useSelector((state) => state.allProducts);
+  const products = useSelector(selectProducts);
+  const error = useSelector(errorMessage);
   const dispatch = useDispatch();
-  const { loading, products, error } = allProducts;
+  const loading = useSelector(productLoading);
+  const favorites = useSelector(selectFavorites);
 
   const thisProduct = products.find((product) => product._id === productId);
 
@@ -21,7 +32,11 @@ function ProductDetail() {
   }
 
   function addItemToFavorites(item) {
-    dispatch(addToFavorites(item));
+    if (!favorites.includes(item)) {
+      dispatch(addToFavorites(item));
+    } else {
+      dispatch(removeFromFavorites(item._id));
+    }
   }
 
   if (!thisProduct) return <></>;
