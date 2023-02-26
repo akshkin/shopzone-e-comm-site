@@ -1,15 +1,17 @@
 import Product from "../../components/product/product.component";
 import { ProductsContainer, StyledRiseLoader } from "./products.style";
 import Sort from "../../components/sort/sort.component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ErrorText } from "../auth/auth.style";
 import useSort from "../../hooks/useSort";
 import {
   errorMessage,
   getSortBy,
+  listProducts,
   productLoading,
   selectProducts,
 } from "../../features/productsSlice";
+import { useEffect } from "react";
 
 function Products() {
   const products = useSelector(selectProducts);
@@ -17,6 +19,11 @@ function Products() {
   const error = useSelector(errorMessage);
   const sortBy = useSelector(getSortBy);
   const sortProducts = useSort(sortBy);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(listProducts());
+  }, [dispatch]);
 
   const productElements = products?.map((product) => (
     <Product key={product._id} product={product} />

@@ -15,10 +15,10 @@ function Footer() {
       </Link>
       <FooterLinksContainer>
         <FooterLink>
-          <Link to="/mens">Mens Clothing</Link>
+          <Link to="/men's">Mens Clothing</Link>
         </FooterLink>
         <FooterLink>
-          <Link to="/womens">Womens Clothing</Link>
+          <Link to="/women's">Womens Clothing</Link>
         </FooterLink>
         <FooterLink>
           <Link to="/jewelery">Jewelery</Link>

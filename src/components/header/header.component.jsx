@@ -13,8 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems } from "../../features/cartSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
 import { getUser, signOutUser } from "../../features/userSlice";
+import { searchProducts } from "../../features/productsSlice";
 
-function Header({ filteredProductsBySearch }) {
+function Header() {
   const [searchTerm, setSearchTerm] = useState("");
   const cartItems = useSelector(selectCartItems);
   const favorites = useSelector(selectFavorites);
@@ -31,10 +32,11 @@ function Header({ filteredProductsBySearch }) {
   function handleSubmit(event) {
     event.preventDefault();
     if (searchTerm) {
-      filteredProductsBySearch(searchTerm);
+      dispatch(searchProducts(searchTerm));
+      //filteredProductsBySearch(searchTerm);
       navigate(`/search/${searchTerm}`);
+      setSearchTerm("");
     }
-    setSearchTerm("");
   }
 
   function signOut() {

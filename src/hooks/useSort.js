@@ -1,4 +1,8 @@
-export default function useSort(sortBy) {
+import { useSelector } from "react-redux";
+import { getSortBy } from "../features/productsSlice";
+
+export default function useSort() {
+  const sortBy = useSelector(getSortBy);
   function sortProducts(array) {
     if (sortBy === "rising") {
       return array.sort(
