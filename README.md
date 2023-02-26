@@ -27,6 +27,8 @@ This personal project was bootstrapped with [Create React App](https://github.co
 ## Links
 - Live Site URL: [here](https://shopzone-project.netlify.app/)
 
+## Dev dependencies
+- Iconify [@iconify/react](https://icon-sets.iconify.design/) for Icons which can be installed by running `npm install --save-dev @iconify/react`
 
 ## Contined development
 - to add payment feature
