@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
-import { ReactComponent as CartImg } from "../../images/shopping-cart.svg";
 
 export const StyledCartImg = styled(Icon)`
   font-size: 18rem;

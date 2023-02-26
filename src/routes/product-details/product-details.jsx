@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { ErrorText } from "../auth/auth.style";
 import {
   errorMessage,
+  getProductDetail,
   productLoading,
-  selectProducts,
+  selectProduct,
 } from "../../features/productsSlice";
 import { addToCart } from "../../features/cartSlice";
 import {
@@ -15,17 +16,21 @@ import {
   removeFromFavorites,
   selectFavorites,
 } from "../../features/favoritesSlice";
+import { useEffect } from "react";
+import { StyledRiseLoader } from "../products/products.style";
 
 function ProductDetail() {
   const { productId } = useParams();
 
-  const products = useSelector(selectProducts);
   const error = useSelector(errorMessage);
   const dispatch = useDispatch();
   const loading = useSelector(productLoading);
   const favorites = useSelector(selectFavorites);
+  const thisProduct = useSelector(selectProduct);
 
-  const thisProduct = products.find((product) => product._id === productId);
+  useEffect(() => {
+    dispatch(getProductDetail(productId));
+  }, [productId, dispatch]);
 
   function addItemToCart(item) {
     dispatch(addToCart(item));
@@ -39,14 +44,14 @@ function ProductDetail() {
     }
   }
 
-  if (!thisProduct) return <></>;
+  if (!thisProduct) return <h5>Product does not exist</h5>;
 
   const { image, title, category, rating, price, description } = thisProduct;
 
   return (
     <>
       {loading ? (
-        <h3>Loading...</h3>
+        <StyledRiseLoader />
       ) : error ? (
         <ErrorText>{error}</ErrorText>
       ) : (
@@ -58,7 +63,7 @@ function ProductDetail() {
             <p>
               <span>
                 <Icon icon="ri:star-s-fill" />
-                {rating.rate} ({rating.count})
+                {rating?.rate} ({rating?.count})
               </span>
             </p>
             <ButtonContainer>
