@@ -58,14 +58,17 @@ export const HeaderContainer = styled.header`
     position: absolute;
     margin-top: -1em;
     margin-left: 5em;
+    font-weight: bold;
   }
 
   .cart {
     font-size: 1.5rem;
     position: relative;
     color: #006d77;
+    color: #006d77;
   }
   .num-cart {
+    background-color: #006d77;
     background-color: #006d77;
     margin-top: -0.7em;
     position: absolute;
@@ -111,6 +114,7 @@ export const Input = styled.input`
   font-family: inherit;
   margin-top: 0.5em;
   width: 175px;
+  border: 1px solid #006d77;
   border: 1px solid #006d77;
   font-size: inherit;
 

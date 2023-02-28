@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Category } from "../routes";
 
 const baseURL= process.env.REACT_APP_BASE_URL
 

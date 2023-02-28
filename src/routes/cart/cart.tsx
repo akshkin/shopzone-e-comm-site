@@ -7,9 +7,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
 import { selectCartItems, clearCart } from "../../features/cartSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
-import { Icon } from '@iconify/react';
-
-const CartImg = require("../../images/shopping-cart.png")
 
 function Cart() {
   const  cartItems  = useAppSelector(selectCartItems);

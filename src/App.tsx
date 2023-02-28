@@ -11,18 +11,9 @@ import {
 } from "./routes";
 import { Header, Footer } from "./components";
 import "./App.css";
-import { useEffect } from "react";
-import { useAppDispatch } from "./hooks/useAppDispatch";
-import { listProducts } from "./features/productsSlice";
 
 function App() {
-  // const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   dispatch(listProducts());
-  // }, []);
-
-  
+ 
   return (
     <div className="App">
       <Header />

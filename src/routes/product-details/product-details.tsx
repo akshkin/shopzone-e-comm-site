@@ -60,7 +60,7 @@ function ProductDetail() {
             <p>
               <span>
                 <Icon icon="ri:star-s-fill" />
-                {rating.rate} ({rating.count})
+                {rating?.rate} ({rating?.count})
               </span>
             </p>
             <ButtonContainer>

@@ -11,7 +11,7 @@ import {
 } from "./auth.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { getUser, userLoading, errorMessage, signInUser, signUpUser } from "../../features/userSlice";
-import {RiseLoader} from "react-spinners"
+import { StyledLoader } from "../products/products.style";
 
 const defaultFormFields = {
   name: "",
@@ -39,7 +39,7 @@ function Auth() {
     if (user && !loading) {
       navigate("/products");
     }
-  }, [user, dispatch]);
+  }, [user, loading, dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -132,7 +132,7 @@ function Auth() {
           </p>
         </form>
       </FormContainer>
-      { loading && <RiseLoader />}
+      {loading && <StyledLoader />}
     </FormPage>
   );
 }

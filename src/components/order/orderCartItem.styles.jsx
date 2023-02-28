@@ -22,8 +22,6 @@ export const StyledLink = styled(Link)`
 
   &:hover,
   &:focus {
-    background-color: white;
-    border: 1px solid coral;
-    color: #252525;
+    background-color: #226d77;
   }
 `;

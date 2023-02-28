@@ -2,8 +2,6 @@ import { ChangeEvent } from 'react';
 import { FiltersType } from '../../api';
 import { StyledCheckbox } from './filters.styles'
 
-//import { FiltersType } from './filters.component'
-
 type CheckboxProps = {
   filter: string;
   onFilterChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -12,7 +10,7 @@ type CheckboxProps = {
   index: number
 
 }
-//filters.activeFilter.includes(filter.value)
+
 function Checkbox({ filter, onFilterChange, filters, extraProp, index }: CheckboxProps) {
   return (
     <StyledCheckbox>
