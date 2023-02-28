@@ -1,8 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ProductType } from "../constants.types";
+import { RootState } from "../store";
 
-const initialState = {
+const initialState: Favorites = {
   favorites: [],
 };
+
+type Favorites = {
+  favorites: ProductType[]
+}
 
 const favoritesSlice = createSlice({
   name: "favorites",
@@ -30,7 +36,7 @@ const favoritesSlice = createSlice({
   },
 });
 
-export const selectFavorites = (state) => state.favorites.favorites;
+export const selectFavorites = (state: RootState) => state.favorites.favorites;
 
 export const { addToFavorites, removeFromFavorites } = favoritesSlice.actions;
 

@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
-import Logo from "../../images/logo.png";
 import {
   FooterContainer,
   FooterLinksContainer,
   FooterLink,
+  Copyright
 } from "./footer.style";
 
-function Footer() {
+const Logo = require("../../images/logo.png")
+
+function Footer():JSX.Element {
   return (
     <FooterContainer>
       <Link style={{ fontWeight: "bold" }} to="/">
@@ -15,10 +17,10 @@ function Footer() {
       </Link>
       <FooterLinksContainer>
         <FooterLink>
-          <Link to="/men's">Mens Clothing</Link>
+          <Link to="/men's clothing">Mens Clothing</Link>
         </FooterLink>
         <FooterLink>
-          <Link to="/women's">Womens Clothing</Link>
+          <Link to="/women's clothing">Womens Clothing</Link>
         </FooterLink>
         <FooterLink>
           <Link to="/jewelery">Jewelery</Link>
@@ -35,37 +37,24 @@ function Footer() {
       </FooterLinksContainer>
       <FooterLinksContainer>
         <FooterLink>
-          <a
-            href="https://aksh-kin.netlify.app"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://aksh-kin.netlify.app" target="_blank" rel="noreferrer">
             <Icon className="icon" icon="mdi:web" />
           </a>
         </FooterLink>
         <FooterLink>
-          <a
-            href="https://github.com/akshkin/shopzone-e-comm-site"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Icon className="icon" icon="fa-brands:github" />
+          <a href="https://github.com/akshkin/shopzone-e-comm-site" target="_blank" rel="noreferrer">
+            <Icon className="icon"  icon="fa-brands:github" />
           </a>
         </FooterLink>
         <FooterLink>
-          <a
-            href="https://www.linkedin.com/in/akshaya-kini-140902247/"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://www.linkedin.com/in/akshaya-kini-140902247/" target="_blank" rel="noreferrer">
             <Icon className="icon" icon="fa:linkedin-square" />
           </a>
         </FooterLink>
       </FooterLinksContainer>
-      <p>
-        <Icon className="icon" icon="ri:copyright-line" /> www.shopzone.com. All
-        rights reserved.
-      </p>
+      <Copyright>
+        <Icon icon="ri:copyright-line" /> <small>www.shopzone.com. All rights reserved.</small>
+      </Copyright>
     </FooterContainer>
   );
 }

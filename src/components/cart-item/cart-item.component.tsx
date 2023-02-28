@@ -1,11 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  removeFromCart,
-  addToCart,
-  clearFromCart,
-} from "../../features/cartSlice";
 import {
   StyledIcon,
   CartItemContainer,
@@ -13,24 +7,31 @@ import {
   Quantity,
   QuantityContainer,
 } from "./cart-item.style";
+import { addToCart, removeFromCart, clearFromCart } from "../../features/cartSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { ProductType } from "../../constants.types";
 
-function CartItem({ item }) {
+type CartItemProp = {
+  item: ProductType
+}
+
+function CartItem({ item }: CartItemProp) {
   const [hovered, setHovered] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
 
   const trashIcon = hovered ? "ri-delete-bin-5-fill" : "ri-delete-bin-5-line";
 
   const { _id, image, title, price, quantity } = item;
 
-  function removeItemFromCart(id) {
+  function removeItemFromCart(id: string) {
     dispatch(removeFromCart(id));
   }
 
-  function addItemToCart(item) {
+  function addItemToCart(item: ProductType) {
     dispatch(addToCart(item));
   }
 
-  function clearItemFromCart(id) {
+  function clearItemFromCart(id: string) {
     dispatch(clearFromCart(id));
   }
 
@@ -42,7 +43,7 @@ function CartItem({ item }) {
           <h3>
             <Link to={`/products/${_id}`}>{title}</Link>
           </h3>
-          <p>SEK {price * quantity}</p>
+          <p>SEK {quantity ? price * quantity : price}</p>
           <QuantityContainer>
             <StyledIcon
               icon="ri:subtract-fill"

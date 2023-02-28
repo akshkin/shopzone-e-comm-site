@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { BUTTON_TYPES } from "../../components/button/button.component";
 import {
@@ -10,14 +9,9 @@ import {
   ErrorText,
   SignInButton,
 } from "./auth.style";
-import { StyledRiseLoader } from "../products/products.style";
-import {
-  errorMessage,
-  getUser,
-  signInUser,
-  signUpUser,
-  userLoading,
-} from "../../features/userSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { getUser, userLoading, errorMessage, signInUser, signUpUser } from "../../features/userSlice";
+import { StyledLoader } from "../products/products.style";
 
 const defaultFormFields = {
   name: "",
@@ -34,17 +28,18 @@ function Auth() {
   const { name, email, password, confirmPassword } = formFields;
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const token = useSelector(getUser);
-  const loading = useSelector(userLoading);
-  const error = useSelector(errorMessage);
+  const user = useAppSelector(getUser)
+  const loading = useAppSelector(userLoading)
+  const error = useAppSelector(errorMessage)
 
+  
   useEffect(() => {
-    if (token && !loading) {
+    if (user && !loading) {
       navigate("/products");
     }
-  }, [token, loading, dispatch]);
+  }, [user, loading, dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -52,7 +47,7 @@ function Auth() {
     }
   }, [error]);
 
-  function handleSubmit(event) {
+  function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
     if (isLoggingIn) {
@@ -75,7 +70,7 @@ function Auth() {
     setErrorText("");
   }
 
-  function handleChange(event) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     setFormFields((prevFormFields) => ({ ...prevFormFields, [name]: value }));
   }
@@ -137,7 +132,7 @@ function Auth() {
           </p>
         </form>
       </FormContainer>
-      {loading && <StyledRiseLoader />}
+      {loading && <StyledLoader />}
     </FormPage>
   );
 }

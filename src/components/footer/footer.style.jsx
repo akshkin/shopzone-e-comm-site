@@ -35,3 +35,8 @@ export const FooterLink = styled.li`
     }
   }
 `;
+
+export const Copyright = styled.p`
+  display: flex;
+  gap: 0.3em;
+`;

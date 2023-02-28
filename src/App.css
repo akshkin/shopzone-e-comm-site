@@ -30,9 +30,12 @@ a:hover{
   flex-grow: 1;
 }
 
+
+
 @media (min-width: 800px) {
   html{
     font-size: 120%;
   }  
 }
+
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import Button, { BUTTON_TYPES } from "../button/button.component";
 import { Icon } from "@iconify/react";
@@ -8,23 +7,26 @@ import {
   Image,
   ProductTitle,
   ProductPrice,
+  Rating
 } from "./product.style";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addToFavorites,
-  removeFromFavorites,
-  selectFavorites,
-} from "../../features/favoritesSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { ProductType } from "../../constants.types";
+import { addToFavorites, removeFromFavorites, selectFavorites } from "../../features/favoritesSlice";
 import { addToCart } from "../../features/cartSlice";
 
-function Product({ product }) {
-  const dispatch = useDispatch();
-  const favorites = useSelector(selectFavorites);
+type ProductProps = {
+  product: ProductType
+}
 
-  function addItemToFavorites(item) {
+
+function Product({ product }: ProductProps) {
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector(selectFavorites);
+
+  function addItemToFavorites(item: ProductType) {
     dispatch(addToFavorites(item));
   }
-  function removeItemFromFavorites(id) {
+  function removeItemFromFavorites(id: string) {
     dispatch(removeFromFavorites(id));
   }
 
@@ -46,16 +48,16 @@ function Product({ product }) {
     }
   }
 
-  function addItemToCart(item) {
+  function addItemToCart(item: ProductType) {
     dispatch(addToCart(item));
   }
 
   if (!product) {
     return <></>;
   }
-  const { image, title, _id, price } = product;
+  const { image, title, _id, price, rating } = product;
   return (
-    <ProductContainer>
+    <ProductContainer layout>
       <Image src={image} alt={`${title}`} />
       <ButtonContainer>
         <Button
@@ -69,6 +71,7 @@ function Product({ product }) {
       <ProductTitle>
         <Link to={`/products/${_id}`}>{title}</Link>
       </ProductTitle>
+      <Rating>{rating.rate} <Icon icon="ri:star-s-fill" /></Rating>
       <ProductPrice>SEK {price}</ProductPrice>
     </ProductContainer>
   );

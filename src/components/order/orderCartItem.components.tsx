@@ -1,7 +1,13 @@
-import React from "react";
+import { ProductType } from "../../constants.types";
 import { CartItemContainer, CartItemInfo } from "../cart-item/cart-item.style";
 
-function OrderCartItem({ cartItem }) {
+type OrderCartItemProps = {
+  cartItem: ProductType
+}
+
+
+function OrderCartItem({ cartItem }: OrderCartItemProps) {
+  
   const { image, title, price, quantity } = cartItem;
   return (
     <CartItemContainer>

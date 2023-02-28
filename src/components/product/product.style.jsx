@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const ButtonContainer = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ export const ButtonContainer = styled.div`
   }
 `;
 
-export const ProductContainer = styled.div`
+export const ProductContainer = styled(motion.div)`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -26,10 +27,18 @@ export const ProductContainer = styled.div`
   }
 `;
 
+export const Rating = styled.span`
+  margin-left: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+`;
+
 export const ProductTitle = styled.h3`
   font-size: 1rem;
   font-weight: 300;
   margin: 1em;
+  margin-bottom: 0.5em;
 `;
 export const Image = styled.img`
   width: 100%;

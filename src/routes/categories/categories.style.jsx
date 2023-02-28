@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
-export const CategoryContainer = styled.div`
+export const CategoryContainer = styled(motion.div)`
   padding: 1em;
   margin: 1em;
   display: grid;

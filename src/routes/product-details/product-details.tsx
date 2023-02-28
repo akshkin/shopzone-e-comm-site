@@ -2,56 +2,53 @@ import { useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Button, { BUTTON_TYPES } from "../../components/button/button.component";
 import { MainProductContainer, ButtonContainer } from "./product-details.style";
-import { useDispatch, useSelector } from "react-redux";
 import { ErrorText } from "../auth/auth.style";
-import {
-  errorMessage,
-  getProductDetail,
-  productLoading,
-  selectProduct,
-} from "../../features/productsSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { ProductType } from "../../constants.types";
 import { addToCart } from "../../features/cartSlice";
-import {
-  addToFavorites,
-  removeFromFavorites,
-  selectFavorites,
-} from "../../features/favoritesSlice";
+import { addToFavorites, removeFromFavorites, selectFavorites } from "../../features/favoritesSlice";
+import { productLoading, errorMessage, selectProduct, getProductDetail} from "../../features/productsSlice";
+import { RiseLoader } from "react-spinners"
 import { useEffect } from "react";
-import { StyledRiseLoader } from "../products/products.style";
+
+type ProductParams = {
+  productId: string
+}
 
 function ProductDetail() {
-  const { productId } = useParams();
-
-  const error = useSelector(errorMessage);
-  const dispatch = useDispatch();
-  const loading = useSelector(productLoading);
-  const favorites = useSelector(selectFavorites);
-  const thisProduct = useSelector(selectProduct);
+  const { productId } = useParams<keyof ProductParams>() as ProductParams;
+  const favorites = useAppSelector(selectFavorites)
+  const product = useAppSelector(selectProduct);
+  const loading = useAppSelector(productLoading)
+  const error = useAppSelector(errorMessage)
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getProductDetail(productId));
-  }, [productId, dispatch]);
+    dispatch(getProductDetail(productId))
+  }, [])
 
-  function addItemToCart(item) {
+  function addItemToCart(item: ProductType) {
     dispatch(addToCart(item));
   }
 
-  function addItemToFavorites(item) {
-    if (!favorites.includes(item)) {
-      dispatch(addToFavorites(item));
-    } else {
-      dispatch(removeFromFavorites(item._id));
+  function addItemToFavorites() {
+    if (product){
+      if (!favorites.includes(product)){
+        dispatch(addToFavorites(product));
+      } else {
+        dispatch(removeFromFavorites(product._id))
+      }
     }
   }
 
-  if (!thisProduct) return <h5>Product does not exist</h5>;
+  if (!product) return <h4>Something went wrong!</h4>;
 
-  const { image, title, category, rating, price, description } = thisProduct;
+  const { image, title, category, rating, price, description } = product;
 
   return (
     <>
       {loading ? (
-        <StyledRiseLoader />
+         <RiseLoader /> 
       ) : error ? (
         <ErrorText>{error}</ErrorText>
       ) : (
@@ -69,13 +66,13 @@ function ProductDetail() {
             <ButtonContainer>
               <Button
                 buttonType={BUTTON_TYPES.base}
-                onClick={() => addItemToCart(thisProduct)}
+                onClick={() => addItemToCart(product)}
               >
                 Add to Cart
               </Button>
               <Button
                 buttonType={BUTTON_TYPES.inverted}
-                onClick={() => addItemToFavorites(thisProduct)}
+                onClick={addItemToFavorites}
               >
                 Favorite
               </Button>

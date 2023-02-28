@@ -1,4 +1,4 @@
-import React from "react";
+import { ProductType } from "../../constants.types";
 import OrderCartItem from "./orderCartItem.components";
 import {
   OrderItemTotal,
@@ -6,7 +6,13 @@ import {
   StyledLink,
 } from "./orderCartItem.styles";
 
-function Order({ orderItems, orderTotal }) {
+type OrderProps= {
+  orderItems: ProductType[];
+  orderTotal: number;
+}
+
+
+function Order({ orderItems, orderTotal }: OrderProps) {
   return (
     <StyledOrder>
       <h2>Your order has been confirmed</h2>

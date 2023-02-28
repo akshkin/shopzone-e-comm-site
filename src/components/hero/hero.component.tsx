@@ -1,8 +1,9 @@
-import React from 'react'
+import { ReactElement } from 'react'
 import { StyledHero, Heading } from './hero.styles'
-import HeroImg from "../../images/hero.jpg"
 
-function Hero() {
+const HeroImg = require("../../images/hero.jpg")
+
+function Hero(): ReactElement {
   return (
     <StyledHero>
         <img src={HeroImg} alt="hero"/>
