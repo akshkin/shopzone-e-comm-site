@@ -52,7 +52,9 @@ export const HeaderContainer = styled.header`
     padding: 0.8em;
   }
   .favorites {
-    background-color: coral;
+    background-color: #83c5be;
+    color: #252525;
+    font-weight: bold;
     position: absolute;
     margin-top: -1em;
     margin-left: 5em;
@@ -61,9 +63,10 @@ export const HeaderContainer = styled.header`
   .cart {
     font-size: 1.5rem;
     position: relative;
+    color: #006d77;
   }
   .num-cart {
-    background-color: #252525;
+    background-color: #006d77;
     margin-top: -0.7em;
     position: absolute;
   }
@@ -108,11 +111,11 @@ export const Input = styled.input`
   font-family: inherit;
   margin-top: 0.5em;
   width: 175px;
-  border: 1px solid lightcoral;
+  border: 1px solid #006d77;
   font-size: inherit;
 
   &:focus {
-    outline: 1px solid lightblue;
+    outline: 1px solid #83c5be;
     border: none;
   }
 

@@ -24,4 +24,19 @@ export const FooterLinksContainer = styled.ul`
 
 export const FooterLink = styled.li`
   font-size: 1rem;
+
+  .icon {
+    color: #006d77;
+    font-size: 1.5rem;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #83c5be;
+    }
+  }
+`;
+
+export const Copyright = styled.p`
+  display: flex;
+  gap: 0.3em;
 `;

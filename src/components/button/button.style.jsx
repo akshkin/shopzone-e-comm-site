@@ -1,24 +1,25 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const BaseButton = styled.button`
   color: white;
-  background-color: #252525;
+  background-color: #006d77;
   padding: 0.5em 1.5em;
   font-family: inherit;
   font-size: 1rem;
   cursor: pointer;
+  border: 1px solid transparent;
 
-  &:hover{
+  &:hover {
     opacity: 0.8;
   }
-`
+`;
 
 export const InvertedButton = styled(BaseButton)`
   color: #252525;
-  background-color: white;
-  border: 2px solid gray;
+  background-color: #83c5be;
+  border: 2px solid transparent;
 
-  &:hover{
-    border: 1px solid darkgray;
+  &:hover {
+    border: 2px solid darkgray;
   }
-`
+`;

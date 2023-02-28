@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Icon } from "@iconify/react";
 
 export const CartContainer = styled.div`
   display: flex;
@@ -37,4 +38,12 @@ export const PlaceOrder = styled.div`
 
 export const CartItemsContainer = styled.div`
   align-self: center;
+`;
+
+export const EmptyCart = styled(Icon)`
+  font-size: 18rem;
+
+  @media (min-width: 600px) {
+    font-size: 25rem;
+  }
 `;
