@@ -4,7 +4,7 @@ This personal project was bootstrapped with [Create React App](https://github.co
 
 ## Technologies used
 
-- React
+- React + TypeScript
 - React Router
 - Redux
 - Styled Components(CSS-in-JS)
