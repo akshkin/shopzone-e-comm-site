@@ -8,31 +8,28 @@ import {
   Category,
   Auth,
   SearchPage,
+  NotFound
 } from "./routes";
-import { Header, Footer } from "./components";
 import "./App.css";
+import Layout from "./components/layout/layout.component";
 
 function App() {
  
   return (
     <div className="App">
-      <Header />
-      <main>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:productId" element={<ProductDetail />} />
-          <Route path="/:category" element={<Category />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route
-            path="/search/:query"
-            element={<SearchPage />}
-          />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="products" element={<Products />} />
+            <Route path="products/:productId" element={<ProductDetail />} />
+            <Route path=":category" element={<Category />} />
+            <Route path="favorites" element={<Favorites />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="auth" element={<Auth />} />
+            <Route path="search/:query" element={<SearchPage />} />
+          </Route>
+            <Route element={<NotFound />} />
         </Routes>
-      </main>
-      <Footer />
     </div>
   );
 }

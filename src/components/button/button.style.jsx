@@ -17,9 +17,4 @@ export const BaseButton = styled.button`
 export const InvertedButton = styled(BaseButton)`
   color: #252525;
   background-color: #83c5be;
-  border: 2px solid transparent;
-
-  &:hover {
-    border: 2px solid darkgray;
-  }
 `;

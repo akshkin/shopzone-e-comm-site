@@ -118,7 +118,7 @@ function Filters({ filters, setFilters }: FiltersProp) {
           ))}
         </Section>
         <Section>
-          <h5>Rating</h5>
+          <h5>Rating (greater than)</h5>
           { ratingStar.map((rating, index) => 
             <RadioButtons>
               <input 

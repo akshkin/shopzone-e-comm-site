@@ -1,23 +1,24 @@
 import React, { useState, ChangeEvent } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import {
   HeaderContainer,
   NavLinks,
-  NavLink,
+  StyledNavLink,
   Form,
   Input,
 } from "./header.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { getUser, signOutUser, errorMessage } from "../../features/userSlice";
+import { getUser, signOutUser } from "../../features/userSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
 import { selectCartItems } from "../../features/cartSlice";
-import { ErrorText } from "../../routes/auth/auth.style";
 import { searchProducts } from "../../features/productsSlice";
 
 const Logo = require("../../images/logo.png")
 
-
+type LinkParam = {
+  isActive: boolean
+}
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,8 +27,7 @@ function Header() {
   const favorites = useAppSelector(selectFavorites);
 
   const user = useAppSelector(getUser)
-  const error = useAppSelector(errorMessage)
-
+  
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -52,8 +52,7 @@ function Header() {
   }
 
   return (
-    <>
-      <HeaderContainer>
+    <HeaderContainer>
         <Link to="/">
           <img src={Logo} alt="logo" className="logo" />
         </Link>
@@ -66,20 +65,20 @@ function Header() {
               SIGN OUT
             </span>
           ) : (
-            <NavLink to="/auth">SIGN IN</NavLink>
+            <StyledNavLink className={({isActive}: LinkParam) => isActive ? "active" : ""} to="/auth">SIGN IN</StyledNavLink>
           )}
-          <NavLink to="/favorites">
+          <StyledNavLink className={({isActive}: LinkParam) => isActive ? "active" : ""} to="/favorites">
             {favorites && favorites?.length > 0 && (
               <span className="num-of-items favorites">{favorites.length}</span>
             )}
             <span className="faves">FAVORITES</span>
-          </NavLink>
-          <NavLink to="/cart">
+          </StyledNavLink>
+          <StyledNavLink className={({isActive}: LinkParam) => isActive ? "active" : ""} to="/cart">
             {cartItems?.length > 0 && (
               <span className="num-cart">{cartItems.length}</span>
             )}
             <Icon className="cart" icon={cartIcon} />
-          </NavLink>
+          </StyledNavLink>
         </NavLinks>
         <Form onSubmit={handleSubmit}>
           <label>Search</label>
@@ -90,8 +89,6 @@ function Header() {
           />
         </Form>
       </HeaderContainer>
-      <Outlet />
-    </>
   );
 }
 

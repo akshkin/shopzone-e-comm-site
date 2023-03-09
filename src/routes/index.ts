@@ -6,3 +6,4 @@ export { default as Products } from "./products/products";
 export { default as ProductDetail } from "./product-details/product-details";
 export { default as SearchPage } from "./searchPage/searchPage";
 export { default as Auth } from "./auth/auth";
+export { default as NotFound } from "./404notFound/notFound";

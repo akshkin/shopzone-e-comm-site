@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const baseURL= process.env.REACT_APP_BASE_URL
-
 const API = axios.create({ baseURL: "https://shopzone-server.onrender.com" });
 
 API.interceptors.request.use((req) => {

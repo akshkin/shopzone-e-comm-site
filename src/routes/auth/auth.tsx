@@ -39,7 +39,7 @@ function Auth() {
     if (user && !loading) {
       navigate("/products");
     }
-  }, [user, loading, dispatch]);
+  }, [user, loading, dispatch, navigate]);
 
   useEffect(() => {
     if (error) {

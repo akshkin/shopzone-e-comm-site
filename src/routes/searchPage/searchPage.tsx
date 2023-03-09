@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import Product from "../../components/product/product.component";
 import { productLoading, searchProducts, selectFilteredProducts } from "../../features/productsSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import useSort from "../../hooks/useSort";
 import { ProductsContainer, StyledLoader } from "../products/products.style";
 import { SearchTitle } from "./searchPage.styles";
 
@@ -14,7 +13,6 @@ type SearchParams = {
 
 function SearchPage() {
   const { query } = useParams<keyof SearchParams>() as SearchParams;
-  const sortProducts = useSort();
   const dispatch = useAppDispatch()
   const loading = useAppSelector(productLoading)
   const filteredProducts = useAppSelector(selectFilteredProducts)
@@ -23,8 +21,6 @@ function SearchPage() {
     dispatch(searchProducts(query))
 
   }, [query, dispatch])
-
-  sortProducts([...filteredProducts]);
 
   return (
     <>

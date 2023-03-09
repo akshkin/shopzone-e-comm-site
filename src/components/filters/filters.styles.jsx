@@ -12,11 +12,12 @@ export const FilterContainer = styled.div`
   z-index: 100;
   background-color: white;
   h3 {
-    font-size: 130%;
+    font-size: 110%;
   }
 
   @media (min-width: 900px) {
     width: 400px;
+    max-width: 100%;
     position: static;
   }
 `;
@@ -24,6 +25,10 @@ export const FilterContainer = styled.div`
 export const RadioButtons = styled.div`
   display: flex;
   padding-block: 0.2em;
+
+  label {
+    cursor: pointer;
+  }
 `;
 
 export const StyledIcon = styled(Icon)`
@@ -31,12 +36,17 @@ export const StyledIcon = styled(Icon)`
   position: absolute;
   right: 2px;
   top: 0.75em;
+  cursor: pointer;
+
+  @media (min-width: 900px) {
+    display: none;
+  }
 `;
 
 export const Section = styled.div`
   margin-bottom: 1em;
+
   h5 {
-    font-size: 110%;
     margin-bottom: 1em;
     padding-bottom: 0.4em;
     border-bottom: 1px solid #ccc;
@@ -45,5 +55,8 @@ export const Section = styled.div`
 
 export const StyledCheckbox = styled.div`
   display: block;
-  font-size: 1.2rem;
+
+  label {
+    cursor: pointer;
+  }
 `;
