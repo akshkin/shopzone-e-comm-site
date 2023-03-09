@@ -3,6 +3,7 @@ import { RiseLoader } from "react-spinners";
 import { motion } from "framer-motion";
 import { FilterContainer } from "../../components/filters/filters.styles";
 import { StyledIcon } from "../../components/filters/filters.styles";
+import { Icon } from "@iconify/react";
 
 export const ProductsContainer = styled.div`
   padding: 1em;
@@ -19,6 +20,10 @@ export const FilterAndSort = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.7em;
+
+  ${Icon} {
+    cursor: pointer;
+  }
 
   @media screen and (min-width: 900px) {
     display: none;
@@ -71,13 +76,12 @@ export const Main = styled.main`
   @media (min-width: 900px) {
     display: grid;
     grid-template-areas:
-      "filter loader"
-      "filter results"
-      "filter products";
+      "filters loader"
+      "filters products";
     grid-template-columns: 0.4fr 1fr;
 
     h5 {
-      grid-area: results;
+      grid-area: loader;
     }
 
     ${ProductsContainer} {
@@ -87,11 +91,12 @@ export const Main = styled.main`
       overflow-y: scroll;
     }
     ${DesktopFilters} {
-      grid-area: filter;
+      grid-area: filters;
       overflow-y: hidden;
     }
     ${StyledLoader} {
       grid-area: loader;
+      transform: rotate(90deg);
     }
   }
 `;

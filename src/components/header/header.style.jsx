@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const HeaderContainer = styled.header`
   max-width: 100%;
@@ -85,7 +85,7 @@ export const HeaderContainer = styled.header`
   }
 `;
 
-export const NavLink = styled(Link)`
+export const StyledNavLink = styled(NavLink)`
   margin-right: 1em;
 `;
 
@@ -94,6 +94,9 @@ export const NavLinks = styled.nav`
   justify-content: space-evenly;
   align-items: center;
   padding-top: 1em;
+  .active {
+    border-bottom: 1px solid #252525;
+  }
 
   @media (min-width: 400px) {
     padding-top: 0;

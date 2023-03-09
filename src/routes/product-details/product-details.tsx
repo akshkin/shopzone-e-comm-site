@@ -25,7 +25,7 @@ function ProductDetail() {
 
   useEffect(() => {
     dispatch(getProductDetail(productId))
-  }, [])
+  }, [dispatch, productId])
 
   function addItemToCart(item: ProductType) {
     dispatch(addToCart(item));

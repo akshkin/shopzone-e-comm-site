@@ -1,8 +1,5 @@
 .App {
   text-align: center;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 *{
   box-sizing: border-box;
@@ -26,9 +23,7 @@ a{
 a:hover{
   color: darkgray;
 }
-.App main{
-  flex-grow: 1;
-}
+
 
 
 

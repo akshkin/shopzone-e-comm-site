@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useParams, Outlet } from "react-router-dom";
 import Product from "../../components/product/product.component";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import useSort from "../../hooks/useSort";
 import { CategoryContainer } from "./categories.style";
 import { selectProducts, productLoading, errorMessage, selectShow, setShow, getProductsByCategory, selectTotalProducts } from "../../features/productsSlice";
 import { ErrorText } from "../auth/auth.style";
@@ -26,10 +25,6 @@ function Category() {
   useEffect(() => {
     dispatch(getProductsByCategory(category))
   }, [category,dispatch ])
-
-  const sortProducts = useSort(); 
-
-  if (products) sortProducts([...products]);
 
   
   return (

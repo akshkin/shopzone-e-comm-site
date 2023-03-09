@@ -55,7 +55,7 @@ function Products() {
               animate={{ x: "0%" }}
               exit={{ x: "-100%" }}
               show={show}
-              transition={{ ease: "easeInOut", duration: 0.5 }}>
+              transition={{ ease: "easeOut", duration: 0.5 }}>
                 <Filters filters={filters} setFilters={setFilters} />
               </FilterWrapper>
             }
@@ -63,8 +63,7 @@ function Products() {
           <DesktopFilters>
             <Filters filters={filters} setFilters={setFilters} />
           </DesktopFilters>
-          <p>Showing {totalProducts} {totalProducts === 1 ? "product" : "products"}</p>
-          { loading && <StyledLoader />}
+          { loading ? <StyledLoader /> : (<p>Showing {totalProducts} {totalProducts === 1 ? "product" : "products"}</p>)}
           <ProductsContainer>
             {productElements}
           </ProductsContainer>
