@@ -27,8 +27,8 @@ function App() {
             <Route path="cart" element={<Cart />} />
             <Route path="auth" element={<Auth />} />
             <Route path="search/:query" element={<SearchPage />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
-            <Route element={<NotFound />} />
         </Routes>
     </div>
   );
