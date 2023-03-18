@@ -1,14 +1,16 @@
+import React from 'react';
 import Product from "../../components/product/product.component";
 import { Main, DesktopFilters, FilterWrapper, ProductsContainer, StyledLoader, FilterAndSort } from "./products.style";
-import { ErrorText } from "../auth/auth.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
-import { productLoading, selectProducts, errorMessage, selectShow, setShow, selectTotalProducts, listProducts } from "../../features/productsSlice";
+import { selectFilteredProducts, selectShow, setShow, selectTotalProducts } from "../../features/productsSlice";
 import Filters from "../../components/filters/filters.component";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Icon } from '@iconify/react';
 import { AnimatePresence } from "framer-motion";
 import { FiltersType } from "../../api";
+import { useLoaderData, defer, Await } from "react-router-dom";
+import { DataType, getProducts } from "../../utils/utils";
 
 export const defaultFilters = {
   sort: {
@@ -20,33 +22,31 @@ export const defaultFilters = {
   price: 1000000
 }
 
+export function loader(){
+  const productsPromise = getProducts(defaultFilters)
+  return defer({productsData: productsPromise}) 
+}
+
+type LoaderDataType = {
+  productsData: DataType
+}
+
 function Products() {
-  const products = useAppSelector(selectProducts);
-  const loading = useAppSelector(productLoading)
-  const error = useAppSelector(errorMessage)
-  const totalProducts = useAppSelector(selectTotalProducts)
-
+  const { productsData } = useLoaderData() as LoaderDataType
   const dispatch = useAppDispatch()
-
+  const filteredProducts = useAppSelector(selectFilteredProducts)
+  const totalProducts = useAppSelector(selectTotalProducts)
   const show = useAppSelector(selectShow)
 
   const [filters, setFilters] = useState<FiltersType>({...defaultFilters})
 
-  useEffect(() => {
-    dispatch(listProducts(filters))
-  }, [])
+  function renderProducts(productsData: DataType){
 
-    
-  const productElements = products.map((product: ProductType) => (
-    <Product key={product._id} product={product} />
-  ));
-  
-    
-  return (
-    <>
-      {error ? (
-        <ErrorText>{error}</ErrorText>
-      ) : (
+    const productElements = productsData.products.map((product: ProductType) => 
+      <Product key={product._id} product={product} />
+    );
+    const filteredProductElements = filteredProducts.map(product => <Product key={product._id} product={product} />)
+      return (
         <Main>
           <FilterAndSort>Filter and Sort <Icon onClick={() => dispatch(setShow(true))} icon="system-uicons:filtering" /></FilterAndSort>
           <AnimatePresence> 
@@ -56,20 +56,26 @@ function Products() {
               exit={{ x: "-100%" }}
               show={show}
               transition={{ ease: "easeOut", duration: 0.5 }}>
-                <Filters filters={filters} setFilters={setFilters} />
+                <Filters filters={filters} setFilters={setFilters} categories={productsData.category}/>
               </FilterWrapper>
             }
           </AnimatePresence>
           <DesktopFilters>
-            <Filters filters={filters} setFilters={setFilters} />
+            <Filters filters={filters} setFilters={setFilters} categories={productsData.category}/>
           </DesktopFilters>
-          { loading ? <StyledLoader /> : (<p>Showing {totalProducts} {totalProducts === 1 ? "product" : "products"}</p>)}
+          <p>Showing {totalProducts ? totalProducts : productsData.totalProducts} {productsData.totalProducts === 1 ? "product" : "products"}</p>
           <ProductsContainer>
-            {productElements}
+            {filteredProducts.length > 0 ? filteredProductElements : productElements}
           </ProductsContainer>
         </Main>
-      )}
-    </>
+      )
+  }
+  
+    
+  return (
+    <React.Suspense fallback={<StyledLoader />}>
+      <Await resolve={productsData} children={renderProducts} />    
+    </React.Suspense>    
   );
 }
 

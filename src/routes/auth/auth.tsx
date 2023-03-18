@@ -1,5 +1,5 @@
 import { useEffect, useState, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BUTTON_TYPES } from "../../components/button/button.component";
 import {
   FormPage,
@@ -33,13 +33,14 @@ function Auth() {
   const user = useAppSelector(getUser)
   const loading = useAppSelector(userLoading)
   const error = useAppSelector(errorMessage)
-
+  const location = useLocation()
+  const from = location.state?.path || "products"
   
   useEffect(() => {
     if (user && !loading) {
-      navigate("/products");
+      navigate(from);
     }
-  }, [user, loading, dispatch, navigate]);
+  }, [user, loading, dispatch, navigate, from]);
 
   useEffect(() => {
     if (error) {
@@ -77,6 +78,7 @@ function Auth() {
 
   return (
     <FormPage>
+      { location?.state?.message && <ErrorText>{location?.state?.message}</ErrorText> }
       <FormContainer>
         <h2>{isLoggingIn ? "Sign in!" : "Sign Up!"}</h2>
         <form onSubmit={handleSubmit}>
@@ -120,7 +122,7 @@ function Auth() {
 
           {errorText && <ErrorText>{errorText}</ErrorText>}
 
-          <SignInButton type="submit" buttonType={BUTTON_TYPES.base}>
+          <SignInButton disabled={loading} type="submit" buttonType={BUTTON_TYPES.base}>
             {isLoggingIn ? " Sign In" : "Sign Up"}
           </SignInButton>
           <p>

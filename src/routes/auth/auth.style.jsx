@@ -55,4 +55,8 @@ export const SignInButton = styled(Button)`
   margin-top: 1em;
   width: 100%;
   height: 50px;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 `;

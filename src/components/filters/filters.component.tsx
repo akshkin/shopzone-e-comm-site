@@ -1,9 +1,5 @@
 import React, { ChangeEvent } from "react";
-import {
-  listProducts,
-  selectCategories,
-  setShow
-} from "../../features/productsSlice";
+import { listProducts, setShow } from "../../features/productsSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import {
   FilterContainer,
@@ -16,6 +12,7 @@ import { FiltersType } from "../../api";
 import Sort from "../sort/sort.component";
 import Button, { BUTTON_TYPES } from "../button/button.component";
 import { defaultFilters } from "../../routes/products/products";
+import { RootState } from "../../store";
 
 const ratingStar = [
   {
@@ -49,14 +46,14 @@ const ratingStar = [
 type FiltersProp = {
   filters: FiltersType;
   setFilters: React.Dispatch<React.SetStateAction<FiltersType>>
+  categories : string[]
 }
 
 
-function Filters({ filters, setFilters }: FiltersProp) {
+function Filters({ filters, setFilters, categories }: FiltersProp) {
   const dispatch = useAppDispatch();
-  const maxPrice = useAppSelector((state) => state.allProducts.maxPrice);
-  const minPrice = useAppSelector((state) => state.allProducts.minPrice);
-  const categories = useAppSelector(selectCategories)
+  const maxPrice = useAppSelector((state: RootState) => state.allProducts.maxPrice);
+  const minPrice = useAppSelector((state: RootState) => state.allProducts.minPrice);
    
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { type, checked, value, name } = event.target;
@@ -72,9 +69,8 @@ function Filters({ filters, setFilters }: FiltersProp) {
     }
       
   };
-
   
-  const handleSubmit = (event: React.FormEvent) => {
+  function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     dispatch(listProducts(filters))
     dispatch(setShow(false));
@@ -86,7 +82,7 @@ function Filters({ filters, setFilters }: FiltersProp) {
 
   const clearFilters = ( ) => {
     setFilters(defaultFilters)
-    dispatch(listProducts(filters))
+    dispatch(listProducts(defaultFilters))
     dispatch(setShow(false))
   }
 

@@ -47,15 +47,6 @@ export const listProducts = createAsyncThunk(
   }
 );
 
-export const getProductDetail = createAsyncThunk("/products", async(_id: string) => {
-  try {
-    const { data } = await fetchProductDetails(_id)
-    return data
-  } catch (error: any) {
-    console.log(error)
-    return error || error.response.data.error
-  }
-})
 
 export const searchProducts = createAsyncThunk(`/products/search`, async (searchQuery: string) => {
   try {
@@ -106,7 +97,7 @@ const productsSlice = createSlice({
           state.error = action.payload.message
           return
         }
-        state.products = action.payload.products;
+        state.filteredProducts = action.payload.products;
         state.categories = action.payload.category;
         state.totalProducts = action.payload.totalProducts
         state.maxPrice = action.payload.maxPrice
@@ -122,13 +113,6 @@ const productsSlice = createSlice({
       .addCase(searchProducts.fulfilled, (state, action) => {
         state.loading = false
         state.filteredProducts = action.payload
-      })
-      .addCase(getProductDetail.pending, (state, action) => {
-        state.loading = true
-      })
-      .addCase(getProductDetail.fulfilled, (state, action) => {
-        state.loading = false
-        state.product = action.payload
       })
       .addCase(getProductsByCategory.pending, (state, action) => {
         state.loading = true 

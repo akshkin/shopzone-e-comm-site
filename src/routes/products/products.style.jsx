@@ -21,7 +21,7 @@ export const FilterAndSort = styled.div`
   align-items: center;
   gap: 0.7em;
 
-  ${Icon} {
+  & Icon {
     cursor: pointer;
   }
 
@@ -70,7 +70,7 @@ export const DesktopFilters = styled.div`
 `;
 
 export const Main = styled.main`
-  Icon {
+  & Icon {
     display: none;
   }
   @media (min-width: 900px) {
