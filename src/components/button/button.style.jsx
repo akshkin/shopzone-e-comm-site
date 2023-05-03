@@ -9,8 +9,13 @@ export const BaseButton = styled.button`
   cursor: pointer;
   border: 1px solid transparent;
 
-  &:hover {
+  &:hover,
+  &:focus {
     opacity: 0.8;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
   }
 `;
 

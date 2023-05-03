@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { getUser, signOutUser } from "../../features/userSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
 import { selectCartItems } from "../../features/cartSlice";
-import { searchProducts } from "../../features/productsSlice";
+import { getProductsBySearch } from "../../utils/utils";
 
 const Logo = require("../../images/logo.png")
 
@@ -40,7 +40,7 @@ function Header() {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (searchTerm) {
-      dispatch(searchProducts(searchTerm))
+      getProductsBySearch(searchTerm)
       navigate(`/search/${searchTerm}`);
       setSearchTerm("");
     }

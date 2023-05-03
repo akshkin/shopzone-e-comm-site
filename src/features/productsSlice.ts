@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { fetchProductDetails, fetchProducts, fetchProductsByCategory, getProductsBySearch } from "../api";
+import { fetchProducts } from "../api";
 import { ProductType } from "../constants.types";
 import { RootState } from "../store";
 import { FiltersType } from "../api";
@@ -48,28 +48,6 @@ export const listProducts = createAsyncThunk(
 );
 
 
-export const searchProducts = createAsyncThunk(`/products/search`, async (searchQuery: string) => {
-  try {
-    const {data} = await getProductsBySearch(searchQuery)
-    return [...data]
-
-  } catch (error: any) {
-    console.log(error)
-    return error || error.response.data.message
-  }
-})
-
-export const getProductsByCategory = createAsyncThunk(`/products/category?category=`, async(category: string) =>{
-  try{
-    const {data} = await fetchProductsByCategory(category)
-    const { products, totalProducts } = data
-    return {products, totalProducts}
-  } catch(error:any){
-    console.log(error)
-    return error || error.response.data.message
-  }
-})
-
 const productsSlice = createSlice({
   name: "products",
   initialState,
@@ -107,21 +85,7 @@ const productsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(searchProducts.pending, (state, action) => {
-        state.loading = true
-      })
-      .addCase(searchProducts.fulfilled, (state, action) => {
-        state.loading = false
-        state.filteredProducts = action.payload
-      })
-      .addCase(getProductsByCategory.pending, (state, action) => {
-        state.loading = true 
-      })
-      .addCase(getProductsByCategory.fulfilled, (state, action) => {
-        state.loading = false
-        state.products = action.payload.products
-        state.totalProducts = action.payload.totalProducts
-      })
+      
   },
 });
 

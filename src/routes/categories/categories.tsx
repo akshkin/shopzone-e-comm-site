@@ -1,51 +1,57 @@
-import { useEffect } from "react";
-import { useParams, Outlet } from "react-router-dom";
+import React from "react";
+import { useParams, Outlet, LoaderFunctionArgs, defer, Await, useLoaderData } from "react-router-dom";
 import Product from "../../components/product/product.component";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { CategoryContainer } from "./categories.style";
-import { selectProducts, productLoading, errorMessage, selectShow, setShow, getProductsByCategory, selectTotalProducts } from "../../features/productsSlice";
-import { ErrorText } from "../auth/auth.style";
 import { StyledLoader } from "../products/products.style";
+import { getProductsByCategory } from "../../utils/utils";
+import { ProductType } from "../../constants.types";
 
 
 type CategoryParams = {
   category: string;
 }
 
+export function loader({ params }: LoaderFunctionArgs){
+  const productsPromise = params.category ? getProductsByCategory(params.category) : null
+  return defer({ categoryProducts: productsPromise })
+}
+
+type LoaderDataType = {
+  categoryProducts: CategoryProducts
+}
+
+type CategoryProducts = {
+  products: ProductType[],
+    totalProducts: number
+}
+
 
 function Category() {
+  const { categoryProducts } = useLoaderData() as LoaderDataType;
   const { category } = useParams<keyof CategoryParams>() as CategoryParams;
 
-  const products = useAppSelector(selectProducts)
-  const loading = useAppSelector(productLoading)
-  const error = useAppSelector(errorMessage)
-  const totalProducts = useAppSelector(selectTotalProducts)
-  const dispatch = useAppDispatch()
+  function renderProducts(categoryProducts: CategoryProducts){
+    return (
+      <>
+        <h4>Showing {categoryProducts.totalProducts} products</h4>
+        <CategoryContainer animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
+          { categoryProducts.products.map((product) => {
+              return <Product key={product._id} product={product} />;
+            })}
+        </CategoryContainer>
+        <Outlet />
+      </>
 
-  useEffect(() => {
-    dispatch(getProductsByCategory(category))
-  }, [category,dispatch ])
+    )
+  }
 
   
   return (
-    <>
-      {loading ? (
-         <StyledLoader /> 
-      ) : error ? (
-        <ErrorText>{error}</ErrorText>
-      ) : (
-        <>
+    <>      
       <h2>{category?.toUpperCase()}</h2>
-      <h4>Showing {totalProducts} products</h4>
-      <CategoryContainer animate={{opacity: 1}} initial={{opacity: 0}} exit={{opacity: 0}}>
-        {products &&
-          products.map((product) => {
-            return <Product key={product._id} product={product} />;
-          })}
-      </CategoryContainer>
-      <Outlet />
-      </>
-      )}
+      <React.Suspense fallback={<StyledLoader />}>
+        <Await resolve={categoryProducts} children={renderProducts} />
+      </React.Suspense>      
     </>
   );
 }

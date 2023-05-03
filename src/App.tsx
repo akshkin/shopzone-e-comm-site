@@ -12,6 +12,8 @@ import {
 } from "./routes";
 import { loader as productsLoader } from "./routes/products/products";
 import { loader as productDetailLoader } from "./routes/product-details/product-details"
+import { loader as filtersLoader } from "./routes/searchPage/searchPage"
+import { loader as categoryLoader } from "./routes/categories/categories"
 import "./App.css";
 import Layout from "./components/layout/layout.component";
 import ErrorComponent from "./components/error.component";
@@ -23,14 +25,14 @@ function App() {
     <Route element={<Layout />} > 
       <Route path="/" element={<Home />} />
       <Route path="products" element={<Products />} errorElement={<ErrorComponent />} loader={productsLoader} />
-      <Route path="products/:productId" element={<ProductDetail />} loader={productDetailLoader} />
-      <Route path=":category" element={<Category />} />
+      <Route path="products/:productId" element={<ProductDetail />} loader={productDetailLoader} errorElement={<ErrorComponent />} />
+      <Route path=":category" element={<Category />} loader={categoryLoader} errorElement={<ErrorComponent />} />
       <Route element={<ProtectedRoute />}>
-        <Route path="favorites" element={<Favorites />} />
+        <Route path="favorites" element={<Favorites />} errorElement={<ErrorComponent />} />
       </Route>
       <Route path="cart" element={<Cart />} />
       <Route path="auth" element={<Auth />} />
-      <Route path="search/:query" element={<SearchPage />} />
+      <Route path="search/:query" element={<SearchPage />} loader={filtersLoader} errorElement={<ErrorComponent />} />
       <Route path="*" element={<NotFound />} />
     </Route>    
   ))

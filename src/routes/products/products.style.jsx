@@ -21,7 +21,7 @@ export const FilterAndSort = styled.div`
   align-items: center;
   gap: 0.7em;
 
-  & Icon {
+  Icon {
     cursor: pointer;
   }
 
@@ -37,7 +37,7 @@ export const StyledLoader = styled(RiseLoader)`
 
 export const FilterWrapper = styled(motion.div)`
   background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 100;
 `;

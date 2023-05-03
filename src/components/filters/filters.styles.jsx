@@ -11,6 +11,7 @@ export const FilterContainer = styled.div`
   padding: 1em;
   z-index: 100;
   background-color: white;
+
   h3 {
     font-size: 110%;
   }
