@@ -10,7 +10,13 @@ import {
   SignInButton,
 } from "./auth.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { getUser, userLoading, errorMessage, signInUser, signUpUser } from "../../features/userSlice";
+import {
+  getUser,
+  userLoading,
+  errorMessage,
+  signInUser,
+  signUpUser,
+} from "../../features/userSlice";
 import { StyledLoader } from "../products/products.style";
 
 const defaultFormFields = {
@@ -30,12 +36,12 @@ function Auth() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const user = useAppSelector(getUser)
-  const loading = useAppSelector(userLoading)
-  const error = useAppSelector(errorMessage)
-  const location = useLocation()
-  const from = location.state?.path || "products"
-  
+  const user = useAppSelector(getUser);
+  const loading = useAppSelector(userLoading);
+  const error = useAppSelector(errorMessage);
+  const location = useLocation();
+  const from = location.state?.path || "/products";
+
   useEffect(() => {
     if (user && !loading) {
       navigate(from);
@@ -78,7 +84,9 @@ function Auth() {
 
   return (
     <FormPage>
-      { location?.state?.message && <ErrorText>{location?.state?.message}</ErrorText> }
+      {location?.state?.message && (
+        <ErrorText>{location?.state?.message}</ErrorText>
+      )}
       <FormContainer>
         <h2>{isLoggingIn ? "Sign in!" : "Sign Up!"}</h2>
         <form onSubmit={handleSubmit}>
@@ -122,7 +130,11 @@ function Auth() {
 
           {errorText && <ErrorText>{errorText}</ErrorText>}
 
-          <SignInButton disabled={loading} type="submit" buttonType={BUTTON_TYPES.base}>
+          <SignInButton
+            disabled={loading}
+            type="submit"
+            buttonType={BUTTON_TYPES.base}
+          >
             {isLoggingIn ? " Sign In" : "Sign Up"}
           </SignInButton>
           <p>

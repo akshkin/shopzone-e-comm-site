@@ -61,7 +61,7 @@ function Filters({
   minPrice,
 }: FiltersProp) {
   const dispatch = useAppDispatch();
- 
+
   const searchFilters = searchParams.toString();
 
   const updateSearchParams = useCallback(
@@ -161,7 +161,7 @@ function Filters({
           {categories.map((category, index) => (
             <Checkbox
               filter={category}
-              key={category}
+              key={`category-${category}`}
               onFilterChange={handleChange}
               filters={filters}
               index={index}
@@ -175,7 +175,7 @@ function Filters({
             <RadioButtons>
               <input
                 id={rating.id}
-                key={rating.id}
+                key={`rating-${rating.id}`}
                 type="radio"
                 name="rating"
                 checked={

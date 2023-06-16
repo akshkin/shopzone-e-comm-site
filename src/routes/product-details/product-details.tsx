@@ -43,7 +43,7 @@ export function loader({ params }: LoaderFunctionArgs) {
 function ProductDetail() {
   const { product } = useLoaderData() as LoaderDataType;
   const location = useLocation();
-  const { productId } = useParams<keyof ProductParams>() as ProductParams;
+  // const { productId } = useParams<keyof ProductParams>() as ProductParams;
   const favorites = useAppSelector(selectFavorites);
   const dispatch = useAppDispatch();
   const user = useAppSelector(getUser);
