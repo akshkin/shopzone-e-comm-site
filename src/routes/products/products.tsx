@@ -1,75 +1,154 @@
+import React, { useEffect } from "react";
 import Product from "../../components/product/product.component";
-import { Main, DesktopFilters, FilterWrapper, ProductsContainer, StyledLoader, FilterAndSort } from "./products.style";
-import { ErrorText } from "../auth/auth.style";
+import {
+  Main,
+  DesktopFilters,
+  FilterWrapper,
+  ProductsContainer,
+  StyledLoader,
+  FilterAndSort,
+} from "./products.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
-import { productLoading, selectProducts, errorMessage, selectShow, setShow, selectTotalProducts, listProducts } from "../../features/productsSlice";
+import {
+  selectShow,
+  setShow
+} from "../../features/productsSlice";
 import Filters from "../../components/filters/filters.component";
-import { useEffect, useState } from "react";
-import { Icon } from '@iconify/react';
+import { useState } from "react";
+import { Icon } from "@iconify/react";
 import { AnimatePresence } from "framer-motion";
 import { FiltersType } from "../../api";
+import { useLoaderData, defer, Await, useSearchParams } from "react-router-dom";
+import { DataType, getProducts } from "../../utils/utils";
 
 export const defaultFilters = {
-  sort: {
-    rating: "rating_desc",
-    price: ""
-  },
+  sort: "rating_desc",
   category: [],
   rating: 3,
-  price: 1000000
+  price: 1000000,
+};
+
+export function loader() {
+  const productsPromise = getProducts(defaultFilters);
+  return defer({ productsData: productsPromise });
 }
 
+type LoaderDataType = {
+  productsData: DataType;
+};
+
 function Products() {
-  const products = useAppSelector(selectProducts);
-  const loading = useAppSelector(productLoading)
-  const error = useAppSelector(errorMessage)
-  const totalProducts = useAppSelector(selectTotalProducts)
+  const { productsData } = useLoaderData() as LoaderDataType;
+  const dispatch = useAppDispatch();
+  const show = useAppSelector(selectShow);
+  const [filteredProducts, setFilteredProducts] = useState<DataType>();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const dispatch = useAppDispatch()
+  const [filters, setFilters] = useState<FiltersType>({ ...defaultFilters });
 
-  const show = useAppSelector(selectShow)
-
-  const [filters, setFilters] = useState<FiltersType>({...defaultFilters})
+  const priceFilter = searchParams.get("price");
+  const categoryFilter = searchParams.get("category");
+  const sortFilter = searchParams.get("sortBy");
+  const ratingFilter = searchParams.get("rating");
 
   useEffect(() => {
-    dispatch(listProducts(filters))
-  }, [])
+    async function listP(){
+    const data = await getProducts({
+      sort: sortFilter ? sortFilter : "",
+      category: categoryFilter ? [categoryFilter] : [],
+      price: priceFilter ? +priceFilter : 100000,
+      rating: ratingFilter ? +ratingFilter : 3,
+    });
+    setFilteredProducts(data)
 
-    
-  const productElements = products.map((product: ProductType) => (
-    <Product key={product._id} product={product} />
-  ));
+    }
+    listP()
+  }, [filters, categoryFilter, ratingFilter, sortFilter, priceFilter])
+
   
-    
-  return (
-    <>
-      {error ? (
-        <ErrorText>{error}</ErrorText>
-      ) : (
-        <Main>
-          <FilterAndSort>Filter and Sort <Icon onClick={() => dispatch(setShow(true))} icon="system-uicons:filtering" /></FilterAndSort>
-          <AnimatePresence> 
-            {show && 
-              <FilterWrapper initial={{ x: "-100%" }}
+  function renderProducts(productsData: DataType) {
+    const productElements = productsData.products.map(
+      (product: ProductType) => (
+        <Product
+          key={product._id}
+          product={product}
+          searchParams={searchParams}
+        />
+      )
+    );
+    const filteredProductElements = filteredProducts?.products.map(
+      (product) => (
+        <Product
+          key={product._id}
+          product={product}
+          searchParams={searchParams}
+        />
+      )
+    );
+
+    return (
+      <Main>
+        <FilterAndSort>
+          Filter and Sort{" "}
+          <Icon
+            onClick={() => dispatch(setShow(true))}
+            icon="system-uicons:filtering"
+          />
+        </FilterAndSort>
+        <AnimatePresence>
+          {show && (
+            <FilterWrapper
+              initial={{ x: "-100%" }}
               animate={{ x: "0%" }}
               exit={{ x: "-100%" }}
               show={show}
-              transition={{ ease: "easeOut", duration: 0.5 }}>
-                <Filters filters={filters} setFilters={setFilters} />
-              </FilterWrapper>
-            }
-          </AnimatePresence>
-          <DesktopFilters>
-            <Filters filters={filters} setFilters={setFilters} />
-          </DesktopFilters>
-          { loading ? <StyledLoader /> : (<p>Showing {totalProducts} {totalProducts === 1 ? "product" : "products"}</p>)}
-          <ProductsContainer>
-            {productElements}
-          </ProductsContainer>
-        </Main>
-      )}
-    </>
+              transition={{ ease: "easeOut", duration: 0.5 }}
+              onClick={() => setShow(false)}
+            >
+              <Filters
+                setSearchParams={setSearchParams}
+                searchParams={searchParams}
+                filters={filters}
+                setFilters={setFilters}
+                categories={productsData.category}
+                minPrice={productsData?.minPrice}
+                maxPrice={productsData.maxPrice}
+              />
+            </FilterWrapper>
+          )}
+        </AnimatePresence>
+        <DesktopFilters>
+          <Filters
+            setSearchParams={setSearchParams}
+            searchParams={searchParams}
+            filters={filters}
+            setFilters={setFilters}
+            categories={productsData.category}
+            minPrice={productsData?.minPrice}
+            maxPrice={productsData.maxPrice}
+          />
+        </DesktopFilters>
+        <p>
+          Showing{" "}
+          {filteredProducts?.totalProducts
+            ? filteredProducts.totalProducts
+            : productsData.totalProducts}{" "}
+          {filteredProducts?.totalProducts === 1 || productsData.totalProducts === 1 ? "product" : "products"}
+        </p>
+        <ProductsContainer>
+          {filteredProducts?.products.length 
+            ? filteredProductElements
+            : productElements}
+        </ProductsContainer>
+      </Main>
+    );
+  }
+
+  return (
+    <React.Suspense fallback={<StyledLoader />}>
+      <Await resolve={productsData} children={renderProducts} />
+    </React.Suspense>
   );
 }
 

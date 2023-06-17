@@ -1,57 +1,91 @@
-import { useParams } from "react-router-dom";
+import React from "react";
+import {
+  useLoaderData,
+  useParams,
+  LoaderFunctionArgs,
+  Await,
+  defer,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Button, { BUTTON_TYPES } from "../../components/button/button.component";
-import { MainProductContainer, ButtonContainer } from "./product-details.style";
-import { ErrorText } from "../auth/auth.style";
+import {
+  MainProductContainer,
+  ButtonContainer,
+  BackButton,
+} from "./product-details.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
 import { addToCart } from "../../features/cartSlice";
-import { addToFavorites, removeFromFavorites, selectFavorites } from "../../features/favoritesSlice";
-import { productLoading, errorMessage, selectProduct, getProductDetail} from "../../features/productsSlice";
-import { RiseLoader } from "react-spinners"
-import { useEffect } from "react";
+import {
+  addToFavorites,
+  removeFromFavorites,
+  selectFavorites,
+} from "../../features/favoritesSlice";
+import { getProductDetails } from "../../utils/utils";
+import {} from "react-router-dom";
+import { StyledLoader } from "../products/products.style";
+import { Link } from "react-router-dom";
+import { getUser } from "../../features/userSlice";
 
 type ProductParams = {
-  productId: string
+  productId: string;
+};
+
+type LoaderDataType = {
+  product: ProductType;
+};
+
+export function loader({ params }: LoaderFunctionArgs) {
+  const productPromise = params.productId
+    ? getProductDetails(params.productId)
+    : null;
+  return defer({ product: productPromise });
 }
 
 function ProductDetail() {
-  const { productId } = useParams<keyof ProductParams>() as ProductParams;
-  const favorites = useAppSelector(selectFavorites)
-  const product = useAppSelector(selectProduct);
-  const loading = useAppSelector(productLoading)
-  const error = useAppSelector(errorMessage)
+  const { product } = useLoaderData() as LoaderDataType;
+  const location = useLocation();
+  // const { productId } = useParams<keyof ProductParams>() as ProductParams;
+  const favorites = useAppSelector(selectFavorites);
   const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(getProductDetail(productId))
-  }, [dispatch, productId])
+  const search = location.state?.search;
+  console.log(search);
 
   function addItemToCart(item: ProductType) {
     dispatch(addToCart(item));
   }
 
-  function addItemToFavorites() {
-    if (product){
-      if (!favorites.includes(product)){
-        dispatch(addToFavorites(product));
+  function renderProduct(product: ProductType) {
+    const { image, title, category, rating, price, description } = product;
+
+    function addItemToFavorites() {
+      if (user) {
+        if (!favorites.includes(product)) {
+          return dispatch(addToFavorites(product));
+        } else {
+          return dispatch(removeFromFavorites(product._id));
+        }
       } else {
-        dispatch(removeFromFavorites(product._id))
+        navigate("/auth", { state: { message: "You must login first" } });
       }
     }
-  }
 
-  if (!product) return <h4>Something went wrong!</h4>;
-
-  const { image, title, category, rating, price, description } = product;
-
-  return (
-    <>
-      {loading ? (
-         <RiseLoader /> 
-      ) : error ? (
-        <ErrorText>{error}</ErrorText>
-      ) : (
+    return (
+      <>
+        {search ? (
+          <Link to={`..${search}`} relative="path">
+            <p style={{ textAlign: "left", padding: "1em" }}>
+              &larr; Back to products
+            </p>
+          </Link>
+        ) : (
+          <BackButton onClick={() => navigate(-1)}>&larr; Go Back</BackButton>
+        )}
         <MainProductContainer>
           <img src={image} alt={title} />
           <div className="product-info">
@@ -82,8 +116,14 @@ function ProductDetail() {
             <p>{description}</p>
           </div>
         </MainProductContainer>
-      )}
-    </>
+      </>
+    );
+  }
+
+  return (
+    <React.Suspense fallback={<StyledLoader />}>
+      <Await resolve={product} children={renderProduct} />
+    </React.Suspense>
   );
 }
 

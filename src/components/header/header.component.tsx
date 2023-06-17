@@ -12,13 +12,13 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { getUser, signOutUser } from "../../features/userSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
 import { selectCartItems } from "../../features/cartSlice";
-import { searchProducts } from "../../features/productsSlice";
+import { getProductsBySearch } from "../../utils/utils";
 
-const Logo = require("../../images/logo.png")
+const Logo = require("../../images/logo.png");
 
 type LinkParam = {
-  isActive: boolean
-}
+  isActive: boolean;
+};
 
 function Header() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,8 +26,8 @@ function Header() {
   const cartItems = useAppSelector(selectCartItems);
   const favorites = useAppSelector(selectFavorites);
 
-  const user = useAppSelector(getUser)
-  
+  const user = useAppSelector(getUser);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -40,7 +40,7 @@ function Header() {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (searchTerm) {
-      dispatch(searchProducts(searchTerm))
+      getProductsBySearch(searchTerm);
       navigate(`/search/${searchTerm}`);
       setSearchTerm("");
     }
@@ -53,42 +53,54 @@ function Header() {
 
   return (
     <HeaderContainer>
-        <Link to="/">
-          <img src={Logo} alt="logo" className="logo" />
-        </Link>
-        <NavLinks>
-          {user ? (
-            <span
-              style={{ cursor: "pointer", paddingRight: "1em" }}
-              onClick={signOut}
-            >
-              SIGN OUT
-            </span>
-          ) : (
-            <StyledNavLink className={({isActive}: LinkParam) => isActive ? "active" : ""} to="/auth">SIGN IN</StyledNavLink>
+      <Link to="/">
+        <img src={Logo} alt="logo" className="logo" />
+      </Link>
+      <NavLinks>
+        {user ? (
+          <span
+            style={{ cursor: "pointer", paddingRight: "1em" }}
+            onClick={signOut}
+          >
+            SIGN OUT
+          </span>
+        ) : (
+          <StyledNavLink
+            className={({ isActive }: LinkParam) => (isActive ? "active" : "")}
+            to="/auth"
+          >
+            SIGN IN
+          </StyledNavLink>
+        )}
+        <StyledNavLink
+          className={({ isActive }: LinkParam) => (isActive ? "active" : "")}
+          to="/favorites"
+        >
+          {favorites && favorites?.length > 0 && (
+            <span className="num-of-items favorites">{favorites.length}</span>
           )}
-          <StyledNavLink className={({isActive}: LinkParam) => isActive ? "active" : ""} to="/favorites">
-            {favorites && favorites?.length > 0 && (
-              <span className="num-of-items favorites">{favorites.length}</span>
-            )}
-            <span className="faves">FAVORITES</span>
-          </StyledNavLink>
-          <StyledNavLink className={({isActive}: LinkParam) => isActive ? "active" : ""} to="/cart">
-            {cartItems?.length > 0 && (
-              <span className="num-cart">{cartItems.length}</span>
-            )}
-            <Icon className="cart" icon={cartIcon} />
-          </StyledNavLink>
-        </NavLinks>
-        <Form onSubmit={handleSubmit}>
-          <label>Search</label>
-          <Input
-            type="search"
-            onChange={handleChange}
-            placeholder="Search products"
-          />
-        </Form>
-      </HeaderContainer>
+          <span className="faves">FAVORITES</span>
+        </StyledNavLink>
+        <StyledNavLink
+          className={({ isActive }: LinkParam) => (isActive ? "active" : "")}
+          to="/cart"
+        >
+          {cartItems?.length > 0 && (
+            <span className="num-cart">{cartItems.length}</span>
+          )}
+          <Icon className="cart" icon={cartIcon} />
+        </StyledNavLink>
+      </NavLinks>
+      <Form onSubmit={handleSubmit}>
+        <label>Search</label>
+        <Input
+          type="search"
+          onChange={handleChange}
+          placeholder="Search products"
+          value={searchTerm}
+        />
+      </Form>
+    </HeaderContainer>
   );
 }
 

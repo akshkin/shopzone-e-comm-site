@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button, { BUTTON_TYPES } from "../button/button.component";
 import { Icon } from "@iconify/react";
 import {
@@ -7,27 +7,38 @@ import {
   Image,
   ProductTitle,
   ProductPrice,
-  Rating
+  Rating,
 } from "./product.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
-import { addToFavorites, removeFromFavorites, selectFavorites } from "../../features/favoritesSlice";
+import {
+  addToFavorites,
+  removeFromFavorites,
+  selectFavorites,
+} from "../../features/favoritesSlice";
 import { addToCart } from "../../features/cartSlice";
+import { getUser } from "../../features/userSlice";
 
 type ProductProps = {
-  product: ProductType
-}
+  product: ProductType;
+  searchParams?: URLSearchParams;
+};
 
-
-function Product({ product }: ProductProps) {
+function Product({ product, searchParams }: ProductProps) {
   const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
   const favorites = useAppSelector(selectFavorites);
+  const navigate = useNavigate();
 
   function addItemToFavorites(item: ProductType) {
-    dispatch(addToFavorites(item));
+    user
+      ? dispatch(addToFavorites(item))
+      : navigate("/auth", { state: { message: "You must login first" } });
   }
   function removeItemFromFavorites(id: string) {
-    dispatch(removeFromFavorites(id));
+    user
+      ? dispatch(removeFromFavorites(id))
+      : navigate("/auth", { state: { message: "You must login first" } });
   }
 
   function heartIcon() {
@@ -52,6 +63,8 @@ function Product({ product }: ProductProps) {
     dispatch(addToCart(item));
   }
 
+  console.log(searchParams);
+
   if (!product) {
     return <></>;
   }
@@ -69,9 +82,16 @@ function Product({ product }: ProductProps) {
         <Button buttonType={BUTTON_TYPES.inverted}>{heartIcon()}</Button>
       </ButtonContainer>
       <ProductTitle>
-        <Link to={`/products/${_id}`}>{title}</Link>
+        <Link
+          to={`/products/${_id}`}
+          state={{ search: searchParams && `?${searchParams.toString()}` }}
+        >
+          {title}
+        </Link>
       </ProductTitle>
-      <Rating>{rating.rate} <Icon icon="ri:star-s-fill" /></Rating>
+      <Rating>
+        {rating?.rate} <Icon icon="ri:star-s-fill" />
+      </Rating>
       <ProductPrice>SEK {price}</ProductPrice>
     </ProductContainer>
   );

@@ -46,3 +46,21 @@ export const ButtonContainer = styled.div`
     }
   }
 `;
+
+export const BackButton = styled.button`
+  display: block;
+  margin-right: auto;
+  background-color: white;
+  border: 0;
+  margin-top: 2em;
+  margin-left: 1em;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.6;
+  }
+  &:focus {
+    opacity: 0.6;
+  }
+`;
