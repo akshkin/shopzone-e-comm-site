@@ -63,6 +63,8 @@ function Product({ product, searchParams }: ProductProps) {
     dispatch(addToCart(item));
   }
 
+  console.log(searchParams);
+
   if (!product) {
     return <></>;
   }
@@ -82,7 +84,7 @@ function Product({ product, searchParams }: ProductProps) {
       <ProductTitle>
         <Link
           to={`/products/${_id}`}
-          state={{ search: searchParams && `..?${searchParams.toString()}` }}
+          state={{ search: searchParams && `?${searchParams.toString()}` }}
         >
           {title}
         </Link>

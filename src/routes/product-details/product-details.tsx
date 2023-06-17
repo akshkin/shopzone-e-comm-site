@@ -10,7 +10,11 @@ import {
 } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Button, { BUTTON_TYPES } from "../../components/button/button.component";
-import { MainProductContainer, ButtonContainer } from "./product-details.style";
+import {
+  MainProductContainer,
+  ButtonContainer,
+  BackButton,
+} from "./product-details.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
 import { addToCart } from "../../features/cartSlice";
@@ -49,7 +53,8 @@ function ProductDetail() {
   const user = useAppSelector(getUser);
   const navigate = useNavigate();
 
-  const search = location.state?.search || "";
+  const search = location.state?.search;
+  console.log(search);
 
   function addItemToCart(item: ProductType) {
     dispatch(addToCart(item));
@@ -72,11 +77,15 @@ function ProductDetail() {
 
     return (
       <>
-        <Link to={search ? `${search}` : ".."} relative="path">
-          <p style={{ textAlign: "left", padding: "1em" }}>
-            &larr; Back to products
-          </p>
-        </Link>
+        {search ? (
+          <Link to={`..${search}`} relative="path">
+            <p style={{ textAlign: "left", padding: "1em" }}>
+              &larr; Back to products
+            </p>
+          </Link>
+        ) : (
+          <BackButton onClick={() => navigate(-1)}>&larr; Go Back</BackButton>
+        )}
         <MainProductContainer>
           <img src={image} alt={title} />
           <div className="product-info">
