@@ -28,7 +28,7 @@ function Checkbox({
         value={filter}
         checked={
           searchParams.get("category")
-            ? searchParams.get("category")?.includes(filter)
+            ? searchParams.get("category")?.split(",").includes(filter)
             : filters.category?.includes(filter)
         }
         onChange={onFilterChange}
