@@ -16,7 +16,7 @@ import {
   removeFromFavorites,
   selectFavorites,
 } from "../../features/favoritesSlice";
-import { addToCart } from "../../features/cartSlice";
+import { addProductToCart } from "../../features/cartSlice";
 import { getUser } from "../../features/userSlice";
 
 type ProductProps = {
@@ -60,10 +60,8 @@ function Product({ product, searchParams }: ProductProps) {
   }
 
   function addItemToCart(item: ProductType) {
-    dispatch(addToCart(item));
+    dispatch(addProductToCart({ cartItem: item }));
   }
-
-  console.log(searchParams);
 
   if (!product) {
     return <></>;

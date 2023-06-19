@@ -49,7 +49,7 @@ export const signOutUser = createAsyncThunk("user/signOut", async () => {
     await signOut();
   } catch (error: any) {
     console.log(error);
-    return error || error.response.data;
+    return error.response.data;
   }
 });
 
@@ -70,6 +70,7 @@ const userSlice = createSlice({
         }
         state.error = "";
         state.token = action.payload;
+        localStorage.setItem("user", JSON.stringify(state.token));
       })
       .addCase(signUpUser.pending, (state) => {
         state.loading = true;
@@ -82,15 +83,17 @@ const userSlice = createSlice({
         }
         state.error = "";
         state.token = action.payload;
+        localStorage.setItem("user", JSON.stringify(state.token));
       })
       .addCase(signOutUser.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload.errors) {
-          state.error = action.payload.errors[0].message;
+          state.error = action.payload.message;
           return;
         }
         state.error = "";
         state.token = "";
+        localStorage.removeItem("user");
       });
   },
 });

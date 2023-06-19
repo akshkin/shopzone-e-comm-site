@@ -17,7 +17,7 @@ import {
 } from "./product-details.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
-import { addToCart } from "../../features/cartSlice";
+import { addProductToCart } from "../../features/cartSlice";
 import {
   addToFavorites,
   removeFromFavorites,
@@ -57,7 +57,7 @@ function ProductDetail() {
   console.log(search);
 
   function addItemToCart(item: ProductType) {
-    dispatch(addToCart(item));
+    dispatch(addProductToCart({ cartItem: item }));
   }
 
   function renderProduct(product: ProductType) {

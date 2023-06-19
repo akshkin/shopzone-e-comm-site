@@ -2,46 +2,48 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CartItem, Button, Order } from "../../components";
 import { BUTTON_TYPES } from "../../components/button/button.component";
-import { CartContainer, CartItemsContainer, EmptyCart, PlaceOrder } from "./cart.style";
+import {
+  CartContainer,
+  CartItemsContainer,
+  EmptyCart,
+  PlaceOrder,
+} from "./cart.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { ProductType } from "../../constants.types";
-import { selectCartItems, clearCart } from "../../features/cartSlice";
+import {
+  selectCartItems,
+  // clearCart,
+  getCartProducts,
+  selectTotalPrice,
+} from "../../features/cartSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
 
+export type CartItemType = {
+  product: string;
+  quantity: number;
+  totalPrice: number;
+};
+
 function Cart() {
-  const  cartItems  = useAppSelector(selectCartItems);
-  const [cartTotal, setCartTotal] = useState(0);
+  const cartItems = useAppSelector(selectCartItems);
+  const cartTotal = useAppSelector(selectTotalPrice);
   const dispatch = useAppDispatch();
-  const  favorites  = useAppSelector(selectFavorites);
+  const favorites = useAppSelector(selectFavorites);
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const [orderItems, setOrderItems] = useState<ProductType[]>([...cartItems]);
+  // const [orderItems, setOrderItems] = useState<CartItemType[]>([...cartItems]);
   const [orderTotal, setOrderTotal] = useState(0);
 
   useEffect(() => {
-    
-    const newCartTotal = cartItems.reduce(
-      (total, cartItem) => total + cartItem.quantity! * cartItem.price,
-      0
-  );
-    setCartTotal(newCartTotal);
-  }, [cartItems]);
-
-  useEffect(() => {
-    const newTotal = orderItems.reduce(
-      (total, orderItem) => total + orderItem.quantity! * orderItem.price,
-      0
-    );
-    setOrderTotal(newTotal);
-  }, [cartItems, orderItems]);
+    dispatch(getCartProducts());
+  }, [dispatch]);
 
   const cartCount = cartItems.reduce(
-    (total, cartItem) => total + cartItem.quantity!,
+    (total, cartItem) => total + cartItem.quantity,
     0
   );
 
-  const cartItemElements = cartItems.map((item) => {
+  const cartItemElements = cartItems?.map((item) => {
     return (
-      <div key={item._id} className="product cart-product">
+      <div key={item.productId} className="product cart-product">
         <CartItem item={item} />
       </div>
     );
@@ -53,11 +55,11 @@ function Cart() {
         setOrderPlaced(true);
       }, 300);
     }
-    dispatch(clearCart());
+    // dispatch(clearCart());
   }
 
-  if (orderPlaced)
-    return <Order orderTotal={orderTotal} orderItems={orderItems} />;
+  // if (orderPlaced)
+  //   return <Order orderTotal={orderTotal} orderItems={orderItems} />;
 
   return (
     <CartContainer>
@@ -78,9 +80,7 @@ function Cart() {
         <PlaceOrder>
           <h4>Price details ({cartCount} items): </h4>
           <p>Total amount: SEK {cartTotal.toFixed(2)}</p>
-          <Button onClick={placeOrder}>
-            Place order
-          </Button>
+          <Button onClick={placeOrder}>Place order</Button>
         </PlaceOrder>
       )}
     </CartContainer>

@@ -37,6 +37,7 @@ function Header() {
     setSearchTerm(event.target.value);
   }
 
+  console.log(localStorage.getItem("user"));
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (searchTerm) {
