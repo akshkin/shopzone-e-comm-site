@@ -23,8 +23,20 @@ import "./App.css";
 import Layout from "./components/layout/layout.component";
 import ErrorComponent from "./components/error.component";
 import ProtectedRoute from "./routes/protectedRoute";
+import { useEffect } from "react";
+import { useAppDispatch } from "./hooks/useAppDispatch";
+import { getCartProducts } from "./features/cartSlice";
+import { getProductFavorites } from "./features/favoritesSlice";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  //dispatch actions here to update the header to show cart and favorites
+  useEffect(() => {
+    dispatch(getProductFavorites());
+    dispatch(getCartProducts());
+  }, [dispatch]);
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route element={<Layout />}>

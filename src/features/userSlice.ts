@@ -49,6 +49,7 @@ export const signOutUser = createAsyncThunk("user/signOut", async () => {
     await signOut();
   } catch (error: any) {
     console.log(error);
+    Promise.reject(error);
     return error.response.data;
   }
 });
@@ -71,6 +72,7 @@ const userSlice = createSlice({
         state.error = "";
         state.token = action.payload;
         localStorage.setItem("user", JSON.stringify(state.token));
+        console.log(localStorage.user);
       })
       .addCase(signUpUser.pending, (state) => {
         state.loading = true;
@@ -87,13 +89,13 @@ const userSlice = createSlice({
       })
       .addCase(signOutUser.fulfilled, (state, action) => {
         state.loading = false;
-        if (action.payload.errors) {
-          state.error = action.payload.message;
-          return;
-        }
+        localStorage.removeItem("user");
         state.error = "";
         state.token = "";
-        localStorage.removeItem("user");
+      })
+      .addCase(signOutUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = "Could not sign out";
       });
   },
 });

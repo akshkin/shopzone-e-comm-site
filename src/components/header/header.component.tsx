@@ -9,7 +9,7 @@ import {
   Input,
 } from "./header.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { getUser, signOutUser } from "../../features/userSlice";
+import { errorMessage, getUser, signOutUser } from "../../features/userSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
 import { selectCartItems } from "../../features/cartSlice";
 import { getProductsBySearch } from "../../utils/utils";
@@ -25,8 +25,11 @@ function Header() {
 
   const cartItems = useAppSelector(selectCartItems);
   const favorites = useAppSelector(selectFavorites);
+  const error = useAppSelector(errorMessage);
 
   const user = useAppSelector(getUser);
+
+  console.log(user);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -37,7 +40,6 @@ function Header() {
     setSearchTerm(event.target.value);
   }
 
-  console.log(localStorage.getItem("user"));
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (searchTerm) {
@@ -49,6 +51,7 @@ function Header() {
 
   function signOut() {
     dispatch(signOutUser());
+    if (error) return;
     navigate("/");
   }
 

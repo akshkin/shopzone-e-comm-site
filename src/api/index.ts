@@ -5,6 +5,7 @@ import { ProductType } from "../constants.types";
 const API = axios.create({ baseURL: "http://localhost:8000" });
 
 API.interceptors.request.use((req) => {
+  console.log(localStorage.getItem("user"));
   if (localStorage.getItem("user")) {
     req.headers.Authorization = JSON.parse(localStorage.getItem("user") || "");
   }
@@ -76,3 +77,8 @@ export const clearCartItem = ({ id }: { id: string }) =>
   API.post("/cart/clearItem", { id });
 
 export const getCart = () => API.get("/cart/get");
+
+export const addToFavorites = ({ item }: { item: ProductType }) =>
+  API.post("/favorites/add", { item });
+
+export const getFavorites = () => API.get("/favorites/get");

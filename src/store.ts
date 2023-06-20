@@ -13,8 +13,7 @@ import {
 import productsSlice from "./features/productsSlice";
 import favoritesSlice from "./features/favoritesSlice";
 import cartSlice from "./features/cartSlice";
-import userSlice, { getUser } from "./features/userSlice";
-import axios from "axios";
+import userSlice from "./features/userSlice";
 
 const reducers = combineReducers({
   allProducts: productsSlice,
@@ -26,8 +25,8 @@ const reducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["favorites"],
-  // whitelist: ["favorites", "cartItems"],
+  whitelist: ["user"],
+  // whitelist: ["favorites"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -44,19 +43,6 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-
-// export const authorizeRequest = () => {
-//   const API = axios.create({ baseURL: "http://localhost8000" });
-
-//   API.interceptors.request.use((req) => {
-//     const persistedState = store.getState();
-//     console.log(persistedState);
-
-//     return req;
-//   });
-
-//   return API;
-// };
 
 export type RootState = ReturnType<typeof store.getState>;
 

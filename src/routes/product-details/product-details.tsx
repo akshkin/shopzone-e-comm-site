@@ -19,8 +19,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
 import { addProductToCart } from "../../features/cartSlice";
 import {
-  addToFavorites,
-  removeFromFavorites,
+  addProductToFavorites,
   selectFavorites,
 } from "../../features/favoritesSlice";
 import { getProductDetails } from "../../utils/utils";
@@ -65,11 +64,11 @@ function ProductDetail() {
 
     function addItemToFavorites() {
       if (user) {
-        if (!favorites.includes(product)) {
-          return dispatch(addToFavorites(product));
-        } else {
-          return dispatch(removeFromFavorites(product._id));
-        }
+        //   if (!favorites.includes(product)) {
+        return dispatch(addProductToFavorites({ item: product }));
+        // } else {
+        //   return dispatch(removeFromFavorites(product._id));
+        // }
       } else {
         navigate("/auth", { state: { message: "You must login first" } });
       }

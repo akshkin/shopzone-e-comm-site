@@ -12,8 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
 import {
-  addToFavorites,
-  removeFromFavorites,
+  addProductToFavorites,
   selectFavorites,
 } from "../../features/favoritesSlice";
 import { addProductToCart } from "../../features/cartSlice";
@@ -32,31 +31,34 @@ function Product({ product, searchParams }: ProductProps) {
 
   function addItemToFavorites(item: ProductType) {
     user
-      ? dispatch(addToFavorites(item))
+      ? dispatch(addProductToFavorites({ item }))
       : navigate("/auth", { state: { message: "You must login first" } });
   }
-  function removeItemFromFavorites(id: string) {
-    user
-      ? dispatch(removeFromFavorites(id))
-      : navigate("/auth", { state: { message: "You must login first" } });
-  }
+  // function removeItemFromFavorites(id: string) {
+  //   user
+  //     ? dispatch(removeFromFavorites(id))
+  //     : navigate("/auth", { state: { message: "You must login first" } });
+  // }
 
   function heartIcon() {
-    if (favorites?.find((favorite) => favorite._id === product._id)) {
-      return (
-        <Icon
-          icon="ri:heart-fill"
-          onClick={() => removeItemFromFavorites(product._id)}
-        />
-      );
-    } else {
-      return (
-        <Icon
-          icon="ri:heart-line"
-          onClick={() => addItemToFavorites(product)}
-        />
-      );
-    }
+    const isFavorite = favorites?.find(
+      (favorite) => favorite.productId === product._id
+    );
+
+    return (
+      <Icon
+        icon={isFavorite ? "ri:heart-fill" : "ri:heart-line"}
+        onClick={() => addItemToFavorites(product)}
+      />
+    );
+    // } else {
+    //   return (
+    //     <Icon
+    //       icon="ri:heart-line"
+    //       onClick={() => addItemToFavorites(product)}
+    //     />
+    //   );
+    // }
   }
 
   function addItemToCart(item: ProductType) {

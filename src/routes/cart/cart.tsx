@@ -32,9 +32,9 @@ function Cart() {
   // const [orderItems, setOrderItems] = useState<CartItemType[]>([...cartItems]);
   const [orderTotal, setOrderTotal] = useState(0);
 
-  useEffect(() => {
-    dispatch(getCartProducts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCartProducts());
+  // }, [dispatch]);
 
   const cartCount = cartItems.reduce(
     (total, cartItem) => total + cartItem.quantity,
