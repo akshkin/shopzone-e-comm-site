@@ -34,7 +34,6 @@ function Product({ product, searchParams }: ProductProps) {
       ? dispatch(addProductToFavorites({ item }))
       : navigate("/auth", { state: { message: "You must login first" } });
   }
-  
 
   function heartIcon() {
     const isFavorite = favorites?.find(
@@ -47,11 +46,17 @@ function Product({ product, searchParams }: ProductProps) {
         onClick={() => addItemToFavorites(product)}
       />
     );
-    
   }
 
   function addItemToCart(item: ProductType) {
-    dispatch(addProductToCart({ cartItem: item }));
+    user
+      ? dispatch(addProductToCart({ cartItem: item }))
+      : navigate("/auth", {
+          state: {
+            message:
+              "Please be patient while we work on the functionality of adding items to cart without being logged in.",
+          },
+        });
   }
 
   if (!product) {
