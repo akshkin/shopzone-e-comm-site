@@ -14,8 +14,11 @@ import {
   // clearCart,
   getCartProducts,
   selectTotalPrice,
+  cartLoading,
 } from "../../features/cartSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
+import { RiseLoader } from "react-spinners";
+import { StyledLoader } from "../products/products.style";
 
 export type CartItemType = {
   product: string;
@@ -28,6 +31,7 @@ function Cart() {
   const cartTotal = useAppSelector(selectTotalPrice);
   const dispatch = useAppDispatch();
   const favorites = useAppSelector(selectFavorites);
+  const isLoading = useAppSelector(cartLoading);
   const [orderPlaced, setOrderPlaced] = useState(false);
   // const [orderItems, setOrderItems] = useState<CartItemType[]>([...cartItems]);
   const [orderTotal, setOrderTotal] = useState(0);
@@ -60,6 +64,7 @@ function Cart() {
 
   // if (orderPlaced)
   //   return <Order orderTotal={orderTotal} orderItems={orderItems} />;
+  if (isLoading) return <StyledLoader />;
 
   return (
     <CartContainer>

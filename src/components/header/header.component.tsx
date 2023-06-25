@@ -53,6 +53,7 @@ function Header() {
     dispatch(signOutUser());
     if (error) return;
     navigate("/");
+    window.location.reload();
   }
 
   return (

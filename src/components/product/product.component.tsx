@@ -34,11 +34,7 @@ function Product({ product, searchParams }: ProductProps) {
       ? dispatch(addProductToFavorites({ item }))
       : navigate("/auth", { state: { message: "You must login first" } });
   }
-  // function removeItemFromFavorites(id: string) {
-  //   user
-  //     ? dispatch(removeFromFavorites(id))
-  //     : navigate("/auth", { state: { message: "You must login first" } });
-  // }
+  
 
   function heartIcon() {
     const isFavorite = favorites?.find(
@@ -51,14 +47,7 @@ function Product({ product, searchParams }: ProductProps) {
         onClick={() => addItemToFavorites(product)}
       />
     );
-    // } else {
-    //   return (
-    //     <Icon
-    //       icon="ri:heart-line"
-    //       onClick={() => addItemToFavorites(product)}
-    //     />
-    //   );
-    // }
+    
   }
 
   function addItemToCart(item: ProductType) {

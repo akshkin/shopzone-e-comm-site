@@ -81,5 +81,6 @@ const favoritesSlice = createSlice({
 });
 
 export const selectFavorites = (state: RootState) => state.favorites.favorites;
+export const favoritesLoading = (state: RootState) => state.favorites.loading;
 
 export default favoritesSlice.reducer;
