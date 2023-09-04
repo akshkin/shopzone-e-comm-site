@@ -8,6 +8,8 @@ import {
   ProductTitle,
   ProductPrice,
   Rating,
+  StyledCartIcon,
+  StyledHeartIcon,
 } from "./product.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
@@ -43,7 +45,7 @@ function Product({ product, searchParams }: ProductProps) {
     return (
       <Icon
         icon={isFavorite ? "ri:heart-fill" : "ri:heart-line"}
-        onClick={() => addItemToFavorites(product)}
+        // onClick={() => addItemToFavorites(product)}
       />
     );
   }
@@ -66,27 +68,27 @@ function Product({ product, searchParams }: ProductProps) {
   return (
     <ProductContainer layout>
       <Image src={image} alt={`${title}`} />
-      <ButtonContainer>
-        <Button
-          buttonType={BUTTON_TYPES.base}
-          onClick={() => addItemToCart(product)}
-        >
-          Add to Cart
-        </Button>
-        <Button buttonType={BUTTON_TYPES.inverted}>{heartIcon()}</Button>
-      </ButtonContainer>
+
+      <StyledHeartIcon
+        onClick={() => addItemToFavorites(product)}
+        icon={heartIcon().props.icon}
+      />
       <ProductTitle>
         <Link
           to={`/products/${_id}`}
           state={{ search: searchParams && `?${searchParams.toString()}` }}
         >
-          {title}
+          {title.substring(0, 12)}...
         </Link>
       </ProductTitle>
       <Rating>
         {rating?.rate} <Icon icon="ri:star-s-fill" />
       </Rating>
       <ProductPrice>SEK {price}</ProductPrice>
+      <StyledCartIcon
+        onClick={() => addItemToCart(product)}
+        icon="ion:cart-outline"
+      />
     </ProductContainer>
   );
 }
