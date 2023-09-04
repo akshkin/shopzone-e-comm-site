@@ -7,32 +7,37 @@ import {
   Quantity,
   QuantityContainer,
 } from "./cart-item.style";
-import { addToCart, removeFromCart, clearFromCart } from "../../features/cartSlice";
+import {
+  addProductToCart,
+  removeProductFromCart,
+  CartItemType,
+  clearProductFromCart,
+} from "../../features/cartSlice";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
 
 type CartItemProp = {
-  item: ProductType
-}
+  item: CartItemType;
+};
 
 function CartItem({ item }: CartItemProp) {
   const [hovered, setHovered] = useState(false);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const trashIcon = hovered ? "ri-delete-bin-5-fill" : "ri-delete-bin-5-line";
 
-  const { _id, image, title, price, quantity } = item;
+  const { _id, image, title } = item.product;
 
   function removeItemFromCart(id: string) {
-    dispatch(removeFromCart(id));
+    dispatch(removeProductFromCart({ id }));
   }
 
   function addItemToCart(item: ProductType) {
-    dispatch(addToCart(item));
+    dispatch(addProductToCart({ cartItem: item }));
   }
 
   function clearItemFromCart(id: string) {
-    dispatch(clearFromCart(id));
+    dispatch(clearProductFromCart({ id }));
   }
 
   return (
@@ -43,16 +48,16 @@ function CartItem({ item }: CartItemProp) {
           <h3>
             <Link to={`/products/${_id}`}>{title}</Link>
           </h3>
-          <p>SEK {quantity ? price * quantity : price}</p>
+          <p>SEK {item.totalPrice}</p>
           <QuantityContainer>
             <StyledIcon
               icon="ri:subtract-fill"
               onClick={() => removeItemFromCart(_id)}
             />
-            <Quantity> {quantity} </Quantity>
+            <Quantity> {item.quantity} </Quantity>
             <StyledIcon
               icon="ri:add-line"
-              onClick={() => addItemToCart(item)}
+              onClick={() => addItemToCart(item.product)}
             />
           </QuantityContainer>
           <StyledIcon

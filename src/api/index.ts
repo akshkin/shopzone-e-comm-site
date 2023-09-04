@@ -1,14 +1,15 @@
 import axios from "axios";
+import { ProductType } from "../constants.types";
 
 const API = axios.create({ baseURL: "https://shopzone-server.onrender.com" });
 // const API = axios.create({ baseURL: "http://localhost:8000" });
 
 API.interceptors.request.use((req) => {
+  console.log(localStorage.getItem("user"));
   if (localStorage.getItem("user")) {
-    req.headers.Authorization = JSON.parse(
-      localStorage.getItem("user") || ""
-    ).token;
+    req.headers.Authorization = JSON.parse(localStorage.getItem("user") || "");
   }
+
   return req;
 });
 
@@ -63,3 +64,21 @@ export const signUp = (formFields: FormFields) =>
   API.post("/users/signup", formFields);
 
 export const getProfile = () => API.get("/users/profile");
+
+export const addToCart = ({ cartItem }: { cartItem: ProductType }) =>
+  API.post("/cart/add", { cartItem });
+
+export const removeFromCart = ({ id }: { id: string }) =>
+  API.post("/cart/remove", { id });
+
+export const clearCart = () => API.post("/cart/clear");
+
+export const clearCartItem = ({ id }: { id: string }) =>
+  API.post("/cart/clearItem", { id });
+
+export const getCart = () => API.get("/cart/get");
+
+export const addToFavorites = ({ item }: { item: ProductType }) =>
+  API.post("/favorites/add", { item });
+
+export const getFavorites = () => API.get("/favorites/get");

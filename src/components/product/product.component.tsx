@@ -12,11 +12,10 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
 import {
-  addToFavorites,
-  removeFromFavorites,
+  addProductToFavorites,
   selectFavorites,
 } from "../../features/favoritesSlice";
-import { addToCart } from "../../features/cartSlice";
+import { addProductToCart } from "../../features/cartSlice";
 import { getUser } from "../../features/userSlice";
 
 type ProductProps = {
@@ -32,38 +31,33 @@ function Product({ product, searchParams }: ProductProps) {
 
   function addItemToFavorites(item: ProductType) {
     user
-      ? dispatch(addToFavorites(item))
-      : navigate("/auth", { state: { message: "You must login first" } });
-  }
-  function removeItemFromFavorites(id: string) {
-    user
-      ? dispatch(removeFromFavorites(id))
+      ? dispatch(addProductToFavorites({ item }))
       : navigate("/auth", { state: { message: "You must login first" } });
   }
 
   function heartIcon() {
-    if (favorites?.find((favorite) => favorite._id === product._id)) {
-      return (
-        <Icon
-          icon="ri:heart-fill"
-          onClick={() => removeItemFromFavorites(product._id)}
-        />
-      );
-    } else {
-      return (
-        <Icon
-          icon="ri:heart-line"
-          onClick={() => addItemToFavorites(product)}
-        />
-      );
-    }
+    const isFavorite = favorites?.find(
+      (favorite) => favorite.productId === product._id
+    );
+
+    return (
+      <Icon
+        icon={isFavorite ? "ri:heart-fill" : "ri:heart-line"}
+        onClick={() => addItemToFavorites(product)}
+      />
+    );
   }
 
   function addItemToCart(item: ProductType) {
-    dispatch(addToCart(item));
+    user
+      ? dispatch(addProductToCart({ cartItem: item }))
+      : navigate("/auth", {
+          state: {
+            message:
+              "Please be patient while we work on the functionality of adding items to cart without being logged in.",
+          },
+        });
   }
-
-  console.log(searchParams);
 
   if (!product) {
     return <></>;

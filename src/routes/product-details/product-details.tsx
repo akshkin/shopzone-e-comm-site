@@ -17,10 +17,9 @@ import {
 } from "./product-details.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
-import { addToCart } from "../../features/cartSlice";
+import { addProductToCart } from "../../features/cartSlice";
 import {
-  addToFavorites,
-  removeFromFavorites,
+  addProductToFavorites,
   selectFavorites,
 } from "../../features/favoritesSlice";
 import { getProductDetails } from "../../utils/utils";
@@ -57,7 +56,7 @@ function ProductDetail() {
   console.log(search);
 
   function addItemToCart(item: ProductType) {
-    dispatch(addToCart(item));
+    dispatch(addProductToCart({ cartItem: item }));
   }
 
   function renderProduct(product: ProductType) {
@@ -65,11 +64,11 @@ function ProductDetail() {
 
     function addItemToFavorites() {
       if (user) {
-        if (!favorites.includes(product)) {
-          return dispatch(addToFavorites(product));
-        } else {
-          return dispatch(removeFromFavorites(product._id));
-        }
+        //   if (!favorites.includes(product)) {
+        return dispatch(addProductToFavorites({ item: product }));
+        // } else {
+        //   return dispatch(removeFromFavorites(product._id));
+        // }
       } else {
         navigate("/auth", { state: { message: "You must login first" } });
       }
