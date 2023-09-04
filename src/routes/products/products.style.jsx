@@ -3,14 +3,21 @@ import { RiseLoader } from "react-spinners";
 import { motion } from "framer-motion";
 import { FilterContainer } from "../../components/filters/filters.styles";
 import { StyledIcon } from "../../components/filters/filters.styles";
-import { Icon } from "@iconify/react";
 
 export const ProductsContainer = styled.div`
   padding: 1em;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 300px);
+  grid-template-columns: repeat(2, 1fr);
   justify-content: center;
   grid-gap: 1em;
+
+  @media (min-width: 500px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 800px) {
+    grid-template-columns: repeat(auto-fit, 300px);
+  }
 `;
 
 export const FilterAndSort = styled.div`
