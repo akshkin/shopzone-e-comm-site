@@ -1,15 +1,15 @@
-import { ReactElement } from 'react'
-import { StyledHero, Heading } from './hero.styles'
+import { ReactElement } from "react";
+import { StyledHero, Heading } from "./hero.styles";
 
-const HeroImg = require("../../images/hero.jpg")
+const HeroImg = require("../../images/hero-new.jpg");
 
 function Hero(): ReactElement {
   return (
     <StyledHero>
-        <img src={HeroImg} alt="hero"/>
-        <Heading>SHOP FROM HOME!</Heading>
+      <img src={HeroImg} alt="hero" />
+      <Heading>Explore our collections below</Heading>
     </StyledHero>
-  )
+  );
 }
 
-export default Hero
+export default Hero;
