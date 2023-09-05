@@ -55,8 +55,18 @@ function ProductDetail() {
   const search = location.state?.search;
   console.log(search);
 
+  // function addItemToCart(item: ProductType) {
+  //   dispatch(addProductToCart({ cartItem: item }));
+  // }
   function addItemToCart(item: ProductType) {
-    dispatch(addProductToCart({ cartItem: item }));
+    user
+      ? dispatch(addProductToCart({ cartItem: item }))
+      : navigate("/auth", {
+          state: {
+            message:
+              "Please be patient while we work on the functionality of adding items to cart without being logged in.",
+          },
+        });
   }
 
   function renderProduct(product: ProductType) {
