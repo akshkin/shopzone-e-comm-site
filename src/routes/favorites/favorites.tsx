@@ -19,8 +19,9 @@ function Favorites() {
   //   dispatch(getProductFavorites());
   // }, [dispatch]);
 
+  console.log(favorites);
   const favoriteElements = favorites?.map((favorite) => (
-    <Product key={favorite.productId} product={favorite.product} />
+    <Product key={favorite.product._id} product={favorite.product} />
   ));
 
   if (favorites?.length === 0) return <p>No products added to Favorites</p>;

@@ -39,7 +39,7 @@ function Product({ product, searchParams }: ProductProps) {
 
   function heartIcon() {
     const isFavorite = favorites?.find(
-      (favorite) => favorite.productId === product._id
+      (favorite) => favorite.product._id === product._id
     );
 
     return (
@@ -78,7 +78,7 @@ function Product({ product, searchParams }: ProductProps) {
           to={`/products/${_id}`}
           state={{ search: searchParams && `?${searchParams.toString()}` }}
         >
-          {title.substring(0, 12)}...
+          {title?.substring(0, 12)}...
         </Link>
       </ProductTitle>
       <Rating>

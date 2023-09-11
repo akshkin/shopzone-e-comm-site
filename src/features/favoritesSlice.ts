@@ -17,7 +17,6 @@ type Favorites = {
 
 type FavoriteItemType = {
   product: ProductType;
-  productId: string;
 };
 
 export const addProductToFavorites = createAsyncThunk(
@@ -38,7 +37,6 @@ export const getProductFavorites = createAsyncThunk(
   async () => {
     try {
       const response = await getFavorites();
-      console.log(response.data);
       return response.data;
     } catch (error: any) {
       console.log(error);

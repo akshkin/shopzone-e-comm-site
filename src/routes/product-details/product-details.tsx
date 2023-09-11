@@ -55,9 +55,6 @@ function ProductDetail() {
   const search = location.state?.search;
   console.log(search);
 
-  // function addItemToCart(item: ProductType) {
-  //   dispatch(addProductToCart({ cartItem: item }));
-  // }
   function addItemToCart(item: ProductType) {
     user
       ? dispatch(addProductToCart({ cartItem: item }))
@@ -74,11 +71,7 @@ function ProductDetail() {
 
     function addItemToFavorites() {
       if (user) {
-        //   if (!favorites.includes(product)) {
         return dispatch(addProductToFavorites({ item: product }));
-        // } else {
-        //   return dispatch(removeFromFavorites(product._id));
-        // }
       } else {
         navigate("/auth", { state: { message: "You must login first" } });
       }
