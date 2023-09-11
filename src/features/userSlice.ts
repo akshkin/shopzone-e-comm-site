@@ -65,7 +65,7 @@ const userSlice = createSlice({
       })
       .addCase(signInUser.fulfilled, (state, action) => {
         state.loading = false;
-        if (action.payload.message) {
+        if (action.payload?.message) {
           state.error = action.payload.message;
           return;
         }

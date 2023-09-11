@@ -5,7 +5,6 @@ const API = axios.create({ baseURL: "https://shopzone-server.onrender.com" });
 // const API = axios.create({ baseURL: "http://localhost:8000" });
 
 API.interceptors.request.use((req) => {
-  console.log(localStorage.getItem("user"));
   if (localStorage.getItem("user")) {
     req.headers.Authorization = JSON.parse(localStorage.getItem("user") || "");
   }
@@ -18,10 +17,6 @@ type FormFields = {
   email: string;
   password: string;
 };
-// sort : {
-//   rating?: string | undefined;
-//   price?: string | undefined
-// };
 
 export type FiltersType = {
   sort: string | undefined;
@@ -30,14 +25,6 @@ export type FiltersType = {
   rating?: number;
 };
 
-// export const fetchProducts = (filters: FiltersType) =>
-//   API.get(
-//     `/products?sort=${
-//       filters.sort.rating || filters.sort.price
-//     }&category=${filters.category.toString()}&price=${filters.price}&rating=${
-//       filters.rating
-//     }`
-//   );
 export const fetchProducts = (filters: FiltersType) =>
   API.get(
     `/products?sort=${

@@ -10,10 +10,7 @@ import {
 } from "./products.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
-import {
-  selectShow,
-  setShow
-} from "../../features/productsSlice";
+import { selectShow, setShow } from "../../features/productsSlice";
 import Filters from "../../components/filters/filters.component";
 import { useState } from "react";
 import { Icon } from "@iconify/react";
@@ -53,20 +50,18 @@ function Products() {
   const ratingFilter = searchParams.get("rating");
 
   useEffect(() => {
-    async function listP(){
-    const data = await getProducts({
-      sort: sortFilter ? sortFilter : "",
-      category: categoryFilter ? [categoryFilter] : [],
-      price: priceFilter ? +priceFilter : 100000,
-      rating: ratingFilter ? +ratingFilter : 3,
-    });
-    setFilteredProducts(data)
-
+    async function listP() {
+      const data = await getProducts({
+        sort: sortFilter ? sortFilter : "",
+        category: categoryFilter ? [categoryFilter] : [],
+        price: priceFilter ? +priceFilter : 100000,
+        rating: ratingFilter ? +ratingFilter : 3,
+      });
+      setFilteredProducts(data);
     }
-    listP()
-  }, [filters, categoryFilter, ratingFilter, sortFilter, priceFilter])
+    listP();
+  }, [filters, categoryFilter, ratingFilter, sortFilter, priceFilter]);
 
-  
   function renderProducts(productsData: DataType) {
     const productElements = productsData.products.map(
       (product: ProductType) => (
@@ -134,10 +129,13 @@ function Products() {
           {filteredProducts?.totalProducts
             ? filteredProducts.totalProducts
             : productsData.totalProducts}{" "}
-          {filteredProducts?.totalProducts === 1 || productsData.totalProducts === 1 ? "product" : "products"}
+          {filteredProducts?.totalProducts === 1 ||
+          productsData.totalProducts === 1
+            ? "product"
+            : "products"}
         </p>
         <ProductsContainer>
-          {filteredProducts?.products.length 
+          {filteredProducts?.products.length
             ? filteredProductElements
             : productElements}
         </ProductsContainer>

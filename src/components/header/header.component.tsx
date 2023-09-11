@@ -29,8 +29,6 @@ function Header() {
 
   const user = useAppSelector(getUser);
 
-  console.log(user);
-
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
