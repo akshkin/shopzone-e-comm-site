@@ -10,7 +10,7 @@ const initialState: Cart = {
   totalPrice: 0,
 };
 export type CartItemType = {
-  productId: string;
+  // productId: string;
   product: ProductType;
   quantity: number;
   totalPrice: number;

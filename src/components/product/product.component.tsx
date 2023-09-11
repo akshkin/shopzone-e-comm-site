@@ -17,7 +17,7 @@ import {
   addProductToFavorites,
   selectFavorites,
 } from "../../features/favoritesSlice";
-import { addProductToCart } from "../../features/cartSlice";
+import { addProductToCart, selectCartItems } from "../../features/cartSlice";
 import { getUser } from "../../features/userSlice";
 
 type ProductProps = {
@@ -29,6 +29,7 @@ function Product({ product, searchParams }: ProductProps) {
   const dispatch = useAppDispatch();
   const user = useAppSelector(getUser);
   const favorites = useAppSelector(selectFavorites);
+  const cartItems = useAppSelector(selectCartItems);
   const navigate = useNavigate();
 
   function addItemToFavorites(item: ProductType) {
@@ -42,12 +43,13 @@ function Product({ product, searchParams }: ProductProps) {
       (favorite) => favorite.product._id === product._id
     );
 
-    return (
-      <Icon
-        icon={isFavorite ? "ri:heart-fill" : "ri:heart-line"}
-        // onClick={() => addItemToFavorites(product)}
-      />
-    );
+    return <Icon icon={isFavorite ? "ri:heart-fill" : "ri:heart-line"} />;
+  }
+
+  function cartIcon() {
+    const inCart = cartItems.find((item) => item.product._id === product._id);
+
+    return <Icon icon={inCart ? "ion:cart-sharp" : "ion:cart-outline"} />;
   }
 
   function addItemToCart(item: ProductType) {
@@ -87,7 +89,7 @@ function Product({ product, searchParams }: ProductProps) {
       <ProductPrice>SEK {price}</ProductPrice>
       <StyledCartIcon
         onClick={() => addItemToCart(product)}
-        icon="ion:cart-outline"
+        icon={cartIcon().props.icon}
       />
     </ProductContainer>
   );

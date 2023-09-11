@@ -19,6 +19,7 @@ import {
 import { selectFavorites } from "../../features/favoritesSlice";
 import { RiseLoader } from "react-spinners";
 import { StyledLoader } from "../products/products.style";
+import { clearCart } from "../../api";
 
 export type CartItemType = {
   product: string;
@@ -47,7 +48,7 @@ function Cart() {
 
   const cartItemElements = cartItems?.map((item) => {
     return (
-      <div key={item.productId} className="product cart-product">
+      <div key={item.product._id} className="product cart-product">
         <CartItem item={item} />
       </div>
     );
@@ -61,6 +62,13 @@ function Cart() {
     }
     // dispatch(clearCart());
   }
+
+  // useEffect(() => {
+  //   async function cleatCart() {
+  //     clearCart();
+  //   }
+  //   cleatCart();
+  // }, []);
 
   // if (orderPlaced)
   //   return <Order orderTotal={orderTotal} orderItems={orderItems} />;
