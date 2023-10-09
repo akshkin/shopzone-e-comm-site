@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CartItem, Button, Order } from "../../components";
 import { BUTTON_TYPES } from "../../components/button/button.component";
 import {
@@ -36,6 +36,7 @@ function Cart() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   // const [orderItems, setOrderItems] = useState<CartItemType[]>([...cartItems]);
   const [orderTotal, setOrderTotal] = useState(0);
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   dispatch(getCartProducts());
@@ -60,6 +61,8 @@ function Cart() {
         setOrderPlaced(true);
       }, 300);
     }
+
+    navigate("/checkout");
     // dispatch(clearCart());
   }
 
@@ -75,28 +78,36 @@ function Cart() {
   if (isLoading) return <StyledLoader />;
 
   return (
-    <CartContainer>
-      <CartItemsContainer>{cartItemElements}</CartItemsContainer>
-      {!cartItems.length ? (
-        <div>
-          <EmptyCart icon="noto:shopping-cart" />
-          <Link to="/products">
-            <h3>Your cart is empty. Let's add some items!</h3>
-          </Link>
-          {favorites && favorites.length > 0 && (
-            <Button buttonType={BUTTON_TYPES.inverted}>
-              <Link to="/favorites">ADD ITEMS FROM FAVORITES</Link>
-            </Button>
-          )}
-        </div>
-      ) : (
-        <PlaceOrder>
-          <h4>Price details ({cartCount} items): </h4>
-          <p>Total amount: SEK {cartTotal.toFixed(2)}</p>
-          <Button onClick={placeOrder}>Place order</Button>
-        </PlaceOrder>
+    <>
+      <CartContainer>
+        <CartItemsContainer>{cartItemElements}</CartItemsContainer>
+        {!cartItems.length ? (
+          <div>
+            <EmptyCart icon="noto:shopping-cart" />
+            <Link to="/products">
+              <h3>Your cart is empty. Let's add some items!</h3>
+            </Link>
+            {favorites && favorites.length > 0 && (
+              <Button buttonType={BUTTON_TYPES.inverted}>
+                <Link to="/favorites">ADD ITEMS FROM FAVORITES</Link>
+              </Button>
+            )}
+          </div>
+        ) : (
+          <PlaceOrder>
+            <h4>Price details ({cartCount} items): </h4>
+            <p>Total amount: SEK {cartTotal.toFixed(2)}</p>
+            <Button onClick={placeOrder}>Place order</Button>
+          </PlaceOrder>
+        )}
+      </CartContainer>
+      {orderPlaced && (
+        <Order
+          orderItems={cartItems}
+          orderTotal={parseFloat(cartTotal.toFixed(2))}
+        />
       )}
-    </CartContainer>
+    </>
   );
 }
 

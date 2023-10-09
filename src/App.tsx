@@ -28,6 +28,7 @@ import { useAppDispatch, useAppSelector } from "./hooks/useAppDispatch";
 import { getCartProducts } from "./features/cartSlice";
 import { getProductFavorites } from "./features/favoritesSlice";
 import { getUser } from "./features/userSlice";
+import CheckoutPage from "./routes/checkout/checkout";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -67,6 +68,11 @@ function App() {
           <Route
             path="favorites"
             element={<Favorites />}
+            errorElement={<ErrorComponent />}
+          />
+          <Route
+            path="checkout"
+            element={<CheckoutPage />}
             errorElement={<ErrorComponent />}
           />
         </Route>

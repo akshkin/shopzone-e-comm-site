@@ -2,13 +2,12 @@ import { ProductType } from "../../constants.types";
 import { CartItemContainer, CartItemInfo } from "../cart-item/cart-item.style";
 
 type OrderCartItemProps = {
-  cartItem: ProductType
-}
+  cartItem: ProductType;
+  quantity: number;
+};
 
-
-function OrderCartItem({ cartItem }: OrderCartItemProps) {
-  
-  const { image, title, price, quantity } = cartItem;
+function OrderCartItem({ cartItem, quantity }: OrderCartItemProps) {
+  const { image, title, price } = cartItem;
   return (
     <CartItemContainer>
       <img src={image} alt={title} />

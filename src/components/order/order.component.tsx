@@ -1,4 +1,5 @@
 import { ProductType } from "../../constants.types";
+import { CartItemType } from "../../features/cartSlice";
 import OrderCartItem from "./orderCartItem.components";
 import {
   OrderItemTotal,
@@ -6,11 +7,10 @@ import {
   StyledLink,
 } from "./orderCartItem.styles";
 
-type OrderProps= {
-  orderItems: ProductType[];
+type OrderProps = {
+  orderItems: CartItemType[];
   orderTotal: number;
-}
-
+};
 
 function Order({ orderItems, orderTotal }: OrderProps) {
   return (
@@ -19,7 +19,11 @@ function Order({ orderItems, orderTotal }: OrderProps) {
       <h4>Order summary</h4>
       <div>
         {orderItems.map((cartItem) => (
-          <OrderCartItem key={cartItem._id} cartItem={cartItem} />
+          <OrderCartItem
+            key={cartItem.product._id}
+            cartItem={cartItem.product}
+            quantity={cartItem.quantity}
+          />
         ))}
       </div>
       <OrderItemTotal>Total: SEK {orderTotal}</OrderItemTotal>
