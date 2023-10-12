@@ -1,9 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import Button, { BUTTON_TYPES } from "../button/button.component";
 import { Icon } from "@iconify/react";
 import {
   ProductContainer,
-  ButtonContainer,
   Image,
   ProductTitle,
   ProductPrice,

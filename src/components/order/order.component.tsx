@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { CartItemType } from "../../features/cartSlice";
 import OrderCartItem from "./orderCartItem.components";
 import {
   OrderItemTotal,

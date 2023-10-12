@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CartItem, Button } from "../../components";
 import { BUTTON_TYPES } from "../../components/button/button.component";
@@ -8,7 +7,7 @@ import {
   EmptyCart,
   PlaceOrder,
 } from "./cart.style";
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppDispatch";
 import {
   selectCartItems,
   selectTotalPrice,

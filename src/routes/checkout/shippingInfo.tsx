@@ -128,7 +128,12 @@ function ShippingInfo() {
           />
           <label htmlFor="addressCheckbox">Save address for future use</label>
 
-          <Button type="submit">"Proceed to Payment"</Button>
+          <Button
+            type="submit"
+            style={{ marginTop: "1em", display: "block", width: "100%" }}
+          >
+            Proceed to Payment
+          </Button>
           {isLoading && <StyledLoader />}
         </form>
       </FormContainer>

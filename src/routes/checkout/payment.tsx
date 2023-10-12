@@ -82,7 +82,7 @@ function Payment() {
     <div>
       {isPending && <StyledLoader />}
       <h2>To pay: SEK {totalPrice}</h2>
-      <div style={{ margin: "1em" }}>
+      <div style={{ display: "grid", placeItems: "center" }}>
         <PayPalButtons
           createOrder={createOrder}
           onApprove={onApprove}
