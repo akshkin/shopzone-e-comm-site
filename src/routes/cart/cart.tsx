@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CartItem, Button, Order } from "../../components";
+import { CartItem, Button } from "../../components";
 import { BUTTON_TYPES } from "../../components/button/button.component";
 import {
   CartContainer,
@@ -11,15 +11,11 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import {
   selectCartItems,
-  // clearCart,
-  getCartProducts,
   selectTotalPrice,
   cartLoading,
 } from "../../features/cartSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
-import { RiseLoader } from "react-spinners";
 import { StyledLoader } from "../products/products.style";
-import { clearCart } from "../../api";
 
 export type CartItemType = {
   product: string;
@@ -30,17 +26,10 @@ export type CartItemType = {
 function Cart() {
   const cartItems = useAppSelector(selectCartItems);
   const cartTotal = useAppSelector(selectTotalPrice);
-  const dispatch = useAppDispatch();
   const favorites = useAppSelector(selectFavorites);
   const isLoading = useAppSelector(cartLoading);
-  const [orderPlaced, setOrderPlaced] = useState(false);
-  // const [orderItems, setOrderItems] = useState<CartItemType[]>([...cartItems]);
-  const [orderTotal, setOrderTotal] = useState(0);
-  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   dispatch(getCartProducts());
-  // }, [dispatch]);
+  const navigate = useNavigate();
 
   const cartCount = cartItems.reduce(
     (total, cartItem) => total + cartItem.quantity,
@@ -56,25 +45,9 @@ function Cart() {
   });
 
   function placeOrder() {
-    if (window.confirm("Confirm payment?")) {
-      setTimeout(() => {
-        setOrderPlaced(true);
-      }, 300);
-    }
-
-    navigate("/checkout");
-    // dispatch(clearCart());
+    navigate("/checkout/shipping");
   }
 
-  // useEffect(() => {
-  //   async function cleatCart() {
-  //     clearCart();
-  //   }
-  //   cleatCart();
-  // }, []);
-
-  // if (orderPlaced)
-  //   return <Order orderTotal={orderTotal} orderItems={orderItems} />;
   if (isLoading) return <StyledLoader />;
 
   return (
@@ -101,12 +74,6 @@ function Cart() {
           </PlaceOrder>
         )}
       </CartContainer>
-      {orderPlaced && (
-        <Order
-          orderItems={cartItems}
-          orderTotal={parseFloat(cartTotal.toFixed(2))}
-        />
-      )}
     </>
   );
 }

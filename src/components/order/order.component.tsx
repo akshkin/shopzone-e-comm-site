@@ -1,4 +1,4 @@
-import { ProductType } from "../../constants.types";
+import { useParams } from "react-router-dom";
 import { CartItemType } from "../../features/cartSlice";
 import OrderCartItem from "./orderCartItem.components";
 import {
@@ -6,19 +6,30 @@ import {
   StyledOrder,
   StyledLink,
 } from "./orderCartItem.styles";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import {
+  getOrder,
+  selectOrderItems,
+  selectTotalPrice,
+} from "../../features/orderSlice";
 
-type OrderProps = {
-  orderItems: CartItemType[];
-  orderTotal: number;
-};
+function Order() {
+  const { orderId } = useParams();
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector(selectOrderItems);
+  const totalPrice = useAppSelector(selectTotalPrice);
 
-function Order({ orderItems, orderTotal }: OrderProps) {
+  useEffect(() => {
+    dispatch(getOrder(orderId!));
+  }, [orderId, dispatch]);
+
   return (
     <StyledOrder>
       <h2>Your order has been confirmed</h2>
       <h4>Order summary</h4>
       <div>
-        {orderItems.map((cartItem) => (
+        {cartItems.map((cartItem) => (
           <OrderCartItem
             key={cartItem.product._id}
             cartItem={cartItem.product}
@@ -26,7 +37,7 @@ function Order({ orderItems, orderTotal }: OrderProps) {
           />
         ))}
       </div>
-      <OrderItemTotal>Total: SEK {orderTotal}</OrderItemTotal>
+      <OrderItemTotal>Total: SEK {totalPrice}</OrderItemTotal>
       <StyledLink to="/products">Keep shopping</StyledLink>
     </StyledOrder>
   );

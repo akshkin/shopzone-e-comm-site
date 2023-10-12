@@ -1,7 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ProductType } from "../constants.types";
 import { RootState } from "../store";
-import { addToCart, clearCartItem, getCart, removeFromCart } from "../api";
+import {
+  addToCart,
+  clearCart,
+  clearCartItem,
+  getCart,
+  removeFromCart,
+} from "../api";
 
 const initialState: Cart = {
   loading: false,
@@ -30,7 +36,6 @@ export const addProductToCart = createAsyncThunk(
       const response = await addToCart({
         cartItem: cartItem,
       });
-      console.log(response);
       return response.data;
     } catch (error: any) {
       console.log(error);
@@ -44,7 +49,6 @@ export const removeProductFromCart = createAsyncThunk(
   async ({ id }: { id: string }) => {
     try {
       const response = await removeFromCart({ id });
-      console.log(response);
       return response.data;
     } catch (error: any) {
       console.log(error);
@@ -57,18 +61,24 @@ export const clearProductFromCart = createAsyncThunk(
   async ({ id }: { id: string }) => {
     try {
       const response = await clearCartItem({ id });
-      console.log(response);
       return response.data;
     } catch (error: any) {
       return error.response.data;
     }
   }
 );
+export const clearCartItems = createAsyncThunk("/cart/clear", async () => {
+  try {
+    const response = await clearCart();
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+});
 
 export const getCartProducts = createAsyncThunk("/cart/get", async () => {
   try {
     const response = await getCart();
-    console.log(response.data);
     return response.data;
   } catch (error: any) {
     return error.response.data;
@@ -136,6 +146,20 @@ const cartSlice = createSlice({
         state.error = null;
         state.cartItems = action.payload.cart.products;
         state.totalPrice = action.payload.totalPrice;
+      })
+      .addCase(clearCartItems.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(clearCartItems.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        if (action.payload.message) {
+          state.error = action.payload.message;
+          return;
+        }
+        state.error = null;
+        state.cartItems = [];
+        // state.totalPrice = action.payload.totalPrice;
       });
   },
 });

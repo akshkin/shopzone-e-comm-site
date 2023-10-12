@@ -29,6 +29,9 @@ import { getCartProducts } from "./features/cartSlice";
 import { getProductFavorites } from "./features/favoritesSlice";
 import { getUser } from "./features/userSlice";
 import CheckoutPage from "./routes/checkout/checkout";
+import ShippingInfo from "./routes/checkout/shippingInfo";
+import Payment from "./routes/checkout/payment";
+import { Order } from "./components";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -74,8 +77,12 @@ function App() {
             path="checkout"
             element={<CheckoutPage />}
             errorElement={<ErrorComponent />}
-          />
+          >
+            <Route path="shipping" element={<ShippingInfo />} />
+            <Route path=":orderId" element={<Payment />} />
+          </Route>
         </Route>
+        <Route path="/order/:orderId" element={<Order />} />
         <Route path="cart" element={<Cart />} />
         <Route path="auth" element={<Auth />} />
         <Route
