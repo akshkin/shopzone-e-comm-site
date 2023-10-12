@@ -21,12 +21,16 @@ import { useNavigate } from "react-router-dom";
 function ShippingInfo() {
   const userAddress = useAppSelector(selectUserAddress);
 
-  const [shippingInformation, setShippingInformation] = useState({
-    address: "",
-    city: "",
-    postalCode: "",
-    country: "",
-  });
+  const [shippingInformation, setShippingInformation] = useState(
+    userAddress
+      ? { ...userAddress }
+      : {
+          address: "",
+          city: "",
+          postalCode: "",
+          country: "",
+        }
+  );
 
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
@@ -51,7 +55,7 @@ function ShippingInfo() {
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    if (!userAddress && toSave) {
+    if (toSave) {
       saveShippingInformation();
     }
     dispatch(
@@ -62,8 +66,6 @@ function ShippingInfo() {
         paymentMethod: "PayPal",
       })
     );
-    // dispatch(clearCartItems());
-    // dispatch(getCartProducts());
     setTimeout(() => {
       orderId && navigate(`/checkout/${orderId}`);
     }, 1500);
@@ -85,7 +87,7 @@ function ShippingInfo() {
           <Input
             type="text"
             name="address"
-            value={userAddress ? userAddress.address : address}
+            value={address}
             placeholder="Address"
             required
             onChange={handleChange}
@@ -94,7 +96,7 @@ function ShippingInfo() {
           <Input
             type="text"
             name="city"
-            value={userAddress ? userAddress.city : city}
+            value={city}
             placeholder="City"
             required
             onChange={handleChange}
@@ -103,7 +105,7 @@ function ShippingInfo() {
           <Input
             type="text"
             name="postalCode"
-            value={userAddress ? userAddress.postalCode : postalCode}
+            value={postalCode}
             placeholder="Postal Code"
             required
             onChange={handleChange}
@@ -112,7 +114,7 @@ function ShippingInfo() {
           <Input
             type="text"
             name="country"
-            value={userAddress ? userAddress.country : country}
+            value={country}
             placeholder="Country"
             required
             onChange={handleChange}
