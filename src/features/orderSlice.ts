@@ -49,7 +49,6 @@ export const createItemsOrder = createAsyncThunk(
   async (data: OrderData) => {
     try {
       const response = await createOrder(data);
-      console.log(response);
       return response.data;
     } catch (error: any) {
       console.log(error);

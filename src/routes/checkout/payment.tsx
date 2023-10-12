@@ -70,6 +70,7 @@ function Payment() {
         setMessage("Payment successful!");
         dispatch(clearCartItems());
         navigate(`/order/${orderId}`, { replace: true });
+        window.location.reload();
       } catch (error) {
         console.log(error);
         setMessage("Payment failed!");
