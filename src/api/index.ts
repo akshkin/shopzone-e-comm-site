@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ProductType } from "../constants.types";
+import { CartItemType } from "../features/cartSlice";
 
 const API = axios.create({ baseURL: "https://shopzone-server.onrender.com" });
 // const API = axios.create({ baseURL: "http://localhost:8000" });
@@ -23,6 +24,18 @@ export type FiltersType = {
   category: string[] | null;
   price?: number;
   rating?: number;
+};
+
+export type OrderData = {
+  orderItems: CartItemType[];
+  shippingAddress: {
+    address: string;
+    city: string;
+    postalCode: string;
+    country: string;
+  };
+  totalPrice: number;
+  paymentMethod: string;
 };
 
 export const fetchProducts = (filters: FiltersType) =>
@@ -69,3 +82,18 @@ export const addToFavorites = ({ item }: { item: ProductType }) =>
   API.post("/favorites/add", { item });
 
 export const getFavorites = () => API.get("/favorites/get");
+
+export const createOrder = (data: OrderData) => API.post("/order/create", data);
+
+export const getCLientId = () => API.get("/api/config/paypal");
+
+export const getOrderDetails = (id: string) => API.get(`/order/${id}`);
+
+export const updateOrder = ({ id, details }: any) =>
+  API.put(`/order/${id}/pay`, details);
+
+export const saveAddress = (
+  shippingAddress: Pick<OrderData, "shippingAddress">
+) => API.patch("/users/save/address", shippingAddress);
+
+export const getAdress = () => API.get("/users/save/address");

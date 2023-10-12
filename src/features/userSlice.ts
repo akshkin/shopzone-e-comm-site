@@ -1,17 +1,36 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { signIn, signOut, signUp } from "../api";
+import {
+  OrderData,
+  getAdress,
+  saveAddress,
+  signIn,
+  signOut,
+  signUp,
+} from "../api";
 import { RootState } from "../store";
 
 const initialState: User = {
   loading: false,
   token: "",
   error: "" || undefined,
+  shippingAddress: {
+    address: "",
+    postalCode: "",
+    country: "",
+    city: "",
+  },
 };
 
 type User = {
   loading: boolean;
   token: string;
   error: string | undefined;
+  shippingAddress?: {
+    address: string;
+    postalCode: string;
+    country: string;
+    city: string;
+  };
 };
 
 type FormFields = {
@@ -43,6 +62,28 @@ export const signUpUser = createAsyncThunk(
     }
   }
 );
+
+export const saveInfo = createAsyncThunk(
+  "user/save",
+  async (shippingAddress: Pick<OrderData, "shippingAddress">) => {
+    try {
+      const { data } = await saveAddress(shippingAddress);
+      console.log(data);
+      return data;
+    } catch (error: any) {
+      return error.response.data.error;
+    }
+  }
+);
+
+export const getUserAddress = createAsyncThunk("user/get/address", async () => {
+  try {
+    const { data } = await getAdress();
+    return data;
+  } catch (error: any) {
+    return error.response.data.error;
+  }
+});
 
 export const signOutUser = createAsyncThunk("user/signOut", async () => {
   try {
@@ -96,12 +137,32 @@ const userSlice = createSlice({
       .addCase(signOutUser.rejected, (state, action) => {
         state.loading = false;
         state.error = "Could not sign out";
+      })
+      .addCase(saveInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.shippingAddress = action.payload;
+      })
+      .addCase(saveInfo.rejected, (state, action) => {
+        state.loading = false;
+        state.error = "Could not save address";
+      })
+      .addCase(getUserAddress.pending, (state, action) => {
+        state.loading = true;
+        state.error = "";
+      })
+      .addCase(getUserAddress.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.shippingAddress = action.payload.shippingAddress;
       });
   },
 });
 
 export const getUser = (state: RootState) => state.user.token;
 export const userLoading = (state: RootState) => state.user.loading;
+export const selectUserAddress = (state: RootState) =>
+  state.user.shippingAddress;
 export const errorMessage = (state: RootState) => state.user.error;
 
 export default userSlice.reducer;

@@ -14,12 +14,14 @@ import productsSlice from "./features/productsSlice";
 import favoritesSlice from "./features/favoritesSlice";
 import cartSlice from "./features/cartSlice";
 import userSlice from "./features/userSlice";
+import orderSlice from "./features/orderSlice";
 
 const reducers = combineReducers({
   allProducts: productsSlice,
   favorites: favoritesSlice,
   cartItems: cartSlice,
   user: userSlice,
+  order: orderSlice,
 });
 
 const persistConfig = {
