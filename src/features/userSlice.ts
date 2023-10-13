@@ -64,6 +64,7 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(signInUser.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.loading = false;
         if (action.payload?.message) {
           state.error = action.payload.message;
@@ -72,7 +73,6 @@ const userSlice = createSlice({
         state.error = "";
         state.token = action.payload;
         localStorage.setItem("user", JSON.stringify(state.token));
-        console.log(localStorage.user);
       })
       .addCase(signUpUser.pending, (state) => {
         state.loading = true;

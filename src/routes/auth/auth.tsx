@@ -18,6 +18,7 @@ import {
   signUpUser,
 } from "../../features/userSlice";
 import { StyledLoader } from "../products/products.style";
+import { Link } from "react-router-dom";
 
 const defaultFormFields = {
   name: "",
@@ -84,6 +85,13 @@ function Auth() {
 
   return (
     <FormPage>
+      <ErrorText>
+        We are currently facing technical issues with authentication. We will be
+        back soon. You can still continue to browse products{" "}
+        <Link to="/products" style={{ textDecoration: "underline" }}>
+          here
+        </Link>
+      </ErrorText>
       {location?.state?.message && (
         <ErrorText>{location?.state?.message}</ErrorText>
       )}
@@ -132,6 +140,7 @@ function Auth() {
 
           <SignInButton
             // disabled={loading}
+            disabled
             type="submit"
             buttonType={BUTTON_TYPES.base}
           >
