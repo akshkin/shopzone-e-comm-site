@@ -71,6 +71,9 @@ const favoritesSlice = createSlice({
         state.error = "";
         if (action.payload.message) {
           state.error = action.payload.message;
+          if (action.payload.message === "No Favorites added") {
+            state.favorites = [];
+          }
           return;
         }
         state.favorites = action.payload.products;

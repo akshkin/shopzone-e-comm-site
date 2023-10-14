@@ -85,13 +85,13 @@ function Auth() {
 
   return (
     <FormPage>
-      <ErrorText>
+      {/* <ErrorText>
         We are currently facing technical issues with authentication. We will be
         back soon. You can still continue to browse products{" "}
         <Link to="/products" style={{ textDecoration: "underline" }}>
           here
         </Link>
-      </ErrorText>
+      </ErrorText> */}
       {location?.state?.message && (
         <ErrorText>{location?.state?.message}</ErrorText>
       )}
@@ -140,7 +140,6 @@ function Auth() {
 
           <SignInButton
             // disabled={loading}
-            disabled
             type="submit"
             buttonType={BUTTON_TYPES.base}
           >

@@ -50,6 +50,7 @@ function Header() {
   function signOut() {
     dispatch(signOutUser());
     if (error) return;
+    localStorage.removeItem("user");
     navigate("/");
     window.location.reload();
   }
