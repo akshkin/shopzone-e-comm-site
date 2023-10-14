@@ -53,7 +53,6 @@ function ProductDetail() {
   const navigate = useNavigate();
 
   const search = location.state?.search;
-  console.log(search);
 
   function addItemToCart(item: ProductType) {
     user

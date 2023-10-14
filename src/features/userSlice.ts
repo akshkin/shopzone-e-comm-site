@@ -44,9 +44,11 @@ export const signInUser = createAsyncThunk(
   async (formFields: FormFields) => {
     try {
       const { data } = await signIn(formFields);
+      console.log(data.token);
       return data.token;
     } catch (error: any) {
-      return error.response.data.error;
+      console.log(error);
+      return error.response.data;
     }
   }
 );
@@ -58,7 +60,8 @@ export const signUpUser = createAsyncThunk(
       const { data } = await signUp(formFields);
       return data.token;
     } catch (error: any) {
-      return error.response.data.error;
+      console.log(error);
+      return error.response.data;
     }
   }
 );
@@ -71,7 +74,7 @@ export const saveInfo = createAsyncThunk(
       console.log(data);
       return data;
     } catch (error: any) {
-      return error.response.data.error;
+      return error.response.data;
     }
   }
 );
@@ -81,15 +84,15 @@ export const getUserAddress = createAsyncThunk("user/get/address", async () => {
     const { data } = await getAdress();
     return data;
   } catch (error: any) {
-    return error.response.data.error;
+    return error.response.data;
   }
 });
 
 export const signOutUser = createAsyncThunk("user/signOut", async () => {
   try {
     await signOut();
+    console.log(localStorage.getItem("perisit"));
   } catch (error: any) {
-    console.log(error);
     Promise.reject(error);
     return error.response.data;
   }
@@ -130,7 +133,6 @@ const userSlice = createSlice({
       })
       .addCase(signOutUser.fulfilled, (state, action) => {
         state.loading = false;
-        localStorage.removeItem("user");
         state.error = "";
         state.token = "";
       })
