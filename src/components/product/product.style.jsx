@@ -60,10 +60,11 @@ export const Image = styled.img`
   overflow: hidden;
 
   @media (min-width: 800px) {
-    height: 250px;
-    width: 100%;
+    height: 225px;
+    width: 300px;
   }
 `;
+
 export const ProductPrice = styled.p`
   grid-area: price;
   font-size: 1rem;
