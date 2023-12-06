@@ -46,11 +46,10 @@ function Home() {
       <CategoriesContainer>
         {categories.map(({ category, imageUrl, id, route }) => {
           return (
-            <CategoryItemContainer key={id}>
+            <CategoryItemContainer key={id} imageUrl={imageUrl}>
               <Link to={route}>
-                <BackgroundImage imageUrl={imageUrl} />
                 <Body>
-                  <h3>{category}</h3>
+                  <h2>{category}</h2>
                   <span>SHOP NOW</span>
                 </Body>
               </Link>
