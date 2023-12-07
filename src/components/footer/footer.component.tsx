@@ -4,12 +4,12 @@ import {
   FooterContainer,
   FooterLinksContainer,
   FooterLink,
-  Copyright
+  Copyright,
 } from "./footer.style";
 
-const Logo = require("../../images/logo.png")
+const Logo = require("../../images/logo.png");
 
-function Footer():JSX.Element {
+function Footer(): JSX.Element {
   return (
     <FooterContainer>
       <Link style={{ fontWeight: "bold" }} to="/">
@@ -37,23 +37,39 @@ function Footer():JSX.Element {
       </FooterLinksContainer>
       <FooterLinksContainer>
         <FooterLink>
-          <a href="https://aksh-kin.netlify.app" target="_blank" rel="noreferrer">
+          <a
+            href="https://aksh-kin.netlify.app"
+            target="_blank"
+            aria-label="Go to portfolio website"
+            rel="noopener noreferrer"
+          >
             <Icon className="icon" icon="mdi:web" />
           </a>
         </FooterLink>
         <FooterLink>
-          <a href="https://github.com/akshkin/shopzone-e-comm-site" target="_blank" rel="noreferrer">
-            <Icon className="icon"  icon="fa-brands:github" />
+          <a
+            href="https://github.com/akshkin/shopzone-e-comm-site"
+            target="_blank"
+            aria-label="Go to github profile"
+            rel="noopener noreferrer"
+          >
+            <Icon className="icon" icon="fa-brands:github" />
           </a>
         </FooterLink>
         <FooterLink>
-          <a href="https://www.linkedin.com/in/akshaya-kini-140902247/" target="_blank" rel="noreferrer">
+          <a
+            href="https://www.linkedin.com/in/akshaya-kini-140902247/"
+            target="_blank"
+            aria-label="Go to LinkedIn profile"
+            rel="noopener noreferrer"
+          >
             <Icon className="icon" icon="fa:linkedin-square" />
           </a>
         </FooterLink>
       </FooterLinksContainer>
       <Copyright>
-        <Icon icon="ri:copyright-line" /> <small>www.shopzone.com. All rights reserved.</small>
+        <Icon icon="ri:copyright-line" />{" "}
+        <small>www.shopzone.com. All rights reserved.</small>
       </Copyright>
     </FooterContainer>
   );
