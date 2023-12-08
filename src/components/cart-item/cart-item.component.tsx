@@ -12,9 +12,13 @@ import {
   removeProductFromCart,
   CartItemType,
   clearProductFromCart,
+  removeProductFromCartUnlogged,
+  addToCartUnlogged,
+  clearItemFromCartUnlogged,
 } from "../../features/cartSlice";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
+import { getUser } from "../../features/userSlice";
 
 type CartItemProp = {
   item: CartItemType;
@@ -23,21 +27,28 @@ type CartItemProp = {
 function CartItem({ item }: CartItemProp) {
   const [hovered, setHovered] = useState(false);
   const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
 
   const trashIcon = hovered ? "ri-delete-bin-5-fill" : "ri-delete-bin-5-line";
 
   const { _id, image, title } = item.product;
 
   function removeItemFromCart(id: string) {
-    dispatch(removeProductFromCart({ id }));
+    user
+      ? dispatch(removeProductFromCart({ id }))
+      : dispatch(removeProductFromCartUnlogged(id));
   }
 
   function addItemToCart(item: ProductType) {
-    dispatch(addProductToCart({ cartItem: item }));
+    user
+      ? dispatch(addProductToCart({ cartItem: item }))
+      : dispatch(addToCartUnlogged(item));
   }
 
   function clearItemFromCart(id: string) {
-    dispatch(clearProductFromCart({ id }));
+    user
+      ? dispatch(clearProductFromCart({ id }))
+      : dispatch(clearItemFromCartUnlogged(id));
   }
 
   return (
