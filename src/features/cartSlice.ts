@@ -227,6 +227,7 @@ const cartSlice = createSlice({
         }
         state.error = null;
         state.cartItems = [];
+        state.totalPrice = 0;
       });
   },
 });

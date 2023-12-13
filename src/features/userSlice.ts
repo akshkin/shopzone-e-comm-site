@@ -11,7 +11,7 @@ import { RootState } from "../store";
 
 const initialState: User = {
   loading: false,
-  token: "",
+  token: localStorage.getItem("user") || "",
   error: "" || undefined,
   shippingAddress: {
     address: "",
@@ -71,7 +71,6 @@ export const saveInfo = createAsyncThunk(
   async (shippingAddress: Pick<OrderData, "shippingAddress">) => {
     try {
       const { data } = await saveAddress(shippingAddress);
-      console.log(data);
       return data;
     } catch (error: any) {
       return error.response.data;

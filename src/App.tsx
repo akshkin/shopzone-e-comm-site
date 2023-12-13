@@ -13,6 +13,10 @@ import {
   Category,
   Auth,
   SearchPage,
+  Order,
+  CheckoutPage,
+  ShippingInfo,
+  Payment,
   NotFound,
 } from "./routes";
 import { loader as productsLoader } from "./routes/products/products";
@@ -28,10 +32,6 @@ import { useAppDispatch, useAppSelector } from "./hooks/useAppDispatch";
 import { getCartProducts } from "./features/cartSlice";
 import { getProductFavorites } from "./features/favoritesSlice";
 import { getUser } from "./features/userSlice";
-import CheckoutPage from "./routes/checkout/checkout";
-import ShippingInfo from "./routes/checkout/shippingInfo";
-import Payment from "./routes/checkout/payment";
-import { Order } from "./components";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -73,14 +73,14 @@ function App() {
             element={<Favorites />}
             errorElement={<ErrorComponent />}
           />
-          <Route
-            path="checkout"
-            element={<CheckoutPage />}
-            errorElement={<ErrorComponent />}
-          >
-            <Route path="shipping" element={<ShippingInfo />} />
-            <Route path=":orderId" element={<Payment />} />
-          </Route>
+        </Route>
+        <Route
+          path="checkout"
+          element={<CheckoutPage />}
+          errorElement={<ErrorComponent />}
+        >
+          <Route path="shipping" element={<ShippingInfo />} />
+          <Route path=":orderId" element={<Payment />} />
         </Route>
         <Route path="/order/:orderId" element={<Order />} />
         <Route path="cart" element={<Cart />} />

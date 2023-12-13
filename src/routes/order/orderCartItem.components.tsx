@@ -1,5 +1,8 @@
 import { ProductType } from "../../constants.types";
-import { CartItemContainer, CartItemInfo } from "../cart-item/cart-item.style";
+import {
+  CartItemContainer,
+  CartItemInfo,
+} from "../../components/cart-item/cart-item.style";
 
 type OrderCartItemProps = {
   cartItem: ProductType;

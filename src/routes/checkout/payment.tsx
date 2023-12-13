@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { clearCartItems, selectTotalPrice } from "../../features/cartSlice";
+import {
+  clearCartItems,
+  getCartProducts,
+  selectTotalPrice,
+} from "../../features/cartSlice";
 import {
   PayPalButtons,
   SCRIPT_LOADING_STATE,
@@ -70,7 +74,6 @@ function Payment() {
         setMessage("Payment successful!");
         dispatch(clearCartItems());
         navigate(`/order/${orderId}`, { replace: true });
-        window.location.reload();
       } catch (error) {
         console.log(error);
         setMessage("Payment failed!");

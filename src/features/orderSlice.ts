@@ -3,8 +3,10 @@ import { RootState } from "../store";
 import {
   OrderData,
   createOrder,
+  createOrderUnlogged,
   getCLientId,
   getOrderDetails,
+  getOrderDetailsUnlogged,
   updateOrder,
 } from "../api";
 import { CartItemType } from "./cartSlice";
@@ -56,6 +58,18 @@ export const createItemsOrder = createAsyncThunk(
     }
   }
 );
+export const createItemsOrderUnlogged = createAsyncThunk(
+  "/order/create-unlogged",
+  async (data: OrderData) => {
+    try {
+      const response = await createOrderUnlogged(data);
+      return response.data;
+    } catch (error: any) {
+      console.log(error);
+      return error.response.data;
+    }
+  }
+);
 
 export const getOrder = createAsyncThunk("/getOrder", async (id: string) => {
   try {
@@ -65,6 +79,17 @@ export const getOrder = createAsyncThunk("/getOrder", async (id: string) => {
     console.log(error);
   }
 });
+export const getOrderUnlogged = createAsyncThunk(
+  "/getOrder-unlogged",
+  async (id: string) => {
+    try {
+      const response = await getOrderDetailsUnlogged(id);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 export const getClientId = createAsyncThunk("getClientId", async () => {
   try {
@@ -109,6 +134,22 @@ const cartSlice = createSlice({
         state.error = null;
         state.orderId = action.payload._id;
       })
+      .addCase(createItemsOrderUnlogged.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createItemsOrderUnlogged.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        if (action.payload.message) {
+          state.error = action.payload.message;
+          return;
+        }
+        state.cartItems = action.payload.orderItems;
+        state.shippingAddress = action.payload.shippingAddress;
+        state.totalPrice = action.payload.totalPrice;
+        state.error = null;
+        state.orderId = action.payload._id;
+      })
 
       .addCase(getClientId.pending, (state, action) => {
         state.loading = true;
@@ -123,6 +164,17 @@ const cartSlice = createSlice({
         state.error = null;
       })
       .addCase(getOrder.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cartItems = action.payload.orderItems;
+        state.shippingAddress = action.payload.shippingAddress;
+        state.totalPrice = action.payload.totalPrice;
+        state.error = null;
+      })
+      .addCase(getOrderUnlogged.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getOrderUnlogged.fulfilled, (state, action) => {
         state.loading = false;
         state.cartItems = action.payload.orderItems;
         state.shippingAddress = action.payload.shippingAddress;
