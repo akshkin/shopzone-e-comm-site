@@ -13,11 +13,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <PersistGate loading={<StyledLoader />} persistor={persistor}> */}
+      {/*<PersistGate loading={<StyledLoader />} persistor={persistor}>*/}
       <PayPalScriptProvider>
         <App />
       </PayPalScriptProvider>
-      {/* </PersistGate> */}
+      {/*</PersistGate>*/}
     </Provider>
   </React.StrictMode>
 );

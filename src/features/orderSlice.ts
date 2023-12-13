@@ -187,8 +187,8 @@ const cartSlice = createSlice({
       })
       .addCase(makePayment.fulfilled, (state, action) => {
         state.loading = false;
-        // state.orderId = action.payload.d;
         state.error = null;
+        state.orderId = "";
       });
   },
 });

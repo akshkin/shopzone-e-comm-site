@@ -89,6 +89,13 @@ const cartSlice = createSlice({
   name: "cartItems",
   initialState,
   reducers: {
+    getCartFromStorage(state) {
+      if (localStorage.getItem("cart")) {
+        const cart = JSON.parse(localStorage.getItem("cart") || "");
+        state.cartItems = cart.cartItems;
+        state.totalPrice = cart.totalPrice;
+      }
+    },
     addToCartUnlogged(state, action) {
       const existingItem = state.cartItems.find(
         (item) => item.product._id === action.payload._id
@@ -119,7 +126,15 @@ const cartSlice = createSlice({
         (acc, current) => acc + current.totalPrice,
         0
       );
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          cartItems: state.cartItems,
+          totalPrice: state.totalPrice,
+        })
+      );
     },
+
     removeProductFromCartUnlogged(state, action) {
       const existingItem = state.cartItems.find(
         (item) => item.product._id === action.payload
@@ -142,6 +157,14 @@ const cartSlice = createSlice({
           );
         }
       }
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          cartItems: state.cartItems,
+          totalPrice: state.totalPrice,
+        })
+      );
+
       state.totalPrice = state.cartItems.reduce(
         (acc, current) => acc + current.totalPrice,
         0
@@ -155,8 +178,21 @@ const cartSlice = createSlice({
         (acc, current) => acc + current.totalPrice,
         0
       );
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          cartItems: state.cartItems,
+          totalPrice: state.totalPrice,
+        })
+      );
+    },
+    clearCartFromStorage(state) {
+      state.cartItems = [];
+      state.totalPrice = 0;
+      localStorage.removeItem("cart");
     },
   },
+
   extraReducers(builder) {
     builder
       .addCase(addProductToCart.pending, (state) => {
@@ -221,13 +257,13 @@ const cartSlice = createSlice({
       .addCase(clearCartItems.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        if (action.payload.message) {
+        if (action.payload.message !== "Cart cleared") {
           state.error = action.payload.message;
           return;
+        } else {
+          state.cartItems = [];
+          state.totalPrice = 0;
         }
-        state.error = null;
-        state.cartItems = [];
-        state.totalPrice = 0;
       });
   },
 });
@@ -237,9 +273,11 @@ export const selectTotalPrice = (state: RootState) =>
   state.cartItems.totalPrice;
 export const cartLoading = (state: RootState) => state.cartItems.loading;
 export const {
+  getCartFromStorage,
   addToCartUnlogged,
   removeProductFromCartUnlogged,
   clearItemFromCartUnlogged,
+  clearCartFromStorage,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

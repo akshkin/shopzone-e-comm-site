@@ -29,7 +29,7 @@ import ErrorComponent from "./components/error.component";
 import ProtectedRoute from "./routes/protectedRoute";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./hooks/useAppDispatch";
-import { getCartProducts } from "./features/cartSlice";
+import { getCartFromStorage, getCartProducts } from "./features/cartSlice";
 import { getProductFavorites } from "./features/favoritesSlice";
 import { getUser } from "./features/userSlice";
 
@@ -42,6 +42,8 @@ function App() {
     if (user) {
       dispatch(getProductFavorites());
       dispatch(getCartProducts());
+    } else {
+      dispatch(getCartFromStorage());
     }
   }, [dispatch, user]);
 

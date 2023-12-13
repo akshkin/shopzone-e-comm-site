@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import {
@@ -11,7 +11,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { errorMessage, getUser, signOutUser } from "../../features/userSlice";
 import { selectFavorites } from "../../features/favoritesSlice";
-import { getCartProducts, selectCartItems } from "../../features/cartSlice";
+import { selectCartItems } from "../../features/cartSlice";
 import { getProductsBySearch } from "../../utils/utils";
 
 const Logo = require("../../images/logo.png");
@@ -46,10 +46,6 @@ function Header() {
       setSearchTerm("");
     }
   }
-
-  useEffect(() => {
-    dispatch(getCartProducts());
-  }, [cartItems.length, dispatch]);
 
   function signOut() {
     dispatch(signOutUser());

@@ -44,7 +44,6 @@ export const signInUser = createAsyncThunk(
   async (formFields: FormFields) => {
     try {
       const { data } = await signIn(formFields);
-      console.log(data.token);
       return data.token;
     } catch (error: any) {
       console.log(error);
@@ -90,7 +89,6 @@ export const getUserAddress = createAsyncThunk("user/get/address", async () => {
 export const signOutUser = createAsyncThunk("user/signOut", async () => {
   try {
     await signOut();
-    console.log(localStorage.getItem("perisit"));
   } catch (error: any) {
     Promise.reject(error);
     return error.response.data;
