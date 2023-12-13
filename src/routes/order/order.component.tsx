@@ -9,19 +9,22 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import {
   getOrder,
+  getOrderUnlogged,
   selectOrderItems,
   selectTotalPrice,
 } from "../../features/orderSlice";
+import { getUser } from "../../features/userSlice";
 
 function Order() {
   const { orderId } = useParams();
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectOrderItems);
   const totalPrice = useAppSelector(selectTotalPrice);
+  const user = useAppSelector(getUser);
 
   useEffect(() => {
-    dispatch(getOrder(orderId!));
-  }, [orderId, dispatch]);
+    user ? dispatch(getOrder(orderId!)) : dispatch(getOrderUnlogged(orderId!));
+  }, [orderId, user, dispatch]);
 
   return (
     <StyledOrder>

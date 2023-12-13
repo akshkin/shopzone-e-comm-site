@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { clearCartItems, selectTotalPrice } from "../../features/cartSlice";
+import {
+  clearCartFromStorage,
+  clearCartItems,
+  getCartProducts,
+  selectTotalPrice,
+} from "../../features/cartSlice";
 import {
   PayPalButtons,
   SCRIPT_LOADING_STATE,
@@ -13,6 +18,7 @@ import {
   selectClientId,
 } from "../../features/orderSlice";
 import { StyledLoader } from "../products/products.style";
+import { getUser } from "../../features/userSlice";
 
 function Payment() {
   const { orderId } = useParams();
@@ -20,6 +26,7 @@ function Payment() {
   const totalPrice = useAppSelector(selectTotalPrice);
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const clientId = useAppSelector(selectClientId);
+  const user = useAppSelector(getUser);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
@@ -68,9 +75,8 @@ function Payment() {
       try {
         dispatch(makePayment({ id: orderId, details: {} }));
         setMessage("Payment successful!");
-        dispatch(clearCartItems());
+        user ? dispatch(clearCartItems()) : dispatch(clearCartFromStorage());
         navigate(`/order/${orderId}`, { replace: true });
-        window.location.reload();
       } catch (error) {
         console.log(error);
         setMessage("Payment failed!");

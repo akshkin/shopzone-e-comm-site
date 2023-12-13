@@ -81,6 +81,7 @@ export const StyledHeartIcon = styled(Icon)`
   padding: 0.1em;
   font-size: 2rem;
   border-radius: 50%;
+  cursor: pointer;
 `;
 
 export const StyledCartIcon = styled(Icon)`
