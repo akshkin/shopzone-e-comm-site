@@ -24,7 +24,6 @@ export const addProductToFavorites = createAsyncThunk(
   async ({ item }: { item: ProductType }) => {
     try {
       const response = await addToFavorites({ item });
-      console.log(response.data);
       return response.data;
     } catch (error: any) {
       console.log(error);
