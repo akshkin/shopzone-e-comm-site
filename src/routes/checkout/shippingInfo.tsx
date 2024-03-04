@@ -83,14 +83,12 @@ function ShippingInfo() {
           })
         );
 
-    // setTimeout(() => {
-    //   orderId && navigate(`/checkout/${orderId}`);
-    // }, 1000);
   }
 
   useEffect(() => {
     if (orderId) {
-      navigate(`/checkout/${orderId}`, { replace: true });
+      // navigate(`/checkout/${orderId}`, { replace: true });
+      navigate(`/checkout/${orderId}`);
     }
   }, [orderId, navigate]);
 

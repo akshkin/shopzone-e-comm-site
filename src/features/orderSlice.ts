@@ -158,6 +158,11 @@ const cartSlice = createSlice({
       .addCase(getClientId.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
+        console.log(action);
+        if (!action.payload) {
+          state.error = "Something went wrong. Please try again later.";
+        }
+        state.clientId = action.payload;
       })
       .addCase(getOrder.pending, (state, action) => {
         state.loading = true;
@@ -201,5 +206,6 @@ export const orderLoading = (state: RootState) => state.order.loading;
 export const selectOrderId = (state: RootState) => state.order.orderId;
 
 export const selectClientId = (state: RootState) => state.order.clientId;
+export const selectError = (state: RootState) => state.order.error;
 
 export default cartSlice.reducer;
