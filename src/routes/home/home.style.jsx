@@ -40,8 +40,6 @@ export const CategoryItemContainer = styled.div`
   background-size: cover;
   background-position: center;
 
-  @media (min-width: 800px) {
-  }
 `;
 
 export const CategoriesContainer = styled.div`
