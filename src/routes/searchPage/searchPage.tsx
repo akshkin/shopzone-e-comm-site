@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { getProductsBySearch } from "../../utils/utils";
 import { ProductsContainer, StyledLoader } from "../products/products.style";
 import { SearchTitle } from "./searchPage.styles";
+import SkeletonComponent from "../../components/skeletonLoading/skeleton.component";
 
 export function loader({ params }: LoaderFunctionArgs) {
   const dataPromise = params.query ? getProductsBySearch(params.query) : null;
@@ -57,7 +58,7 @@ function SearchPage() {
 
   return (
     <>
-      <Suspense fallback={<StyledLoader />}>
+      <Suspense fallback={<SkeletonComponent />}>
         <Await resolve={filteredProducts} children={renderFilteredProducts} />
       </Suspense>
     </>

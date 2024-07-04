@@ -18,6 +18,8 @@ import { AnimatePresence } from "framer-motion";
 import { FiltersType } from "../../api";
 import { useLoaderData, defer, Await, useSearchParams } from "react-router-dom";
 import { DataType, getProducts } from "../../utils/utils";
+import ProductSkeleton from "../../components/product/product.skeleton";
+import SkeletonComponent from "../../components/skeletonLoading/skeleton.component";
 
 export const defaultFilters = {
   sort: "rating_desc",
@@ -143,8 +145,11 @@ function Products() {
     );
   }
 
+  function renderSkeleton() {
+    return <ProductSkeleton />;
+  }
   return (
-    <React.Suspense fallback={<StyledLoader />}>
+    <React.Suspense fallback={<SkeletonComponent />}>
       <Await resolve={productsData} children={renderProducts} />
     </React.Suspense>
   );

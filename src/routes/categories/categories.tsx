@@ -8,10 +8,10 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import Product from "../../components/product/product.component";
-import { CategoryContainer } from "./categories.style";
 import { ProductsContainer, StyledLoader } from "../products/products.style";
 import { getProductsByCategory } from "../../utils/utils";
 import { ProductType } from "../../constants.types";
+import SkeletonComponent from "../../components/skeletonLoading/skeleton.component";
 
 type CategoryParams = {
   category: string;
@@ -58,7 +58,7 @@ function Category() {
   return (
     <>
       <h2>{category?.toUpperCase()}</h2>
-      <React.Suspense fallback={<StyledLoader />}>
+      <React.Suspense fallback={<SkeletonComponent />}>
         <Await resolve={categoryProducts} children={renderProducts} />
       </React.Suspense>
     </>
