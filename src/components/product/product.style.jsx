@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 
@@ -53,11 +53,11 @@ export const ProductTitle = styled.h3`
 `;
 export const Image = styled.img`
   grid-area: image;
-  max-width: 100%;
+  width: 100%;
   height: 150px;
   object-fit: cover;
   margin: 0 auto;
-  overflow: hidden;
+  ${'' /* overflow: hidden; */}
 
   @media (min-width: 800px) {
     height: 225px;
@@ -91,3 +91,67 @@ export const StyledCartIcon = styled(Icon)`
   margin-right: 0.5em;
   cursor: pointer;
 `;
+
+
+const pulseAnimation = keyframes`  
+    to { background-color: #d7d4d4; }
+`;
+
+
+export const ImageSkeleton = styled.div`
+  grid-area: image;
+  width: 100px;
+  height: 150px;
+  margin: 0 auto;
+  background-color: #e0e0e0;
+  animation: ${pulseAnimation} 1s ease-in-out infinite;
+
+  @media (min-width: 800px) {
+    height: 250px;
+    width: 250px;
+  }
+`;
+
+export const TitleSkeleton = styled.div`
+  grid-area: title;
+  height: 1rem;
+  width: 120px;
+  margin: 0.6em;
+  margin-bottom: 0.5em;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  animation: ${pulseAnimation} 1s ease-in-out infinite;
+`
+
+export const RatingSkeleton = styled.div`
+  grid-area: rating;
+  width: 30px;
+  margin-right: 0.5em;
+  margin-top: 0.6em;
+  align-self: flex-start;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  animation: ${pulseAnimation} 1s ease-in-out infinite;
+`;
+
+export const PriceSkeleton = styled.div`
+  grid-area: price;
+  width: 60px;
+  height: 1rem;
+  margin: 0 0.5em 0.5em;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  animation: ${pulseAnimation} 1s ease-in-out infinite;
+`;
+export const CartIconSkeleton = styled.div`
+  grid-area: icon;
+  width: 20px;
+  height: 1.5rem;
+  justify-self: end;
+  margin-right: 0.5em;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  animation: ${pulseAnimation} 1s ease-in-out infinite;
+`;
+
+
