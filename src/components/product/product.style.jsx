@@ -19,7 +19,7 @@ export const ProductContainer = styled(motion.div)`
     "image image"
     "title rating"
     "price icon";
-  min-width: 120px;
+  width: calc(50vw - 1em);
   justify-content: center;
   align-items: center;
   margin: 0 auto;
@@ -27,6 +27,10 @@ export const ProductContainer = styled(motion.div)`
   border: 1px solid lightgray;
   border-radius: 5px;
   padding-bottom: 0.5em;
+
+  @media (min-width: 620px) {
+    width: calc(30vw - 1em);
+  }
 
   @media (min-width: 800px) {
     width: 300px;
@@ -57,7 +61,7 @@ export const Image = styled.img`
   height: 150px;
   object-fit: cover;
   margin: 0 auto;
-  ${'' /* overflow: hidden; */}
+  ${"" /* overflow: hidden; */}
 
   @media (min-width: 800px) {
     height: 250px;
@@ -90,11 +94,9 @@ export const StyledCartIcon = styled(Icon)`
   cursor: pointer;
 `;
 
-
 const pulseAnimation = keyframes`  
     to { background-color: #d7d4d4; }
 `;
-
 
 export const ImageSkeleton = styled.div`
   grid-area: image;
@@ -119,7 +121,7 @@ export const TitleSkeleton = styled.div`
   background-color: #e0e0e0;
   border-radius: 5px;
   animation: ${pulseAnimation} 1s ease-in-out infinite;
-`
+`;
 
 export const RatingSkeleton = styled.div`
   grid-area: rating;
@@ -151,5 +153,3 @@ export const CartIconSkeleton = styled.div`
   border-radius: 5px;
   animation: ${pulseAnimation} 1s ease-in-out infinite;
 `;
-
-

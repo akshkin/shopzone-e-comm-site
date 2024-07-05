@@ -11,7 +11,7 @@ export const ProductsContainer = styled.div`
   justify-content: center;
   grid-gap: 1em;
 
-  @media (min-width: 500px) {
+  @media (min-width: 620px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
