@@ -11,7 +11,7 @@ export const BaseButton = styled.button`
 
   &:hover,
   &:focus {
-    opacity: 0.8;
+    filter: brightness(110%);
   }
   &:disabled {
     cursor: not-allowed;
@@ -21,5 +21,6 @@ export const BaseButton = styled.button`
 
 export const InvertedButton = styled(BaseButton)`
   color: #252525;
-  background-color: #83c5be;
+  background-color: #ffffff;
+  border: 1px solid #252525;
 `;
