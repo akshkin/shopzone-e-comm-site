@@ -139,7 +139,7 @@ function Auth() {
           {errorText && <ErrorText>{errorText}</ErrorText>}
 
           <SignInButton
-            // disabled={loading}
+            disabled={loading}
             type="submit"
             buttonType={BUTTON_TYPES.base}
           >

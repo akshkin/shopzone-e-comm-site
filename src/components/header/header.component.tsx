@@ -96,7 +96,7 @@ function Header() {
         </StyledNavLink>
       </NavLinks>
       <Form onSubmit={handleSubmit}>
-        <label>Search</label>
+        {/* <label>Search</label> */}
         <Input
           type="search"
           onChange={handleChange}
