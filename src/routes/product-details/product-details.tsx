@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useLoaderData,
   useParams,
@@ -53,6 +53,10 @@ function ProductDetail() {
   const navigate = useNavigate();
 
   const search = location.state?.search;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   function addItemToCart(item: ProductType) {
     user
