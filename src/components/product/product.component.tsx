@@ -60,6 +60,10 @@ function Product({ product, searchParams }: ProductProps) {
       : dispatch(addToCartUnlogged(item));
   }
 
+  function saveScrollPosition() {
+    sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+  }
+
   if (!product) {
     return <></>;
   }
@@ -72,7 +76,7 @@ function Product({ product, searchParams }: ProductProps) {
         onClick={() => addItemToFavorites(product)}
         icon={heartIcon().props.icon}
       />
-      <ProductTitle>
+      <ProductTitle onClick={saveScrollPosition}>
         <Link
           to={`/products/${_id}`}
           state={{ search: searchParams && `?${searchParams.toString()}` }}

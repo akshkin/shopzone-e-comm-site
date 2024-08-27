@@ -5,7 +5,6 @@ import {
   DesktopFilters,
   FilterWrapper,
   ProductsContainer,
-  StyledLoader,
   FilterAndSort,
 } from "./products.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
@@ -16,9 +15,14 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { AnimatePresence } from "framer-motion";
 import { FiltersType } from "../../api";
-import { useLoaderData, defer, Await, useSearchParams } from "react-router-dom";
+import {
+  useLoaderData,
+  defer,
+  Await,
+  useSearchParams,
+  useLocation,
+} from "react-router-dom";
 import { DataType, getProducts } from "../../utils/utils";
-import ProductSkeleton from "../../components/product/product.skeleton";
 import SkeletonComponent from "../../components/skeletonLoading/skeleton.component";
 
 export const defaultFilters = {
@@ -45,6 +49,7 @@ function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [filters, setFilters] = useState<FiltersType>({ ...defaultFilters });
+  const location = useLocation();
 
   const priceFilter = searchParams.get("price");
   const categoryFilter = searchParams.get("category");
@@ -52,6 +57,12 @@ function Products() {
   const ratingFilter = searchParams.get("rating");
 
   useEffect(() => {
+    const savedPosition = sessionStorage.getItem("scrollPosition");
+    if (savedPosition) {
+      window.scrollTo(0, parseInt(savedPosition, 10));
+      sessionStorage.removeItem("scrollPosition"); // Clear the saved position after using it
+    }
+
     async function listP() {
       const data = await getProducts({
         sort: sortFilter ? sortFilter : "",
@@ -62,7 +73,7 @@ function Products() {
       setFilteredProducts(data);
     }
     listP();
-  }, [filters, categoryFilter, ratingFilter, sortFilter, priceFilter]);
+  }, [categoryFilter, ratingFilter, sortFilter, priceFilter, location.key]);
 
   function renderProducts(productsData: DataType) {
     const productElements = productsData.products.map(
@@ -145,9 +156,6 @@ function Products() {
     );
   }
 
-  function renderSkeleton() {
-    return <ProductSkeleton />;
-  }
   return (
     <React.Suspense fallback={<SkeletonComponent />}>
       <Await resolve={productsData} children={renderProducts} />

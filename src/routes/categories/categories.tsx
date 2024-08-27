@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useParams,
   Outlet,
@@ -8,7 +8,7 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import Product from "../../components/product/product.component";
-import { ProductsContainer, StyledLoader } from "../products/products.style";
+import { ProductsContainer } from "../products/products.style";
 import { getProductsByCategory } from "../../utils/utils";
 import { ProductType } from "../../constants.types";
 import SkeletonComponent from "../../components/skeletonLoading/skeleton.component";
@@ -36,6 +36,10 @@ type CategoryProducts = {
 function Category() {
   const { categoryProducts } = useLoaderData() as LoaderDataType;
   const { category } = useParams<keyof CategoryParams>() as CategoryParams;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [category]);
 
   function renderProducts(categoryProducts: CategoryProducts) {
     return (
