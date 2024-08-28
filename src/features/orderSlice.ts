@@ -6,7 +6,6 @@ import {
   getCLientId,
   getOrderDetails,
   updateOrder,
-  getAllOrders,
 } from "../api";
 import { CartItemType } from "./cartSlice";
 
@@ -88,16 +87,6 @@ export const makePayment = createAsyncThunk(
   }
 );
 
-export const getOrders = createAsyncThunk("/getOrders", async () => {
-  try {
-    const response = await getAllOrders();
-    console.log(response);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 const cartSlice = createSlice({
   name: "cartItems",
   initialState,
@@ -148,17 +137,6 @@ const cartSlice = createSlice({
         state.loading = false;
         // state.orderId = action.payload.d;
         state.error = null;
-      })
-      .addCase(getOrders.pending, (state, action) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getOrders.fulfilled, (state, action) => {
-        state.loading = false;
-        // state.cartItems = action.payload.orderItems;
-        // state.shippingAddress = action.payload.shippingAddress;
-        // state.totalPrice = action.payload.totalPrice;
-        // state.error = null;
       });
   },
 });

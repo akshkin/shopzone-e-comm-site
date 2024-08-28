@@ -98,4 +98,4 @@ export const saveAddress = (
 
 export const getAdress = () => API.get("/users/save/address");
 
-export const getAllOrders = () => API.get("/orders");
+export const getAllOrders = (page: number) => API.get(`/orders?page=${page}`);
