@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import {
   ProductContainer,
@@ -29,6 +29,7 @@ function Product({ product, searchParams }: ProductProps) {
   const favorites = useAppSelector(selectFavorites);
   const cartItems = useAppSelector(selectCartItems);
   const navigate = useNavigate();
+  const location = useLocation();
 
   function addItemToFavorites(item: ProductType) {
     user
@@ -62,7 +63,10 @@ function Product({ product, searchParams }: ProductProps) {
   }
 
   function saveScrollPosition() {
+    // console.log(loaction);
+    // if (location.pathname.startsWith("/products")) {
     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+    // }
   }
 
   if (!product) {

@@ -57,11 +57,32 @@ function Products() {
   const ratingFilter = searchParams.get("rating");
 
   useEffect(() => {
-    const savedPosition = sessionStorage.getItem("scrollPosition");
-    if (savedPosition) {
-      window.scrollTo(0, parseInt(savedPosition, 10));
-      sessionStorage.removeItem("scrollPosition"); // Clear the saved position after using it
+    window.scrollTo(0, 0);
+
+    function handleScroll() {
+      const savedPosition = sessionStorage.getItem("scrollPosition");
+      console.log(savedPosition);
+      if (savedPosition) {
+        setTimeout(() => {
+          window.scrollTo(0, parseInt(savedPosition, 10));
+          sessionStorage.removeItem("scrollPosition"); // Clear the saved position after using it
+        }, 200);
+      } else {
+        window.scrollTo(0, 0); // Reset scroll position when page is refreshed
+      }
     }
+    handleScroll();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    // const savedPosition = sessionStorage.getItem("scrollPosition");
+    // console.log(savedPosition);
+    // if (savedPosition) {
+    //   window.scrollTo(0, parseInt(savedPosition));
+    //   sessionStorage.removeItem("scrollPosition"); // Clear the saved position after using it
+    // } else {
+    //   window.scrollTo(0, 0); // Reset scroll position when page is refreshed
+    // }
 
     async function listP() {
       const data = await getProducts({
@@ -73,6 +94,8 @@ function Products() {
       setFilteredProducts(data);
     }
     listP();
+
+    // return () => sessionStorage.removeItem("scrollPosition");
   }, [categoryFilter, ratingFilter, sortFilter, priceFilter, location.key]);
 
   function renderProducts(productsData: DataType) {
