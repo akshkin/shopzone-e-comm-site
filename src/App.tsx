@@ -32,6 +32,7 @@ import CheckoutPage from "./routes/checkout/checkout";
 import ShippingInfo from "./routes/checkout/shippingInfo";
 import Payment from "./routes/checkout/payment";
 import { Order } from "./components";
+import Profile from "./routes/profile/profile.component";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -71,6 +72,11 @@ function App() {
           <Route
             path="favorites"
             element={<Favorites />}
+            errorElement={<ErrorComponent />}
+          />
+          <Route
+            path="profile"
+            element={<Profile />}
             errorElement={<ErrorComponent />}
           />
           <Route
