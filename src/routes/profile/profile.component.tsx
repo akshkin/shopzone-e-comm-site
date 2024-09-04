@@ -52,7 +52,6 @@ function Profile() {
   async function loadMoreOrders() {
     try {
       const response = await getAllOrders(page + 1);
-      console.log(response);
       setPage(page + 1);
       setOrders([...orders, ...response.data.orders]);
       setIsNextPage(response.data.isNextPage);
@@ -61,44 +60,51 @@ function Profile() {
     }
   }
 
-  return (
-    <StyledContainer>
-      {isLoading ? (
-        <StyledLoader />
-      ) : (
-        <>
-          <h1>My orders</h1>
-          {orders.map((order) => {
-            return (
-              <InnerContainer>
-                <StyledText>
-                  Date : {new Date(order.createdAt).toLocaleDateString()}
-                </StyledText>
-                <StyledText>Delivered to : </StyledText>
-                <StyledText>
-                  {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
-                  {order.shippingAddress.postalCode}
-                </StyledText>
+  const content = () => {
+    switch (true) {
+      case isLoading:
+        return <StyledLoader />;
+      case message.length > 0:
+        return <ErrorText>{message}</ErrorText>;
+      case orders.length > 0:
+        return (
+          <>
+            <h1>My orders</h1>
+            {orders.map((order) => {
+              return (
+                <InnerContainer>
+                  <StyledText>
+                    Date : {new Date(order.createdAt).toLocaleDateString()}
+                  </StyledText>
+                  <StyledText>Delivered to : </StyledText>
+                  <StyledText>
+                    {order.shippingAddress.address},{" "}
+                    {order.shippingAddress.city},{" "}
+                    {order.shippingAddress.postalCode}
+                  </StyledText>
 
-                {order.orderItems.map((item) => (
-                  <OrderCartItem
-                    cartItem={item.product}
-                    quantity={item.quantity}
-                  />
-                ))}
-              </InnerContainer>
-            );
-          })}
-          {isNextPage ? (
-            <Button onClick={loadMoreOrders}>Load more</Button>
-          ) : (
-            <p>All orders have been loaded!</p>
-          )}
-        </>
-      )}
-      {message && <ErrorText>{message}</ErrorText>}
-    </StyledContainer>
-  );
+                  {order.orderItems.map((item) => (
+                    <OrderCartItem
+                      cartItem={item.product}
+                      quantity={item.quantity}
+                    />
+                  ))}
+                </InnerContainer>
+              );
+            })}
+            {isNextPage ? (
+              <Button onClick={loadMoreOrders}>Load more</Button>
+            ) : (
+              <p>All orders have been loaded!</p>
+            )}
+          </>
+        );
+      default:
+        return <p>No orders found</p>;
+    }
+  };
+
+  return <StyledContainer>{content()}</StyledContainer>;
 }
 
 export default Profile;
