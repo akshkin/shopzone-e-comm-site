@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getAllOrders } from "../../api";
-import OrderCartItem from "../../components/order/orderCartItem.components";
+// import OrderCartItem from "../../components/order/orderCartItem.components";
 import { ProductType } from "../../constants.types";
 import { InnerContainer, StyledContainer, StyledText } from "./profile.style";
 import { Button } from "../../components";
 import { StyledLoader } from "../products/products.style";
 import { ErrorText } from "../auth/auth.style";
+import OrderCartItem from "../order/orderCartItem.components";
 
 type OrderItem = {
   createdAt: Date;

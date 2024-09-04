@@ -6,45 +6,52 @@ export const BackgroundImage = styled.div`
   width: 100%;
   height: 100%;
 `;
+
 export const Body = styled.div`
   border: 1px solid #252525;
   background-color: white;
-  padding: 2em;
-  position: absolute;
-  top: 50%;
-  left: 28%;
+  padding: 0.5em;
 
   &:hover {
-    opacity: 0.6;
+    filter: brightness(80%);
     cursor: pointer;
   }
 
-  & h3 {
+  & h2 {
     margin-top: 0;
   }
+
+  @media (min-width: 500px) {
+    padding: 2em;
+  }
 `;
+
 export const CategoryItemContainer = styled.div`
-  width: 300px;
-  height: 500px;
+  height: 400px;
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   margin: 0 auto;
   transform: scale(1);
   overflow: hidden;
+  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
+  background-size: cover;
+  background-position: center;
 
-  &:hover {
-    cursor: pointer;
+`;
 
-    ${BackgroundImage} {
-      transform: scale(1.1);
-      transition: transform 0.5s ease-in-out;
+export const CategoriesContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (min-width: 900px) {
+    ${CategoryItemContainer} {
+      height: 500px;
+      width: 33%;
     }
   }
-`;
-export const CategoriesContainer = styled.div`
-  margin: 2em;
-  padding: 2em;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 1em;
-  justify-content: center;
 `;

@@ -15,7 +15,11 @@ import {
   addProductToFavorites,
   selectFavorites,
 } from "../../features/favoritesSlice";
-import { addProductToCart, selectCartItems } from "../../features/cartSlice";
+import {
+  addProductToCart,
+  addToCartUnlogged,
+  selectCartItems,
+} from "../../features/cartSlice";
 import { getUser } from "../../features/userSlice";
 
 type ProductProps = {
@@ -54,12 +58,7 @@ function Product({ product, searchParams }: ProductProps) {
   function addItemToCart(item: ProductType) {
     user
       ? dispatch(addProductToCart({ cartItem: item }))
-      : navigate("/auth", {
-          state: {
-            message:
-              "Please be patient while we work on the functionality of adding items to cart without being logged in.",
-          },
-        });
+      : dispatch(addToCartUnlogged(item));
   }
 
   function saveScrollPosition() {

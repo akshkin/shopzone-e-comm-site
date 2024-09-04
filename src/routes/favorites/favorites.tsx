@@ -1,12 +1,12 @@
 import Product from "../../components/product/product.component";
 import { CategoryContainer } from "../categories/categories.style";
 
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppDispatch";
 import {
   favoritesLoading,
   selectFavorites,
 } from "../../features/favoritesSlice";
-import { useEffect } from "react";
+
 import { StyledLoader } from "../products/products.style";
 
 function Favorites() {

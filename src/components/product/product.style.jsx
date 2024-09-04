@@ -64,10 +64,11 @@ export const Image = styled.img`
   ${"" /* overflow: hidden; */}
 
   @media (min-width: 800px) {
-    height: 250px;
-    width: 100%;
+    height: 225px;
+    width: 300px;
   }
 `;
+
 export const ProductPrice = styled.p`
   grid-area: price;
   font-size: 1rem;
@@ -84,6 +85,7 @@ export const StyledHeartIcon = styled(Icon)`
   padding: 0.1em;
   font-size: 2rem;
   border-radius: 50%;
+  cursor: pointer;
 `;
 
 export const StyledCartIcon = styled(Icon)`

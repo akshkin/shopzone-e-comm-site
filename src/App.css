@@ -16,10 +16,12 @@ img{
   height: 300px;
   object-fit: contain;
 }
+
 a{
   text-decoration: none;
   color: black;
 }
+
 a:hover{
   color: darkgray;
 }

@@ -6,3 +6,8 @@ export const FormLabel = styled.label`
   display: flex;
   justify-content: start;
 `;
+
+export const PayPalButtonsContainer = styled.div`
+  display: "grid";
+  placeitems: "center";
+`;

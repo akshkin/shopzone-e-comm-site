@@ -17,7 +17,7 @@ import {
 } from "./product-details.style";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { ProductType } from "../../constants.types";
-import { addProductToCart } from "../../features/cartSlice";
+import { addProductToCart, addToCartUnlogged } from "../../features/cartSlice";
 import {
   addProductToFavorites,
   selectFavorites,
@@ -61,12 +61,7 @@ function ProductDetail() {
   function addItemToCart(item: ProductType) {
     user
       ? dispatch(addProductToCart({ cartItem: item }))
-      : navigate("/auth", {
-          state: {
-            message:
-              "Please be patient while we work on the functionality of adding items to cart without being logged in.",
-          },
-        });
+      : dispatch(addToCartUnlogged(item));
   }
 
   function renderProduct(product: ProductType) {

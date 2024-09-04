@@ -96,6 +96,7 @@ function Header() {
         </StyledNavLink>
         <StyledNavLink
           className={({ isActive }: LinkParam) => (isActive ? "active" : "")}
+          aria-label="Go to cart"
           to="/cart"
         >
           {cartItems?.length > 0 && (

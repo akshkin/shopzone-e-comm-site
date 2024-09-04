@@ -11,7 +11,7 @@ import { RootState } from "../store";
 
 const initialState: User = {
   loading: false,
-  token: "",
+  token: localStorage.getItem("user") || "",
   error: "" || undefined,
   shippingAddress: {
     address: "",
@@ -44,7 +44,6 @@ export const signInUser = createAsyncThunk(
   async (formFields: FormFields) => {
     try {
       const { data } = await signIn(formFields);
-      console.log(data.token);
       return data.token;
     } catch (error: any) {
       console.log(error);
@@ -71,7 +70,6 @@ export const saveInfo = createAsyncThunk(
   async (shippingAddress: Pick<OrderData, "shippingAddress">) => {
     try {
       const { data } = await saveAddress(shippingAddress);
-      console.log(data);
       return data;
     } catch (error: any) {
       return error.response.data;
@@ -91,7 +89,6 @@ export const getUserAddress = createAsyncThunk("user/get/address", async () => {
 export const signOutUser = createAsyncThunk("user/signOut", async () => {
   try {
     await signOut();
-    console.log(localStorage.getItem("perisit"));
   } catch (error: any) {
     Promise.reject(error);
     return error.response.data;

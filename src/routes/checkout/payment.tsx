@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
-import { clearCartItems, selectTotalPrice } from "../../features/cartSlice";
+import {
+  clearCartFromStorage,
+  clearCartItems,
+  getCartProducts,
+  selectTotalPrice,
+} from "../../features/cartSlice";
 import {
   PayPalButtons,
   SCRIPT_LOADING_STATE,
@@ -11,8 +16,12 @@ import {
   getClientId,
   makePayment,
   selectClientId,
+  selectError,
 } from "../../features/orderSlice";
 import { StyledLoader } from "../products/products.style";
+import { getUser } from "../../features/userSlice";
+import { ErrorText } from "../auth/auth.style";
+import { PayPalButtonsContainer } from "./checkout.style";
 
 function Payment() {
   const { orderId } = useParams();
@@ -20,8 +29,14 @@ function Payment() {
   const totalPrice = useAppSelector(selectTotalPrice);
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const clientId = useAppSelector(selectClientId);
+  const error = useAppSelector(selectError);
+  const user = useAppSelector(getUser);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!clientId) setMessage("Something went wrong");
+  }, [clientId]);
 
   useEffect(() => {
     const loadPayPalScript = async () => {
@@ -38,6 +53,7 @@ function Payment() {
         value: { state: SCRIPT_LOADING_STATE.PENDING, message: "pending" },
       });
     };
+
     if (!window.paypal) {
       loadPayPalScript();
     }
@@ -68,9 +84,8 @@ function Payment() {
       try {
         dispatch(makePayment({ id: orderId, details: {} }));
         setMessage("Payment successful!");
-        dispatch(clearCartItems());
-        navigate(`/order/${orderId}`, { replace: true });
-        window.location.reload();
+        user ? dispatch(clearCartItems()) : dispatch(clearCartFromStorage());
+        navigate(`/order/${orderId}`);
       } catch (error) {
         console.log(error);
         setMessage("Payment failed!");
@@ -81,15 +96,21 @@ function Payment() {
   return (
     <div>
       {isPending && <StyledLoader />}
-      <h2>To pay: SEK {totalPrice}</h2>
-      <div style={{ display: "grid", placeItems: "center" }}>
-        <PayPalButtons
-          createOrder={createOrder}
-          onApprove={onApprove}
-          onError={onError}
-        ></PayPalButtons>
-      </div>
-      {message && <p>{message}</p>}
+      {!error || (!clientId && message) ? (
+        <ErrorText>{error ? error : message}</ErrorText>
+      ) : (
+        <>
+          <h2>To pay: SEK {totalPrice}</h2>
+          <PayPalButtonsContainer>
+            <PayPalButtons
+              createOrder={createOrder}
+              onApprove={onApprove}
+              onError={onError}
+            ></PayPalButtons>
+          </PayPalButtonsContainer>
+        </>
+      )}
+      {clientId && message && <p>{message}</p>}
     </div>
   );
 }

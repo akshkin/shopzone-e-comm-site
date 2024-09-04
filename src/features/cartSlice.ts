@@ -88,7 +88,111 @@ export const getCartProducts = createAsyncThunk("/cart/get", async () => {
 const cartSlice = createSlice({
   name: "cartItems",
   initialState,
-  reducers: {},
+  reducers: {
+    getCartFromStorage(state) {
+      if (localStorage.getItem("cart")) {
+        const cart = JSON.parse(localStorage.getItem("cart") || "");
+        state.cartItems = cart.cartItems;
+        state.totalPrice = cart.totalPrice;
+      }
+    },
+    addToCartUnlogged(state, action) {
+      const existingItem = state.cartItems.find(
+        (item) => item.product._id === action.payload._id
+      );
+
+      if (existingItem) {
+        state.cartItems = state.cartItems.map((item) =>
+          item.product._id === existingItem.product._id
+            ? {
+                ...existingItem,
+                quantity: existingItem.quantity + 1,
+                totalPrice:
+                  (existingItem.quantity + 1) * existingItem.product.price,
+              }
+            : item
+        );
+      } else {
+        state.cartItems = [
+          ...state.cartItems,
+          {
+            product: action.payload,
+            quantity: 1,
+            totalPrice: action.payload.price,
+          },
+        ];
+      }
+      state.totalPrice = state.cartItems.reduce(
+        (acc, current) => acc + current.totalPrice,
+        0
+      );
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          cartItems: state.cartItems,
+          totalPrice: state.totalPrice,
+        })
+      );
+    },
+
+    removeProductFromCartUnlogged(state, action) {
+      const existingItem = state.cartItems.find(
+        (item) => item.product._id === action.payload
+      );
+      if (existingItem) {
+        if (existingItem.quantity === 1) {
+          state.cartItems = state.cartItems.filter(
+            (item) => item.product._id !== action.payload
+          );
+        } else {
+          state.cartItems = state.cartItems.map((item) =>
+            item.product._id === action.payload
+              ? {
+                  ...existingItem,
+                  quantity: existingItem.quantity - 1,
+                  totalPrice:
+                    (existingItem.quantity - 1) * existingItem.product.price,
+                }
+              : item
+          );
+        }
+      }
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          cartItems: state.cartItems,
+          totalPrice: state.totalPrice,
+        })
+      );
+
+      state.totalPrice = state.cartItems.reduce(
+        (acc, current) => acc + current.totalPrice,
+        0
+      );
+    },
+    clearItemFromCartUnlogged(state, action) {
+      state.cartItems = state.cartItems.filter(
+        (item) => item.product._id !== action.payload
+      );
+      state.totalPrice = state.cartItems.reduce(
+        (acc, current) => acc + current.totalPrice,
+        0
+      );
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          cartItems: state.cartItems,
+          totalPrice: state.totalPrice,
+        })
+      );
+    },
+    clearCartFromStorage(state) {
+      state.cartItems = [];
+      state.totalPrice = 0;
+      localStorage.removeItem("cart");
+    },
+  },
+
   extraReducers(builder) {
     builder
       .addCase(addProductToCart.pending, (state) => {
@@ -153,13 +257,13 @@ const cartSlice = createSlice({
       .addCase(clearCartItems.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        if (action.payload.message) {
+        if (action.payload.message !== "Cart cleared") {
           state.error = action.payload.message;
           return;
+        } else {
+          state.cartItems = [];
+          state.totalPrice = 0;
         }
-        state.error = null;
-        state.cartItems = [];
-        // state.totalPrice = action.payload.totalPrice;
       });
   },
 });
@@ -168,5 +272,12 @@ export const selectCartItems = (state: RootState) => state.cartItems.cartItems;
 export const selectTotalPrice = (state: RootState) =>
   state.cartItems.totalPrice;
 export const cartLoading = (state: RootState) => state.cartItems.loading;
+export const {
+  getCartFromStorage,
+  addToCartUnlogged,
+  removeProductFromCartUnlogged,
+  clearItemFromCartUnlogged,
+  clearCartFromStorage,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

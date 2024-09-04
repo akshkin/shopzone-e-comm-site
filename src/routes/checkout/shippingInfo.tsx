@@ -6,12 +6,14 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { selectCartItems, selectTotalPrice } from "../../features/cartSlice";
 import {
   createItemsOrder,
+  createItemsOrderUnlogged,
   orderLoading,
   selectOrderId,
 } from "../../features/orderSlice";
 
 import { StyledLoader } from "../products/products.style";
 import {
+  getUser,
   getUserAddress,
   saveInfo,
   selectUserAddress,
@@ -20,11 +22,13 @@ import { useNavigate } from "react-router-dom";
 
 function ShippingInfo() {
   const userAddress = useAppSelector(selectUserAddress);
+  const user = useAppSelector(getUser);
 
   const [shippingInformation, setShippingInformation] = useState(
     userAddress
       ? { ...userAddress }
       : {
+          email: "",
           address: "",
           city: "",
           postalCode: "",
@@ -40,7 +44,7 @@ function ShippingInfo() {
   const isLoading = useAppSelector(orderLoading);
   const navigate = useNavigate();
 
-  const { address, city, postalCode, country } = shippingInformation;
+  const { email, address, city, postalCode, country } = shippingInformation;
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, checked } = event.target;
@@ -49,27 +53,44 @@ function ShippingInfo() {
     }
     setShippingInformation((prevInfo) => ({ ...prevInfo, [name]: value }));
   }
+
   useEffect(() => {
-    dispatch(getUserAddress());
-  }, [dispatch]);
+    if (user) {
+      dispatch(getUserAddress());
+    }
+  }, [user, dispatch]);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    if (toSave) {
+    if (toSave && user) {
       saveShippingInformation();
     }
-    dispatch(
-      createItemsOrder({
-        orderItems: cartItems,
-        shippingAddress: userAddress ? userAddress : shippingInformation,
-        totalPrice,
-        paymentMethod: "PayPal",
-      })
-    );
-    setTimeout(() => {
-      orderId && navigate(`/checkout/${orderId}`);
-    }, 1500);
+    user
+      ? dispatch(
+          createItemsOrder({
+            orderItems: cartItems,
+            shippingAddress: userAddress ? userAddress : shippingInformation,
+            totalPrice,
+            paymentMethod: "PayPal",
+          })
+        )
+      : dispatch(
+          createItemsOrderUnlogged({
+            orderItems: cartItems,
+            shippingAddress: shippingInformation,
+            totalPrice,
+            paymentMethod: "PayPal",
+          })
+        );
+
   }
+
+  useEffect(() => {
+    if (orderId) {
+      // navigate(`/checkout/${orderId}`, { replace: true });
+      navigate(`/checkout/${orderId}`);
+    }
+  }, [orderId, navigate]);
 
   const saveShippingInformation = () => {
     try {
@@ -83,6 +104,19 @@ function ShippingInfo() {
       <h2>Shipping Information</h2>
       <FormContainer>
         <form onSubmit={handleSubmit}>
+          {!user && (
+            <>
+              <FormLabel>Email Address</FormLabel>
+              <Input
+                type="text"
+                name="email"
+                value={email}
+                placeholder="Email Address"
+                required
+                onChange={handleChange}
+              />
+            </>
+          )}
           <FormLabel>Shipping Address</FormLabel>
           <Input
             type="text"
@@ -119,14 +153,20 @@ function ShippingInfo() {
             required
             onChange={handleChange}
           />
-          <input
-            id="addressCheckbox"
-            type="checkbox"
-            name="toSave"
-            checked={toSave}
-            onChange={handleChange}
-          />
-          <label htmlFor="addressCheckbox">Save address for future use</label>
+          {user && (
+            <>
+              <input
+                id="addressCheckbox"
+                type="checkbox"
+                name="toSave"
+                checked={toSave}
+                onChange={handleChange}
+              />
+              <label htmlFor="addressCheckbox">
+                Save address for future use
+              </label>
+            </>
+          )}
 
           <Button
             type="submit"

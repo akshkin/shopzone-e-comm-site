@@ -85,9 +85,15 @@ export const getFavorites = () => API.get("/favorites/get");
 
 export const createOrder = (data: OrderData) => API.post("/order/create", data);
 
+export const createOrderUnlogged = (data: OrderData) =>
+  API.post("/order/create-unlogged", data);
+
 export const getCLientId = () => API.get("/api/config/paypal");
 
 export const getOrderDetails = (id: string) => API.get(`/order/${id}`);
+
+export const getOrderDetailsUnlogged = (id: string) =>
+  API.get(`/order-unlogged/${id}`);
 
 export const updateOrder = ({ id, details }: any) =>
   API.put(`/order/${id}/pay`, details);
