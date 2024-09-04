@@ -62,12 +62,21 @@ function Header() {
       </Link>
       <NavLinks>
         {user ? (
-          <span
-            style={{ cursor: "pointer", paddingRight: "1em" }}
-            onClick={signOut}
-          >
-            SIGN OUT
-          </span>
+          <>
+            <Link
+              to="/profile"
+              style={{ cursor: "pointer", paddingRight: "1em" }}
+              // onClick={signOut}
+            >
+              PROFILE
+            </Link>
+            <span
+              style={{ cursor: "pointer", paddingRight: "1em" }}
+              onClick={signOut}
+            >
+              SIGN OUT
+            </span>
+          </>
         ) : (
           <StyledNavLink
             className={({ isActive }: LinkParam) => (isActive ? "active" : "")}

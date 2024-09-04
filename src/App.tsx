@@ -18,6 +18,7 @@ import {
   ShippingInfo,
   Payment,
   NotFound,
+  Profile,
 } from "./routes";
 import { loader as productsLoader } from "./routes/products/products";
 import { loader as productDetailLoader } from "./routes/product-details/product-details";
@@ -75,14 +76,20 @@ function App() {
             element={<Favorites />}
             errorElement={<ErrorComponent />}
           />
-        </Route>
-        <Route
-          path="checkout"
-          element={<CheckoutPage />}
-          errorElement={<ErrorComponent />}
-        >
-          <Route path="shipping" element={<ShippingInfo />} />
-          <Route path=":orderId" element={<Payment />} />
+
+          <Route
+            path="profile"
+            element={<Profile />}
+            errorElement={<ErrorComponent />}
+          />
+          <Route
+            path="checkout"
+            element={<CheckoutPage />}
+            errorElement={<ErrorComponent />}
+          >
+            <Route path="shipping" element={<ShippingInfo />} />
+            <Route path=":orderId" element={<Payment />} />
+          </Route>
         </Route>
         <Route path="/order/:orderId" element={<Order />} />
         <Route path="cart" element={<Cart />} />

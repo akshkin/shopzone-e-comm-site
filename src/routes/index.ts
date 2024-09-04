@@ -11,3 +11,4 @@ export { default as CheckoutPage } from "./checkout/checkout";
 export { default as ShippingInfo } from "./checkout/shippingInfo";
 export { default as Payment } from "./checkout/payment";
 export { default as NotFound } from "./404notFound/notFound";
+export { default as Profile } from "./profile/profile.component";

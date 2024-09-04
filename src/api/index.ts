@@ -103,3 +103,5 @@ export const saveAddress = (
 ) => API.patch("/users/save/address", shippingAddress);
 
 export const getAdress = () => API.get("/users/save/address");
+
+export const getAllOrders = (page: number) => API.get(`/orders?page=${page}`);
